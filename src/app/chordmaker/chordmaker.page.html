@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      ChordMaker
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list> 
+    <ion-list-header>select key</ion-list-header>
+
+    <ion-item>
+      <ion-label>Key</ion-label>
+      <ion-select [(ngModel)]="keyplace" (ionChange)="selectedKey()">
+        <ion-select-option *ngFor="let key of musicData.tonalities">{{key.Name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>select notes</ion-list-header>
+
+    <ion-item *ngFor="let num of numberX">
+      <ion-label>Notes</ion-label>
+      <ion-select [(ngModel)]="noteplace[num]" (ionChange)="selectedNote()">
+        <ion-select-option *ngFor="let interval of intervalsToDisplay">{{interval.name}}</ion-select-option>
+      </ion-select>
+    </ion-item> 
+
+  </ion-list>
+</ion-content>

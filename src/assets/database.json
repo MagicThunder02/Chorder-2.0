@@ -1,0 +1,108 @@
+
+{
+   "tonalities": [
+        {
+            "Name": "Do", "intervals": [{ "name": "Do", "dist": "1" }, { "name": "Reb", "dist": "2b" }, { "name": "Re", "dist": "2" }, { "name": "Mib", "dist": "3b" },
+            { "name": "Mi", "dist": "3" }, { "name": "Fa", "dist": "4" }, { "name": "Fa#", "dist": "4#" }, { "name": "Solb", "dist": "5b" },
+            { "name": "Sol", "dist": "5" }, { "name": "Sol#", "dist": "5#" }, { "name": "Lab", "dist": "6b" }, { "name": "La", "dist": "6" },
+            { "name": "Sibb", "dist": "7bb" }, { "name": "Sib", "dist": "7b" }, { "name": "Si", "dist": "7" }]
+        },
+        {
+            "Name": "Sol", "intervals": [{ "name": "Sol", "dist": "1" }, { "name": "Lab", "dist": "2b" }, { "name": "La", "dist": "2" }, { "name": "Sib", "dist": "3b" },
+            { "name": "Si", "dist": "3" }, { "name": "Do", "dist": "4" }, { "name": "Do#", "dist": "4#" }, { "name": "Reb", "dist": "5b" },
+            { "name": "Re", "dist": "5" }, { "name": "Re#", "dist": "5#" }, { "name": "Mib", "dist": "6b" }, { "name": "Mi", "dist": "6" },
+            { "name": "Fab", "dist": "7bb" }, { "name": "Fa", "dist": "7b" }, { "name": "Fa#", "dist": "7" }]
+        },
+        {
+            "Name": "Re", "intervals": [{ "name": "Re", "dist": "1" }, { "name": "Mib", "dist": "2b" }, { "name": "Mi", "dist": "2" }, { "name": "Fa", "dist": "3b" },
+            { "name": "Fa#", "dist": "3" }, { "name": "Sol", "dist": "4" }, { "name": "Sol#", "dist": "4#" }, { "name": "Lab", "dist": "5b" },
+            { "name": "La", "dist": "5" }, { "name": "La#", "dist": "5#" }, { "name": "Sib", "dist": "6b" }, { "name": "Si", "dist": "6" },
+            { "name": "Dob", "dist": "7bb" }, { "name": "Do", "dist": "7b" }, { "name": "Do#", "dist": "7" }]
+        },
+        {
+            "Name": "La", "intervals": [{ "name": "La", "dist": "1" }, { "name": "Sib", "dist": "2b" }, { "name": "Si", "dist": "2" }, { "name": "Do", "dist": "3b" },
+            { "name": "Do#", "dist": "3" }, { "name": "Re", "dist": "4" }, { "name": "Re#", "dist": "4#" }, { "name": "Mib", "dist": "5b" },
+            { "name": "Mi", "dist": "5" }, { "name": "Mi#", "dist": "5#" }, { "name": "Fa", "dist": "6b" }, { "name": "Fa#", "dist": "6" },
+            { "name": "Solb", "dist": "7bb" }, { "name": "Sol", "dist": "7b" }, { "name": "Sol#", "dist": "7" }]
+        },
+        {
+            "Name": "Mi", "intervals": [{ "name": "Mi", "dist": "1" }, { "name": "Fa", "dist": "2b" }, { "name": "Fa#", "dist": "2" }, { "name": "Sol", "dist": "3b" },
+            { "name": "Sol#", "dist": "3" }, { "name": "La", "dist": "4" }, { "name": "La#", "dist": "4#" }, { "name": "Sib", "dist": "5b" },
+            { "name": "Si", "dist": "5" }, { "name": "Si#", "dist": "5#" }, { "name": "Do", "dist": "6b" }, { "name": "Do#", "dist": "6" },
+            { "name": "Reb", "dist": "7bb" }, { "name": "Re", "dist": "7b" }, { "name": "Re#", "dist": "7" }]
+        },
+        {
+            "Name": "Si", "intervals": [{ "name": "Si", "dist": "1" }, { "name": "Do", "dist": "2b" }, { "name": "Do#", "dist": "2" }, { "name": "Re", "dist": "3b" },
+            { "name": "Re#", "dist": "3" }, { "name": "Mi", "dist": "4" }, { "name": "Mi#", "dist": "4#" }, { "name": "Fa", "dist": "5b" },
+            { "name": "Fa#", "dist": "5" }, { "name": "Fa##", "dist": "5#" }, { "name": "Sol", "dist": "6b" }, { "name": "Sol#", "dist": "6" },
+            { "name": "Lab", "dist": "7bb" }, { "name": "La", "dist": "7b" }, { "name": "La#", "dist": "7" }]
+        },
+        {
+            "Name": "La", "intervals": [{ "name": "La", "dist": "1" }, { "name": "Sib", "dist": "2b" }, { "name": "Si", "dist": "2" }, { "name": "Do", "dist": "3b" },
+            { "name": "Do#", "dist": "3" }, { "name": "Re", "dist": "4" }, { "name": "Re#", "dist": "4#" }, { "name": "Mib", "dist": "5b" },
+            { "name": "Mi", "dist": "5" }, { "name": "Mi#", "dist": "5#" }, { "name": "Fa", "dist": "6b" }, { "name": "Fa#", "dist": "6" },
+            { "name": "Solb", "dist": "7bb" }, { "name": "Sol", "dist": "7b" }, { "name": "Sol#", "dist": "7" }]
+        },
+        {
+            "Name": "Fa#", "intervals": [{ "name": "Fa#", "dist": "1" }, { "name": "Sol", "dist": "2b" }, { "name": "Sol#", "dist": "2" }, { "name": "La", "dist": "3b" },
+            { "name": "La#", "dist": "3" }, { "name": "Si", "dist": "4" }, { "name": "Si#", "dist": "4#" }, { "name": "Do", "dist": "5b" },
+            { "name": "Do#", "dist": "5" }, { "name": "Do##", "dist": "5#" }, { "name": "Re", "dist": "6b" }, { "name": "Re#", "dist": "6" },
+            { "name": "Mib", "dist": "7bb" }, { "name": "Mi", "dist": "7b" }, { "name": "Mi#", "dist": "7" }]
+        },
+        {
+            "Name": "Do#", "intervals": [{ "name": "Do#", "dist": "1" }, { "name": "Re", "dist": "2b" }, { "name": "Re#", "dist": "2" }, { "name": "Mi", "dist": "3b" },
+            { "name": "Mi#", "dist": "3" }, { "name": "Fa", "dist": "4" }, { "name": "Fa##", "dist": "4#" }, { "name": "Sol", "dist": "5b" },
+            { "name": "Sol#", "dist": "5" }, { "name": "Sol##", "dist": "5#" }, { "name": "La", "dist": "6b" }, { "name": "La#", "dist": "6" },
+            { "name": "Sib", "dist": "7bb" }, { "name": "Si", "dist": "7b" }, { "name": "Si#", "dist": "7" }]
+        },
+        {
+            "Name": "Fa", "intervals": [{ "name": "Fa", "dist": "1" }, { "name": "Solb", "dist": "2b" }, { "name": "Sol", "dist": "2" }, { "name": "Lab", "dist": "3b" },
+            { "name": "La", "dist": "3" }, { "name": "Sib", "dist": "4" }, { "name": "Si", "dist": "4#" }, { "name": "Dob", "dist": "5b" },
+            { "name": "Do", "dist": "5" }, { "name": "Do#", "dist": "5#" }, { "name": "Reb", "dist": "6b" }, { "name": "Re", "dist": "6" },
+            { "name": "Mibb", "dist": "7bb" }, { "name": "Mib", "dist": "7b" }, { "name": "Mi", "dist": "7" }]
+        },
+        {
+            "Name": "Sib", "intervals": [{ "name": "Sib", "dist": "1" }, { "name": "Dob", "dist": "2b" }, { "name": "Do", "dist": "2" }, { "name": "Reb", "dist": "3b" },
+            { "name": "Re", "dist": "3" }, { "name": "Mib", "dist": "4" }, { "name": "Mi", "dist": "4#" }, { "name": "Fab", "dist": "5b" },
+            { "name": "Fa", "dist": "5" }, { "name": "Fa#", "dist": "5#" }, { "name": "Solb", "dist": "6b" }, { "name": "Sol", "dist": "6" },
+            { "name": "Labb", "dist": "7bb" }, { "name": "Lab", "dist": "7b" }, { "name": "La", "dist": "7" }]
+        },
+        {
+            "Name": "Mib", "intervals": [{ "name": "Mib", "dist": "1" }, { "name": "Fab", "dist": "2b" }, { "name": "Fa", "dist": "2" }, { "name": "Solb", "dist": "3b" },
+            { "name": "Sol", "dist": "3" }, { "name": "Lab", "dist": "4" }, { "name": "La", "dist": "4#" }, { "name": "Sibb", "dist": "5b" },
+            { "name": "Sib", "dist": "5" }, { "name": "Si", "dist": "5#" }, { "name": "Dob", "dist": "6b" }, { "name": "Do", "dist": "6" },
+            { "name": "Rebb", "dist": "7bb" }, { "name": "Reb", "dist": "7b" }, { "name": "Re", "dist": "7" }]
+        },
+        {
+            "Name": "Lab", "intervals": [{ "name": "Lab", "dist": "1" }, { "name": "Sibb", "dist": "2b" }, { "name": "Sib", "dist": "2" }, { "name": "Dob", "dist": "3b" },
+            { "name": "Do", "dist": "3" }, { "name": "Reb", "dist": "4" }, { "name": "Re", "dist": "4#" }, { "name": "Mibb", "dist": "5b" },
+            { "name": "Mib", "dist": "5" }, { "name": "Mi", "dist": "5#" }, { "name": "Fab", "dist": "6b" }, { "name": "Fa", "dist": "6" },
+            { "name": "Solbb", "dist": "7bb" }, { "name": "Solb", "dist": "7b" }, { "name": "Sol", "dist": "7" }]
+        },
+        {
+            "Name": "Reb", "intervals": [{ "name": "Reb", "dist": "1" }, { "name": "Mibb", "dist": "2b" }, { "name": "Mib", "dist": "2" }, { "name": "Fab", "dist": "3b" },
+            { "name": "Fa", "dist": "3" }, { "name": "Solb", "dist": "4" }, { "name": "Sol", "dist": "4#" }, { "name": "Labb", "dist": "5b" },
+            { "name": "Lab", "dist": "5" }, { "name": "La", "dist": "5#" }, { "name": "Sibb", "dist": "6b" }, { "name": "Sib", "dist": "6" },
+            { "name": "Rebb", "dist": "Dobb" }, { "name": "Dob", "dist": "7b" }, { "name": "Do", "dist": "7" }]
+        },
+        {
+            "Name": "Solb", "intervals": [{ "name": "Solb", "dist": "1" }, { "name": "Labb", "dist": "2b" }, { "name": "Lab", "dist": "2" }, { "name": "Sibb", "dist": "3b" },
+            { "name": "Sib", "dist": "3" }, { "name": "Dob", "dist": "4" }, { "name": "Do", "dist": "4#" }, { "name": "Rebb", "dist": "5b" },
+            { "name": "Reb", "dist": "5" }, { "name": "Re", "dist": "5#" }, { "name": "Mibb", "dist": "6b" }, { "name": "Mib", "dist": "6" },
+            { "name": "Fabb", "dist": "7bb" }, { "name": "Fab", "dist": "7b" }, { "name": "Fa", "dist": "7" }]
+        },
+        {
+            "Name": "Dob", "intervals": [{ "name": "Dob", "dist": "1" }, { "name": "Rebb", "dist": "2b" }, { "name": "Reb", "dist": "2" }, { "name": "Mibb", "dist": "3b" },
+            { "name": "Mib", "dist": "3" }, { "name": "Fab", "dist": "4" }, { "name": "Fa", "dist": "4#" }, { "name": "Solbb", "dist": "5b" },
+            { "name": "Solb", "dist": "5" }, { "name": "Sol", "dist": "5#" }, { "name": "Labb", "dist": "6b" }, { "name": "Lab", "dist": "6" },
+            { "name": "Sibbb", "dist": "7bb" }, { "name": "Sibb", "dist": "7b" }, { "name": "Sib", "dist": "7" }]
+        }
+    ],
+
+    "chords":[
+        {"names":[""], "formula":["1","3","5"]},
+        {"names":["sus4"], "formula":["1","4","5"]},
+        {"names":["(b5)"], "formula":["1","3","5b"]},
+        {"names":["aum", "+", "(#5)"], "formula":["1","3","5#"]}
+    ]
+}
