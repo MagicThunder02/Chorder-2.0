@@ -9,7 +9,7 @@ export interface Tonality {
 }
 
 export interface Chord {
-    name: string[];
+    names: string[];
     formula: string[];
 }
 

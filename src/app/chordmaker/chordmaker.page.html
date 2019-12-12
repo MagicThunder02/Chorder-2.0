@@ -16,19 +16,19 @@
 
     <ion-item>
       <ion-label>Key</ion-label>
-      <ion-select [(ngModel)]="keyplace" (ionChange)="selectedKey()">
+      <ion-select [(ngModel)]="keyplace" interface="popover" (ionChange)="selectedKey()">
         <ion-select-option *ngFor="let key of musicData.tonalities">{{key.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
 
   </ion-list>
 
-  <ion-list>
+  <ion-list *ngIf="keyplace">
     <ion-list-header>select notes</ion-list-header>
 
     <ion-item *ngFor="let num of numberX">
       <ion-label>Notes</ion-label>
-      <ion-select [(ngModel)]="noteplace[num]" (ionChange)="selectedNote()">
+      <ion-select [(ngModel)]="noteplace[num]" interface="popover" (ionChange)="selectedNote()">
         <ion-select-option *ngFor="let interval of intervalsToDisplay">{{interval.name}}</ion-select-option>
       </ion-select>
     </ion-item> 
