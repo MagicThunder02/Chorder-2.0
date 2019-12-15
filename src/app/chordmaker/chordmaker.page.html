@@ -11,27 +11,33 @@
 
 <ion-content>
 
-  <ion-list> 
+  <ion-list>
+    <!-- selezione della tonica -->
     <ion-list-header>select key</ion-list-header>
-
     <ion-item>
+      <ion-icon [name]="'trash'" color="danger" slot="start" (click)="deleteKey()"></ion-icon>
       <ion-label>Key</ion-label>
-      <ion-select [(ngModel)]="keyplace" interface="popover" (ionChange)="selectedKey()">
-        <ion-select-option *ngFor="let key of musicData.tonalities">{{key.Name}}</ion-select-option>
+      <ion-select [(ngModel)]="keyplace" interface="popover" (ionChange)="selectedKey($event)">
+        <ion-select-option *ngFor="let tonality of musicData.tonalities">{{tonality.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
 
   </ion-list>
 
-  <ion-list *ngIf="keyplace">
-    <ion-list-header>select notes</ion-list-header>
 
-    <ion-item *ngFor="let num of numberX">
+  <ion-list *ngIf="keyplace">
+    <!-- disegnamo i componenti dell'accordo -->
+    <ion-list-header>select notes</ion-list-header>
+    <ion-item *ngFor="let component of components; let idx = index; let lst = last">
+      <ion-icon *ngIf="!lst" [name]="'trash'" color="danger" slot="start" (click)="deleteNote(idx)"></ion-icon>
+      <ion-icon *ngIf="lst"  [name]="'arrow-dropright'" color="medium" slot="start"></ion-icon>
       <ion-label>Notes</ion-label>
-      <ion-select [(ngModel)]="noteplace[num]" interface="popover" (ionChange)="selectedNote()">
-        <ion-select-option *ngFor="let interval of intervalsToDisplay">{{interval.name}}</ion-select-option>
+      <ion-select [(ngModel)]="component.selected" interface="popover" (ionChange)="selectedNote(idx, component)">
+        <ng-container *ngFor="let interval of component.intervals">
+          <ion-select-option *ngIf="!interval.hide">{{interval.name}}</ion-select-option>
+        </ng-container>
       </ion-select>
-    </ion-item> 
+    </ion-item>
 
   </ion-list>
 </ion-content>

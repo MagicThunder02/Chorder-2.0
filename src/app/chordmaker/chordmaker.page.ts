@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicService } from '../services/music.service';
-import { Music, Interval } from '../services/music.model';
+import { Music, ChordComponent, Tonality, Interval } from '../services/music.model';
+
 
 @Component({
   selector: 'app-chordmaker',
@@ -12,47 +13,108 @@ export class ChordmakerPage implements OnInit {
   private musicData: Music;
   private keyplace: string;
   private selectedTonic: string;
-  public intervalsToDisplay: Interval[];
-  public numberX: number[];
   public noteplace: string[] = [];
+  public components: ChordComponent[] = [];
+  private actualTonality: Tonality;
 
 
   constructor(private musicService: MusicService) {
     this.musicData = <Music>{};
-    this.intervalsToDisplay = [];
-    this.numberX = [0];
-
   }
 
-  public selectedKey(): void {  
-    this.noteplace = [];
-    this.numberX = [0];
 
-    this.selectedTonic = this.keyplace;
-    console.log(this.keyplace);
+  private checkHides() {
 
-    //creo un array con le note che saranno nelle tendine delle note
-    this.musicData.tonalities.forEach(tonality => {
-      if (tonality.Name == this.selectedTonic) {
+    let toRemoveArray: string[] = [];
 
-        this.intervalsToDisplay = tonality.intervals;
+    //array di note da togliere
+    this.components.forEach(cmp => {
+      if (cmp.selected != '') {
+        toRemoveArray.push(cmp.selected);
       }
     })
-    console.log(this.intervalsToDisplay);
+
+    //ripristiniamo visibili tutte le note
+    this.components.forEach((cmp, index) => {
+      cmp.intervals.forEach(int => {
+        int.hide = false;
+      })
+    })
+
+    this.components.forEach((cmp, index) => {
+      toRemoveArray.forEach(rem => {
+        cmp.intervals.forEach(int => {
+          if (int.name == rem) {
+            //se la nota da rimuovere è diversa da quella selezionata
+            if (rem != cmp.selected) {
+              int.hide = true;
+              // console.log(`idx: ${index} rem: ${rem} cmp: ${JSON.stringify(this.actualTonality.intervals)}`);
+            }
+          }
+        })
+      })
+    })
+
+
   }
 
-  public selectedNote(): void {
-    console.log(this.noteplace);
-    this.numberX.push(this.numberX.length);
+  /*-----------------------------------------------------------------------------------------------
+    elimino la scelta della tonica e ripristino le condizioni di partenza
+  -----------------------------------------------------------------------------------------------*/
+  public deleteKey() {
+    this.selectedTonic = '';
+    this.keyplace = '';
+    this.actualTonality = null;
+    this.components = [];
+  }
 
-    /*     //elimino la nota già scelta dalle note sceglibili
-        this.intervalsToDisplay.forEach(element => {
-          if (element.name == this.noteplace[this.noteplace.length-1]) {
-             this.intervalsToDisplay.splice(this.noteplace.length-1, 1);
-          }
-        }) */
+  /*-----------------------------------------------------------------------------------------------
+    evento sulla selezione della tonica
+  -----------------------------------------------------------------------------------------------*/
+  public selectedKey(): void {
+    this.selectedTonic = this.keyplace;
+    if (this.keyplace != '') {
+      //creo un array con le note che saranno nelle tendine delle note
+      this.musicData.tonalities.forEach(tonality => {
+        if (tonality.Name == this.selectedTonic) {
+          //memorizziamo la tonalità scelta
+          this.actualTonality = tonality;
+        }
+      })
 
-    let grades: string[] = this.gradeFinder(this.noteplace);
+      //inizializiamo l'array dei componenti con un solo elemento
+      let clone: Interval[] = JSON.parse(JSON.stringify(this.actualTonality.intervals));
+      this.components = [{ selected: '', intervals: clone }]
+    }
+  }
+
+  /*-----------------------------------------------------------------------------------------------
+    elimino la nota
+  -----------------------------------------------------------------------------------------------*/
+  public deleteNote(idx) {
+    this.components.splice(idx, 1);
+    this.checkHides();
+  }
+
+  /*-----------------------------------------------------------------------------------------------
+    evento sulla selezione di una nota
+  -----------------------------------------------------------------------------------------------*/
+  public selectedNote(idx: number, component: ChordComponent): void {
+    // console.log(`i: ${idx} c: ${JSON.stringify(component)}`);
+
+    if ((idx < 6) && (idx == this.components.length - 1)) {
+      let clone: Interval[] = JSON.parse(JSON.stringify(this.actualTonality.intervals));
+      this.components.push({ selected: '', intervals: clone });
+    }
+
+    this.checkHides();
+
+    let notes: string[] = [];
+    this.components.forEach(c => {
+      notes.push(c.selected);
+    })
+
+    let grades: string[] = this.gradeFinder(notes);
     this.matchChord(grades);
   }
 

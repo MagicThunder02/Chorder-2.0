@@ -1,6 +1,7 @@
 export interface Interval {
     name: string;
     dist: string;
+    hide?:boolean;
 }
 
 export interface Tonality {
@@ -16,4 +17,9 @@ export interface Chord {
 export interface Music {
     tonalities: Tonality[];
     chords: Chord[];
+}
+
+export interface ChordComponent {
+    selected: string;
+    intervals: Interval[];
 }
