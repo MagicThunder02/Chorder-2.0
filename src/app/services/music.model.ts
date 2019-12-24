@@ -22,4 +22,6 @@ export interface Music {
 export interface ChordComponent {
     selected: string;
     intervals: Interval[];
+    octaveSelected: boolean;
+    octaveEnable: boolean;
 }

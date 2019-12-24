@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicService } from '../services/music.service';
 import { Music, ChordComponent, Tonality, Interval } from '../services/music.model';
+import { HelperComponent } from '../helper/helper.component';
+import { PopoverController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { CookieService } from 'ngx-cookie-service';
+
 
 
 @Component({
@@ -16,15 +21,27 @@ export class ChordmakerPage implements OnInit {
   public noteplace: string[] = [];
   public components: ChordComponent[] = [];
   private actualTonality: Tonality;
+  public FinalChords: string[] = [];
 
 
-  constructor(private musicService: MusicService) {
+  constructor(private musicService: MusicService, private popoverCtrl: PopoverController,
+    private translate: TranslateService, private cookie: CookieService) {
     this.musicData = <Music>{};
+  }
+
+  ionViewDidEnter(): void {
+
+    this.translate.setDefaultLang('en');
+
+    let lang = this.cookie.get('language');
+
+    if (lang) {
+      this.translate.use(lang);
+    }
   }
 
 
   private checkHides() {
-
     let toRemoveArray: string[] = [];
 
     //array di note da togliere
@@ -59,6 +76,24 @@ export class ChordmakerPage implements OnInit {
   }
 
   /*-----------------------------------------------------------------------------------------------
+    se il grado è uguale a 2, 4 o 6 abilita il selettore dell'ottava 
+    -----------------------------------------------------------------------------------------------*/
+  public showOctaveButton(component: ChordComponent) {
+    let lastNote: string[] = [];
+
+    lastNote.push(component.selected);
+    let dist = this.gradeFinder(lastNote);
+
+    if ((dist[0].includes('2')) || (dist[0].includes('4')) || (dist[0].includes('6'))) {
+      component.octaveEnable = true;
+    }
+    else {
+      component.octaveEnable = null;
+      component.octaveSelected = false;
+    }
+  }
+
+  /*-----------------------------------------------------------------------------------------------
     elimino la scelta della tonica e ripristino le condizioni di partenza
   -----------------------------------------------------------------------------------------------*/
   public deleteKey() {
@@ -84,7 +119,7 @@ export class ChordmakerPage implements OnInit {
 
       //inizializiamo l'array dei componenti con un solo elemento
       let clone: Interval[] = JSON.parse(JSON.stringify(this.actualTonality.intervals));
-      this.components = [{ selected: '', intervals: clone }]
+      this.components = [{ selected: '', intervals: clone, octaveSelected: false, octaveEnable: false }]
     }
   }
 
@@ -104,7 +139,7 @@ export class ChordmakerPage implements OnInit {
 
     if ((idx < 6) && (idx == this.components.length - 1)) {
       let clone: Interval[] = JSON.parse(JSON.stringify(this.actualTonality.intervals));
-      this.components.push({ selected: '', intervals: clone });
+      this.components.push({ selected: '', intervals: clone, octaveSelected: false, octaveEnable: false });
     }
 
     this.checkHides();
@@ -113,6 +148,8 @@ export class ChordmakerPage implements OnInit {
     this.components.forEach(c => {
       notes.push(c.selected);
     })
+
+    this.showOctaveButton(component);
 
     let grades: string[] = this.gradeFinder(notes);
     this.matchChord(grades);
@@ -158,7 +195,7 @@ export class ChordmakerPage implements OnInit {
     return j == child.length;
   }
 
-  private matchChord(grades: string[]): string[] {
+  private matchChord(grades: string[]): void {
     let result: string[] = [];
 
     console.log(grades);
@@ -172,14 +209,28 @@ export class ChordmakerPage implements OnInit {
     })
 
     console.log('r', result);
-    return result;
+    this.FinalChords = result;
   }
 
   ngOnInit() {
-
     this.musicService.getData().subscribe((res) => {
       this.musicData = res;
       console.log(this.musicData);
     })
+  }
+
+  //popover function
+  async helper(ev: any, contextTitle: string, contextContent: string) {
+    const popover = await this.popoverCtrl.create({
+      component: HelperComponent,
+      componentProps: {
+        contextTitle: contextTitle,
+        contextContent: contextContent
+      },
+      event: ev,
+      showBackdrop: true,
+      translucent: true
+    });
+    return await popover.present();
   }
 }

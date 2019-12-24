@@ -1,0 +1,24 @@
+{
+    "title": "ChorderIT",
+    "subtitle": "The ultimate music tool IT",
+
+    "options.title": "Opzioni",
+    "options.notation": "notazione",
+    "options.american": "Americana",
+    "options.european": "Europea",
+    "options.language": "lingua",
+    "options.english": "Inglese",
+    "options.italian": "Italiano",
+
+    "chordmaker.select_tonality": "Selezionare la Tonalità",
+    "chordmaker.tonality": "Tonalità",
+    "chordmaker.select_notes": "Selezionare le Note",
+    "chordmaker.notes": "Note",
+
+    "helper-title.tonality": "Tonalità", 
+    "helper-content.tonality": "Selezionare la tonalità dell'accordo",
+
+    "helper-title.notes": "Note", 
+    "helper-content.notes": "Selezionare le note dell'accordo"
+
+}

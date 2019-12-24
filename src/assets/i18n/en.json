@@ -1,0 +1,23 @@
+{
+    "title": "Chorder",
+    "subtitle": "The ultimate music tool",
+
+    "options.title": "Options",
+    "options.notation": "notation",
+    "options.american": "American",
+    "options.european": "European",
+    "options.language": "language",
+    "options.english": "English",
+    "options.italian": "Italian",
+
+    "chordmaker.select_tonality": "Select the Tonality",
+    "chordmaker.tonality": "Tonality",
+    "chordmaker.select_notes": "Select the Notes",
+    "chordmaker.notes": "Notes",
+
+    "helper-title.tonality": "Tonality", 
+    "helper-content.tonality": "Select the tonality of the chord",
+
+    "helper-title.notes": "Notes", 
+    "helper-content.notes": "Select the notes of the chord"
+}

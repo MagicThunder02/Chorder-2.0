@@ -1,30 +1,52 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        Option
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{ 'options.title' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <ion-list>
     <ion-radio-group>
 
       <ion-list-header>
-        <ion-label>Notation</ion-label>
+        <ion-label>{{ 'options.notation' | translate }}</ion-label>
       </ion-list-header>
-  
+
       <ion-item>
-        <ion-label>American</ion-label>
-        <ion-radio slot="start" value="american" checked></ion-radio>
+        <ion-icon slot="end" [src]="'/assets/flags/usa.svg'"></ion-icon>
+        <ion-label>{{ 'options.american' | translate }}</ion-label>
+        <ion-radio slot="start" value="american"></ion-radio>
       </ion-item>
-  
+
       <ion-item>
-        <ion-label>European</ion-label>
+        <ion-icon slot="end" [src]="'/assets/flags/eu.svg'"></ion-icon>
+        <ion-label>{{ 'options.european' | translate }}</ion-label>
         <ion-radio slot="start" value="european"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+
+    <ion-radio-group>
+
+      <ion-list-header>
+        <ion-label>{{ 'options.language' | translate }}</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-icon slot="end" [src]="'/assets/flags/england.svg'"></ion-icon>
+        <ion-label>{{ 'options.english' | translate }} </ion-label>
+        <ion-radio slot="start" value="english" (click)="languageClick('en')" [checked]="lang === 'en'"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+         <ion-icon slot="end" [src]="'/assets/flags/italy.svg'"></ion-icon>
+         <ion-label>{{ 'options.italian' | translate }}</ion-label> 
+        <ion-radio slot="start" value="italian" (click)="languageClick('it')" [checked]="lang === 'it'" ></ion-radio>
       </ion-item>
 
     </ion-radio-group>
