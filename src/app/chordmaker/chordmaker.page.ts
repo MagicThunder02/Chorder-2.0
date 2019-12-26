@@ -134,12 +134,14 @@ export class ChordmakerPage implements OnInit {
   /*-----------------------------------------------------------------------------------------------
     evento sulla selezione di una nota
   -----------------------------------------------------------------------------------------------*/
-  public selectedNote(idx: number, component: ChordComponent): void {
+  public selectedNote(idx?: number, component?: ChordComponent): void {
     // console.log(`i: ${idx} c: ${JSON.stringify(component)}`);
 
-    if ((idx < 6) && (idx == this.components.length - 1)) {
-      let clone: Interval[] = JSON.parse(JSON.stringify(this.actualTonality.intervals));
-      this.components.push({ selected: '', intervals: clone, octaveSelected: false, octaveEnable: false });
+    if (component) {
+      if ((idx < 6) && (idx == this.components.length - 1)) {
+        let clone: Interval[] = JSON.parse(JSON.stringify(this.actualTonality.intervals));
+        this.components.push({ selected: '', intervals: clone, octaveSelected: false, octaveEnable: false });
+      }
     }
 
     this.checkHides();
@@ -152,6 +154,30 @@ export class ChordmakerPage implements OnInit {
     this.showOctaveButton(component);
 
     let grades: string[] = this.gradeFinder(notes);
+
+    grades.forEach((g, index) => {
+      console.log(this.components[index].octaveSelected)
+      if (g.includes('2')) {
+        if (this.components[index].octaveSelected) {
+          g = g.replace('2', '9')
+          grades[index] = g;
+        }
+      }
+      if (g.includes('4')) {
+        if (this.components[index].octaveSelected) {
+          g = g.replace('4', '11')
+          grades[index] = g;
+        }
+      }
+      if (g.includes('6')) {
+        if (this.components[index].octaveSelected) {
+          g = g.replace('6', '13')
+          grades[index] = g;
+        }
+      }
+    })
+
+    console.log(grades)
     this.matchChord(grades);
   }
 
@@ -195,21 +221,25 @@ export class ChordmakerPage implements OnInit {
     return j == child.length;
   }
 
+  //la funzione "ritorna" tutti i sottoinsiemi che combaciano
   private matchChord(grades: string[]): void {
-    let result: string[] = [];
+    let chordResult: string[] = [];
+    let AllChordsFound: any = [];
 
     console.log(grades);
 
     this.musicData.chords.forEach(chord => {
       if (this.matcher(chord.formula, grades)) {
+        chordResult = [];
         chord.names.forEach(name => {
-          result.push(this.selectedTonic + name);
+          chordResult.push(this.selectedTonic + name);
         })
+        AllChordsFound.push(chordResult);
       }
     })
 
-    console.log('r', result);
-    this.FinalChords = result;
+    console.log('r', AllChordsFound);
+    this.FinalChords = AllChordsFound;
   }
 
   ngOnInit() {
