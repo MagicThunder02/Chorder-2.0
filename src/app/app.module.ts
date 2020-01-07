@@ -16,20 +16,24 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpModule, Http } from '@angular/http';
 import { CookieService } from 'ngx-cookie-service';
+import { MusicSymbolsPipe } from './pipes/music-symbols.pipe';
+import { MusicNotationPipe } from './pipes/music-notation.pipe';
+import { HelperModule } from './helper/helper.module';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 @NgModule({
-  declarations: [
-    AppComponent],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     HttpModule,
+    HelperModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

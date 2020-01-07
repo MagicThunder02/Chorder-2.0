@@ -1,39 +1,78 @@
 import { Component, OnInit } from '@angular/core';
+import { Music, Chord } from '../services/music.model';
+import { MusicService } from '../services/music.service';
+import { TranslateService } from '@ngx-translate/core';
+import { CookieService } from 'ngx-cookie-service';
+import { PopoverController } from '@ionic/angular';
+import { HelperComponent } from '../helper/helper.component';
 
 @Component({
   selector: 'app-notefinder',
   templateUrl: 'notefinder.page.html',
   styleUrls: ['notefinder.page.scss']
 })
-export class Notefinder implements OnInit { 
-  private selectedItem: any;
-  private icons = [
-    'note',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Note ' + i,
-        note: 'Do' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
+export class NotefinderPage implements OnInit {
+  public musicData: Music;
+  private keyplace: string;
+  private categoryplace: string;
+  public filteredChords: Chord[];
+
+  constructor(private musicService: MusicService, private popoverCtrl: PopoverController, private translate: TranslateService, private cookie: CookieService) {
+    this.musicData = <Music>{};
+
+    this.translate.setDefaultLang('en');
+    let lang = this.cookie.get('language');
+    if (lang) {
+      this.translate.use(lang);
     }
+
+    this.categoryplace = 'all';
+  }
+
+  public fillSearch(): void {
+    this.musicData.chords.forEach((chord, index) => {
+      chord.names.forEach((name, index) => {
+        chord.names[index] = this.keyplace + name;
+      })
+    })
+  }
+
+  public catSelected(): void {
+    console.log(this.categoryplace);
+  }
+
+  getChords(ev: any) {
+
+    
+    let serVal = ev.target.value;
+    console.log(serVal)
+/* 
+    if (serVal && serVal.trim() != '') {
+      this.filteredChords = this.musicData.chords.names.filter((topic) => { //here you used == instead of =
+        return (topic.toLowerCase().indexOf(serVal.toLowerCase()) > -1);
+      })
+    } */
   }
 
   ngOnInit() {
+    this.musicService.getData().subscribe((res) => {
+      this.musicData = res;
+      console.log(this.musicData);
+    })
   }
-  // add back when alpha.4 is out
-  // navigate(item) {
-  //   this.router.navigate(['/list', JSON.stringify(item)]);
-  // }
+
+
+  async helper(ev: any, contextTitle: string, contextContent: string) {
+    const popover = await this.popoverCtrl.create({
+      component: HelperComponent,
+      componentProps: {
+        contextTitle: contextTitle,
+        contextContent: contextContent
+      },
+      event: ev,
+      showBackdrop: true,
+      translucent: true
+    });
+    return await popover.present();
+  }
 }

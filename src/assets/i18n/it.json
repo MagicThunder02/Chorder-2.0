@@ -14,11 +14,27 @@
     "chordmaker.tonality": "Tonalità",
     "chordmaker.select_notes": "Selezionare le Note",
     "chordmaker.notes": "Note",
+    "chordmaker.and_other": "e altri",
+    "chordmaker.chords": "accordi",
+    "chordmaker.aka": "Conosciuto anche come:",
+    "chordmaker.subset_of:": "Sottoinsieme di:",
+
 
     "helper-title.tonality": "Tonalità", 
     "helper-content.tonality": "Selezionare la tonalità dell'accordo",
-
     "helper-title.notes": "Note", 
-    "helper-content.notes": "Selezionare le note dell'accordo"
+    "helper-content.notes": "Selezionare le note dell'accordo",
+    "helper-title.category": "Categoria", 
+    "helper-content.category":"Selezionare la categoria di accordi che si vuole visualizzare",
+
+
+    "notefinder.category":"Categoria",
+    "notefinder.all":"Tutti",
+    "notefinder.major":"Maggiori",
+    "notefinder.minor":"Minori",
+    "notefinder.dominant":"Di Dominante",
+    "notefinder.half-diminished":"Semidiminuiti",
+    "notefinder.diminished":"Diminuiti",
+    "notefinder.search_for_a_chord":"Cerca un accordo"
 
 }

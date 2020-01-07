@@ -11,7 +11,9 @@ export interface Tonality {
 
 export interface Chord {
     names: string[];
+    category: string;
     formula: string[];
+    showCard?: boolean;
 }
 
 export interface Music {

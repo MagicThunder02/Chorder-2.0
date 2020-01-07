@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 
 
-
 @Component({
   selector: 'app-chordmaker',
   templateUrl: './chordmaker.page.html',
@@ -129,6 +128,7 @@ export class ChordmakerPage implements OnInit {
   public deleteNote(idx) {
     this.components.splice(idx, 1);
     this.checkHides();
+    this.selectedNote();
   }
 
   /*-----------------------------------------------------------------------------------------------
@@ -151,7 +151,9 @@ export class ChordmakerPage implements OnInit {
       notes.push(c.selected);
     })
 
+    if (component) {
     this.showOctaveButton(component);
+    }
 
     let grades: string[] = this.gradeFinder(notes);
 
@@ -238,7 +240,7 @@ export class ChordmakerPage implements OnInit {
       }
     })
 
-    console.log('r', AllChordsFound);
+    // console.log('r', AllChordsFound);
     this.FinalChords = AllChordsFound;
   }
 

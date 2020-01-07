@@ -8,12 +8,17 @@ import { HelperComponent } from '../helper/helper.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../home/home.module';
 import { HttpClient } from '@angular/common/http';
+import { PipesModule } from '../pipes/pipes-module/pipes.module';
+import { HelperModule } from '../helper/helper.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
+    HelperModule,
     ChordmakerPageRoutingModule,
     TranslateModule.forChild({
       loader: {
@@ -23,7 +28,7 @@ import { HttpClient } from '@angular/common/http';
       }
     }),
   ],
-  declarations: [ChordmakerPage, HelperComponent],
+  declarations: [ChordmakerPage],
   entryComponents: [HelperComponent]
 })
 export class ChordmakerPageModule {}

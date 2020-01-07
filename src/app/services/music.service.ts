@@ -12,6 +12,6 @@ export class MusicService {
   constructor(private http: HttpClient) {   }
 
   public getData():Observable<Music> {
-    return this.http.get<Music>(this.dataUrl)
+    return this.http.get<Music>(this.dataUrl);
   }
 }

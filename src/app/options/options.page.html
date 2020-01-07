@@ -20,13 +20,13 @@
       <ion-item>
         <ion-icon slot="end" [src]="'/assets/flags/usa.svg'"></ion-icon>
         <ion-label>{{ 'options.american' | translate }}</ion-label>
-        <ion-radio slot="start" value="american"></ion-radio>
+        <ion-radio slot="start" value="american" (click)="notationClick('american')" [checked]="notation === 'american'"></ion-radio>
       </ion-item>
 
       <ion-item>
         <ion-icon slot="end" [src]="'/assets/flags/eu.svg'"></ion-icon>
         <ion-label>{{ 'options.european' | translate }}</ion-label>
-        <ion-radio slot="start" value="european"></ion-radio>
+        <ion-radio slot="start" value="european" (click)="notationClick('european')" [checked]="notation === 'european'"></ion-radio>
       </ion-item>
 
     </ion-radio-group>

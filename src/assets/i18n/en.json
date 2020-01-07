@@ -14,10 +14,24 @@
     "chordmaker.tonality": "Tonality",
     "chordmaker.select_notes": "Select the Notes",
     "chordmaker.notes": "Notes",
+    "chordmaker.and_other": "and other",
+    "chordmaker.chords": "chords",
+    "chordmaker.aka": "Also known as:",
+    "chordmaker.subset_of:": "Subset of:",
 
     "helper-title.tonality": "Tonality", 
     "helper-content.tonality": "Select the tonality of the chord",
-
     "helper-title.notes": "Notes", 
-    "helper-content.notes": "Select the notes of the chord"
+    "helper-content.notes": "Select the notes of the chord",
+    "helper-title.category": "Category", 
+    "helper-content.category":"Select the category of chords you want to see",
+
+    "notefinder.category":"Category",
+    "notefinder.all":"All",
+    "notefinder.major":"Majors",
+    "notefinder.minor":"Minors",
+    "notefinder.dominant":"Dominants",
+    "notefinder.half-diminished":"Half-diminished",
+    "notefinder.diminished":"Diminished",
+    "notefinder.search_for_a_chord":"Search for a chord"
 }

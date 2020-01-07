@@ -24,7 +24,8 @@
       <ion-icon [name]="'trash'" color="danger" slot="start" (click)="deleteKey()"></ion-icon>
       <ion-label>{{'chordmaker.tonality' | translate}}</ion-label>
       <ion-select [(ngModel)]="keyplace" interface="popover" (ionChange)="selectedKey($event)">
-        <ion-select-option *ngFor="let tonality of musicData.tonalities">{{tonality.Name}}</ion-select-option>
+        <ion-select-option *ngFor="let tonality of musicData.tonalities" [value]="tonality.Name">
+          {{tonality.Name | musicNotation }}</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -40,12 +41,14 @@
     </ion-chip>
 
     <ion-item *ngFor="let component of components; let idx = index; let lst = last">
-      <ion-icon *ngIf="!lst" [name]="'trash'" color="danger" slot="start" (click)="deleteNote(idx); selectedNote()"></ion-icon>
+      <ion-icon *ngIf="!lst" [name]="'trash'" color="danger" slot="start" (click)="deleteNote(idx)">
+      </ion-icon>
       <ion-icon *ngIf="lst" [name]="'arrow-dropright'" color="medium" slot="start"></ion-icon>
       <ion-label>{{'chordmaker.notes' | translate}}</ion-label>
       <ion-select [(ngModel)]="component.selected" interface="popover" (ionChange)="selectedNote(idx, component)">
         <ng-container *ngFor="let interval of component.intervals">
-          <ion-select-option *ngIf="!interval.hide">{{interval.name}}</ion-select-option>
+          <ion-select-option *ngIf="!interval.hide" [value]="interval.name">{{interval.name | musicNotation}}
+          </ion-select-option>
         </ng-container>
       </ion-select>
       <ion-checkbox slot="end" color="success" [disabled]="!component.octaveEnable"
@@ -54,30 +57,31 @@
 
     <ion-card *ngIf="(components.length > 3) && (FinalChords.length != 0)">
       <ion-card-header>
-        <ion-card-title>{{ FinalChords[0][0] }}</ion-card-title>
+        <ion-card-title>{{ FinalChords[0][0] | musicSymbols | musicNotation}}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        
+
         <ng-container *ngIf="FinalChords[0].length > 1">
-          Also known as:
+          {{'chordmaker.aka' | translate}}
           <strong>
             <ng-container *ngFor="let chordName of FinalChords[0]; let lst = last; let fst = first">
-              <ion-text *ngIf="!lst && !fst">{{chordName}}, </ion-text>
-              <ion-text *ngIf="lst">{{chordName}}</ion-text>
+              <ion-text *ngIf="!lst && !fst">{{chordName | musicSymbols | musicNotation}}, </ion-text>
+              <ion-text *ngIf="lst">{{chordName | musicSymbols }}</ion-text>
             </ng-container>
           </strong>
-           <br> <br>
+          <br> <br>
         </ng-container>
 
-        
+
 
         <ng-container *ngIf="FinalChords.length > 1">
-          Subset of:
+          {{'chordmaker.subset_of:' | translate}}
           <strong>
-            <ng-container *ngFor="let chords of FinalChords; let lst = last; let fst = first">
-              <ion-text *ngIf="!lst && !fst">{{chords}}, </ion-text>
-              <ion-text *ngIf="lst">{{chords}}</ion-text>
+            <ng-container *ngFor="let chords of FinalChords; let lst = last; let idx = index; let fst = first">
+              <ion-text *ngIf="!fst && idx<3">{{chords[0] | musicSymbols}}, </ion-text>
+              <ion-text *ngIf="idx==3">{{chords[0] | musicSymbols}} </ion-text>
+              <ion-text *ngIf="lst">{{'chordmaker.and_other' | translate}} {{FinalChords.length-5}} {{'chordmaker.chords' | translate}}</ion-text>
             </ng-container>
           </strong>
         </ng-container>
