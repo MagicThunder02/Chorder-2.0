@@ -1,6 +1,8 @@
 {
-    "title": "ChorderIT",
-    "subtitle": "The ultimate music tool IT",
+    "home.title": "Chorder",
+    "home.subtitle": "Il supporto definitivo del musicista",
+    "home.pages": "Pagine",
+    "home.options": "Opzioni",
 
     "options.title": "Opzioni",
     "options.notation": "notazione",

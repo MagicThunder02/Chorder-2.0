@@ -1,6 +1,8 @@
 {
-    "title": "Chorder",
-    "subtitle": "The ultimate music tool",
+    "home.title": "Chorder",
+    "home.subtitle": "The ultimate music tool",
+    "home.pages": "Pages",
+    "home.options": "Options",
 
     "options.title": "Options",
     "options.notation": "notation",

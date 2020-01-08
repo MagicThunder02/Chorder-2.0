@@ -29,6 +29,7 @@ export class NotefinderPage implements OnInit {
     this.categoryplace = 'all';
   }
 
+  //selezionata la tonica la aggiunge a ogni nome nella struttura MusicData
   public fillSearch(): void {
     this.musicData.chords.forEach((chord, index) => {
       chord.names.forEach((name, index) => {
@@ -43,15 +44,30 @@ export class NotefinderPage implements OnInit {
 
   getChords(ev: any) {
 
-    
     let serVal = ev.target.value;
     console.log(serVal)
-/* 
-    if (serVal && serVal.trim() != '') {
-      this.filteredChords = this.musicData.chords.names.filter((topic) => { //here you used == instead of =
-        return (topic.toLowerCase().indexOf(serVal.toLowerCase()) > -1);
+    let tmp: any[] = [];
+
+    this.musicData.chords.forEach(chord => {
+      let found: boolean = false;
+      chord.names.forEach(name => {
+        if (name.includes(serVal)) {
+          found = true;
+
+        }
       })
-    } */
+      if (found) {
+        tmp.push(chord);
+      }
+
+    })
+    this.filteredChords = tmp;
+    /* 
+        if (serVal && serVal.trim() != '') {
+          this.filteredChords = this.musicData.chords.names.filter((topic) => { //here you used == instead of =
+            return (topic.toLowerCase().indexOf(serVal.toLowerCase()) > -1);
+          })
+        } */
   }
 
   ngOnInit() {

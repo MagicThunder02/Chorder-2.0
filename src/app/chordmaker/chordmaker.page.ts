@@ -6,6 +6,8 @@ import { PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 
+// import * as MidiWriter from 'midi-writer-js';
+
 
 @Component({
   selector: 'app-chordmaker',
@@ -152,7 +154,7 @@ export class ChordmakerPage implements OnInit {
     })
 
     if (component) {
-    this.showOctaveButton(component);
+      this.showOctaveButton(component);
     }
 
     let grades: string[] = this.gradeFinder(notes);
@@ -242,6 +244,23 @@ export class ChordmakerPage implements OnInit {
 
     // console.log('r', AllChordsFound);
     this.FinalChords = AllChordsFound;
+  }
+
+  public createSound() {
+
+/*     // Start with a new track
+    let track = new MidiWriter.Track();
+
+    // Define an instrument (optional):
+    track.addEvent(new MidiWriter.ProgramChangeEvent({ instrument: 1 }));
+
+    // Add some notes:
+    let note = new MidiWriter.NoteEvent({ pitch: ['C4', 'D4', 'E4'], duration: '4' });
+    track.addEvent(note);
+
+    // Generate a data URI
+    let write = new MidiWriter.Writer(track);
+    console.log(write.dataUri()); */
   }
 
   ngOnInit() {

@@ -25,4 +25,11 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
+.ion-color-grey {
+    --ion-color-base: var(--ion-color-grey);
+    --ion-color-base-rgb: var(--ion-color-grey-rgb);
+    --ion-color-contrast: var(--ion-color-grey-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-grey-contrast-rgb);
+    --ion-color-shade: var(--ion-color-grey-shade);
+    --ion-color-tint: var(--ion-color-grey-tint);
+  }

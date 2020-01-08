@@ -3,6 +3,9 @@
 
 /** Ionic CSS Variables **/
 :root {
+  // --ion-background-color: url('./../assets/negativebg.jpg');
+  // --ion-background-color: #9c3d3d;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -82,4 +85,13 @@
   --ion-color-chorder-contrast-rgb: 255, 255, 255;
   --ion-color-chorder-shade: #18a3b3;
   --ion-color-chorder-tint: #6ee9f7;
+
+  --ion-color-grey: #d3d3d3;
+  --ion-color-grey-rgb: 211,211,211;
+  --ion-color-grey-contrast: #575555;
+  --ion-color-grey-contrast-rgb: 0,0,0;
+  --ion-color-grey-shade: #bababa;
+  --ion-color-grey-tint: #d7d7d7;
+
+  
 }

@@ -16,8 +16,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpModule, Http } from '@angular/http';
 import { CookieService } from 'ngx-cookie-service';
-import { MusicSymbolsPipe } from './pipes/music-symbols.pipe';
-import { MusicNotationPipe } from './pipes/music-notation.pipe';
 import { HelperModule } from './helper/helper.module';
 
 
