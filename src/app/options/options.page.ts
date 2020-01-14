@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class OptionsPage implements OnInit {
   public lang: string = 'en'; 
-  public notation:string = 'european'
+  public notation:string = 'natural'
   constructor(private cookie: CookieService, private translate: TranslateService) { }
 
   ionViewDidEnter(): void {

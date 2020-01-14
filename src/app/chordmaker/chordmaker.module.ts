@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SimpleChange } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -10,6 +10,7 @@ import { HttpLoaderFactory } from '../home/home.module';
 import { HttpClient } from '@angular/common/http';
 import { PipesModule } from '../pipes/pipes-module/pipes.module';
 import { HelperModule } from '../helper/helper.module';
+import { SimpleTimer } from 'ng2-simple-timer';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { HelperModule } from '../helper/helper.module';
     }),
   ],
   declarations: [ChordmakerPage],
-  entryComponents: [HelperComponent]
+  entryComponents: [HelperComponent],
+  providers: [SimpleTimer]
 })
 export class ChordmakerPageModule {}

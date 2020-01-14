@@ -32,8 +32,8 @@
 
 
     <!-- selezione della tonica -->
-    <ion-chip color="secondary" (click)="helper($event, 'helper-title.tonality', 'helper-content.tonality')">
-      <ion-label color="dark">{{'chordmaker.tonality' | translate}}</ion-label>
+    <ion-chip color="secondary" (click)="helper($event, 'helper-title.root', 'helper-content.root')">
+      <ion-label color="dark">{{'notefinder.root' | translate}}</ion-label>
       <ion-icon name="help-circle"></ion-icon>
     </ion-chip>
 
@@ -49,7 +49,7 @@
   <ion-list *ngIf="keyplace">
 
     <ion-chip color="secondary">
-      <ion-label color="dark">{{'notefinder.search_for_a_chord' | translate}}</ion-label>
+      <ion-label color="dark">{{'notefinder.filter' | translate}}</ion-label>
     </ion-chip>
     <ion-searchbar animated (ionChange)="getChords($event)"></ion-searchbar>
 

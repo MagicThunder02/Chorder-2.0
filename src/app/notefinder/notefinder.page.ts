@@ -15,7 +15,7 @@ export class NotefinderPage implements OnInit {
   public musicData: Music;
   private keyplace: string;
   private categoryplace: string;
-  public filteredChords: Chord[];
+  public filteredChords: Chord[] = [];
 
   constructor(private musicService: MusicService, private popoverCtrl: PopoverController, private translate: TranslateService, private cookie: CookieService) {
     this.musicData = <Music>{};
@@ -35,6 +35,11 @@ export class NotefinderPage implements OnInit {
       chord.names.forEach((name, index) => {
         chord.names[index] = this.keyplace + name;
       })
+    })
+
+    //se non viene effettuata una ricerca vengono mostrati tutti gli accordi
+    this.musicData.chords.forEach(chord => {
+      this.filteredChords.push(chord);
     })
   }
 
@@ -62,18 +67,13 @@ export class NotefinderPage implements OnInit {
 
     })
     this.filteredChords = tmp;
-    /* 
-        if (serVal && serVal.trim() != '') {
-          this.filteredChords = this.musicData.chords.names.filter((topic) => { //here you used == instead of =
-            return (topic.toLowerCase().indexOf(serVal.toLowerCase()) > -1);
-          })
-        } */
   }
 
   ngOnInit() {
     this.musicService.getData().subscribe((res) => {
       this.musicData = res;
       console.log(this.musicData);
+      
     })
   }
 

@@ -6,24 +6,25 @@
 
     "options.title": "Opzioni",
     "options.notation": "notazione",
-    "options.american": "Americana",
-    "options.european": "Europea",
+    "options.natural": "Naturale",
+    "options.anglosaxon": "Anglosassone",
     "options.language": "lingua",
     "options.english": "Inglese",
     "options.italian": "Italiano",
 
-    "chordmaker.select_tonality": "Selezionare la Tonalità",
-    "chordmaker.tonality": "Tonalità",
+    "chordmaker.select_root": "Selezionare la Fondamentale",
+    "chordmaker.root": "Fondamentale",
     "chordmaker.select_notes": "Selezionare le Note",
     "chordmaker.notes": "Note",
     "chordmaker.and_other": "e altri",
     "chordmaker.chords": "accordi",
     "chordmaker.aka": "Conosciuto anche come:",
     "chordmaker.subset_of:": "Sottoinsieme di:",
+    "chordmaker.play_chord": "Suona accordo",
+    "chordmaker.play_arp": "Suona arpeggio",
 
-
-    "helper-title.tonality": "Tonalità", 
-    "helper-content.tonality": "Selezionare la tonalità dell'accordo",
+    "helper-title.root": "Fondamentale", 
+    "helper-content.root": "Selezionare la fondamentale dell'accordo",
     "helper-title.notes": "Note", 
     "helper-content.notes": "Selezionare le note dell'accordo",
     "helper-title.category": "Categoria", 
@@ -31,12 +32,13 @@
 
 
     "notefinder.category":"Categoria",
+    "notefinder.root":"Fondamentale",
     "notefinder.all":"Tutti",
     "notefinder.major":"Maggiori",
     "notefinder.minor":"Minori",
     "notefinder.dominant":"Di Dominante",
     "notefinder.half-diminished":"Semidiminuiti",
     "notefinder.diminished":"Diminuiti",
-    "notefinder.search_for_a_chord":"Cerca un accordo"
+    "notefinder.filter":"Filtra"
 
 }

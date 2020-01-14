@@ -5,7 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
   name: 'musicNotation'
 })
 export class MusicNotationPipe implements PipeTransform {
-  private notation = 'european';
+  private notation = 'natural';
 
   constructor(private cookie: CookieService) {
     this.notation = this.cookie.get('notation');
@@ -13,11 +13,11 @@ export class MusicNotationPipe implements PipeTransform {
   transform(value: string, notation: string, ...args: string[]): string {
 
     switch (this.notation) {
-      case 'european':
+      case 'natural':
         return value;
         break;
 
-      case 'american':
+      case 'anglosaxon':
         value = value.toString().replace('Do', 'C');
         value = value.toString().replace('Re', 'D');
         value = value.toString().replace('Mi', 'E');

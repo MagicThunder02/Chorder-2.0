@@ -5,6 +5,10 @@ import { HelperComponent } from '../helper/helper.component';
 import { PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
+import { setTimeout } from 'timers';
+import { SimpleTimer } from 'ng2-simple-timer';
+// import { Media, MediaObject } from '@ionic-native/media/ngx';s
+
 
 // import * as MidiWriter from 'midi-writer-js';
 
@@ -23,10 +27,11 @@ export class ChordmakerPage implements OnInit {
   public components: ChordComponent[] = [];
   private actualTonality: Tonality;
   public FinalChords: string[] = [];
+  public enableButton: boolean = true;
 
 
   constructor(private musicService: MusicService, private popoverCtrl: PopoverController,
-    private translate: TranslateService, private cookie: CookieService) {
+    private translate: TranslateService, private cookie: CookieService, private st: SimpleTimer) {
     this.musicData = <Music>{};
   }
 
@@ -246,22 +251,171 @@ export class ChordmakerPage implements OnInit {
     this.FinalChords = AllChordsFound;
   }
 
-  public createSound() {
 
-/*     // Start with a new track
-    let track = new MidiWriter.Track();
 
-    // Define an instrument (optional):
-    track.addEvent(new MidiWriter.ProgramChangeEvent({ instrument: 1 }));
+  public convertString(value: string): string {
 
-    // Add some notes:
-    let note = new MidiWriter.NoteEvent({ pitch: ['C4', 'D4', 'E4'], duration: '4' });
-    track.addEvent(note);
 
-    // Generate a data URI
-    let write = new MidiWriter.Writer(track);
-    console.log(write.dataUri()); */
+
+    //traduce da europea a americana 
+    value = value.toString().replace('Do', 'c');
+    value = value.toString().replace('Re', 'd');
+    value = value.toString().replace('Mi', 'e');
+    value = value.toString().replace('Fa', 'f');
+    value = value.toString().replace('Sol', 'g');
+    value = value.toString().replace('La', 'a');
+    value = value.toString().replace('Si', 'b');
+    // console.log(value)
+
+    //da bemolle a diesis
+    value = value.toString().replace('cb', 'd#');
+    value = value.toString().replace('db', 'c#');
+    value = value.toString().replace('eb', 'd#');
+    value = value.toString().replace('fb', 'e');
+    value = value.toString().replace('gb', 'f#');
+    value = value.toString().replace('ab', 'g#');
+    value = value.toString().replace('bb', 'a#');
+    console.log(value)
+
+    //da diesis a sharp (# è un carattere speciale)
+    value = value.toString().replace('d#', 'dsharp');
+    value = value.toString().replace('c#', 'csharp');
+    value = value.toString().replace('e#', 'esharp');
+    value = value.toString().replace('f#', 'fsharp');
+    value = value.toString().replace('g#', 'gsharp');
+    value = value.toString().replace('a#', 'asharp');
+    value = value.toString().replace('b#', 'bsharp');
+    return value;
   }
+
+  public accurateTimer(time: number) {
+
+  }
+
+  public playChord(num: number) {
+    console.log('giorfio');
+
+    this.components.forEach(comp => {
+
+      if (comp.selected) {
+        //se l'ottava è selezionata suona l'ottava superiore
+        let octave: number = num;
+        if (comp.octaveSelected) {
+          octave = num + 1;
+        }
+        else {
+          octave = num;
+        }
+
+        comp.audio = new Audio();
+        let name = `assets/notes/note_${this.convertString(comp.selected)}${octave}.mp3`;
+        console.log(name)
+        comp.audio.src = name;
+        comp.audio.load();
+      }
+    })
+
+    this.components.forEach(comp => {
+      if (comp.selected) {
+        comp.audio.play()
+        comp.audio.loop = false;
+      }
+    })
+  }
+
+  public playArp(num: number) {
+
+    //arpeggia un accordo con 1 secondo di distanza
+    let octave: number = num;
+    console.log('abc')
+
+    //quando parte a suonare disabilita il bottone
+    this.enableButton = false;
+
+    this.components.forEach(comp => {
+
+      if (comp.selected) {
+
+        //se l'ottava è selezionata suona l'ottava superiore
+        if (comp.octaveSelected) {
+          octave = num + 1;
+        }
+        else {
+          octave = num;
+        }
+
+        comp.audio = new Audio();
+        let name = `assets/notes/note_${this.convertString(comp.selected)}${octave}.mp3`;
+        console.log(name)
+        comp.audio.src = name;
+        comp.audio.load();
+      }
+    })
+
+    let rit: number = 0;
+    this.st.newTimerHR('ready', 0, 300);
+    this.st.subscribe('ready', () => {
+
+      this.components.forEach(comp => {
+        if (comp.selected) {
+
+          rit += 400;
+
+
+          this.st.newTimerHR(comp.selected, rit, rit);
+
+          this.st.subscribe(comp.selected, () => {
+            comp.audio.play();
+            console.log('n:', comp.selected, rit);
+            this.st.delTimer(comp.selected);
+          });
+
+        }
+      })
+      this.st.delTimer('ready');
+    })
+    
+    //quando finisce di suonare abilita il bottone
+    this.enableButton = true;
+  }
+
+
+  /*     
+      for (let i: number = 0; i < this.components.length; i++) {
+  
+  
+        if (this.components[i].selected) {
+          console.log(this.components[i].selected)
+          this.components[i].audio = null; 
+          this.components[i].audio = new Audio();
+          let name = `assets/notes/note_${this.convertString(this.components[i].selected)}${octave}.mp3`;
+          console.log(name)
+          this.components[i].audio.src = name;
+          //  this.components[0].audio.load();
+  
+          console.log(this.components[i].selected)
+          // await this.delay(1000);
+          this.components[i].audio.play()
+          await this.delay(1000);
+        }
+      }
+  
+      console.log('cde')
+      this.components.forEach(async comp => {
+        if (comp.selected) {
+          comp.audio = new Audio();
+          let name = `assets/notes/note_${this.convertString(comp.selected)}${'4'}.mp3`;
+          console.log(name)
+          comp.audio.src = name;
+          comp.audio.load();
+          console.log(comp.selected)
+  
+          comp.audio.play()
+  
+        }
+      })
+    }
+   */
 
   ngOnInit() {
     this.musicService.getData().subscribe((res) => {

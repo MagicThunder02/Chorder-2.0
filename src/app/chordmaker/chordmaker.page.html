@@ -11,18 +11,20 @@
 
 <ion-content>
 
+  <!-- <audio controls src="assets/ScarTissue.mp3"></audio> -->
+
   <ion-list>
 
     <!-- selezione della tonica -->
-    <ion-chip color="secondary" (click)="helper($event, 'helper-title.tonality', 'helper-content.tonality')">
-      <ion-label color="dark">{{'chordmaker.select_tonality' | translate}}</ion-label>
+    <ion-chip color="secondary" (click)="helper($event, 'helper-title.root', 'helper-content.root')">
+      <ion-label color="dark">{{'chordmaker.select_root' | translate}}</ion-label>
       <ion-icon name="help-circle"></ion-icon>
     </ion-chip>
 
 
     <ion-item>
       <ion-icon [name]="'trash'" color="danger" slot="start" (click)="deleteKey()"></ion-icon>
-      <ion-label>{{'chordmaker.tonality' | translate}}</ion-label>
+      <ion-label>{{'chordmaker.root' | translate}}</ion-label>
       <ion-select [(ngModel)]="keyplace" interface="popover" (ionChange)="selectedKey($event)">
         <ion-select-option *ngFor="let tonality of musicData.tonalities" [value]="tonality.Name">
           {{tonality.Name | musicNotation }}</ion-select-option>
@@ -81,13 +83,14 @@
             <ng-container *ngFor="let chords of FinalChords; let lst = last; let idx = index; let fst = first">
               <ion-text *ngIf="!fst && idx<3">{{chords[0] | musicSymbols}}, </ion-text>
               <ion-text *ngIf="idx==3">{{chords[0] | musicSymbols}} </ion-text>
-              <ion-text *ngIf="lst">{{'chordmaker.and_other' | translate}} {{FinalChords.length-5}} {{'chordmaker.chords' | translate}}</ion-text>
+              <ion-text *ngIf="lst && FinalChords.length-5>0">{{'chordmaker.and_other' | translate}} {{FinalChords.length-5}} {{'chordmaker.chords' | translate}}</ion-text>
             </ng-container>
           </strong>
         </ng-container>
       </ion-card-content>
       <ion-card-content>
-        <ion-button (click)="createSound()">play</ion-button>
+        <ion-button (click)="playChord(3)">{{'chordmaker.play_chord' | translate}}</ion-button>
+        <ion-button (click)="playArp(3)">{{'chordmaker.play_arp' | translate}}</ion-button>
       </ion-card-content>
     </ion-card>
 

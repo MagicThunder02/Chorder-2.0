@@ -17,6 +17,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpModule, Http } from '@angular/http';
 import { CookieService } from 'ngx-cookie-service';
 import { HelperModule } from './helper/helper.module';
+// import { Media, MediaObject } from '@ionic-native/media/ngx';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -47,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StatusBar,
     SplashScreen,
     MusicService,
+    // Media,
     CookieService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

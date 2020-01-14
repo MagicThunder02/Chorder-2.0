@@ -19,14 +19,14 @@
 
       <ion-item>
         <ion-icon slot="end" [src]="'/assets/flags/usa.svg'"></ion-icon>
-        <ion-label>{{ 'options.american' | translate }}</ion-label>
-        <ion-radio slot="start" value="american" (click)="notationClick('american')" [checked]="notation === 'american'"></ion-radio>
+        <ion-label>{{ 'options.anglosaxon' | translate }}</ion-label>
+        <ion-radio slot="start" value="anglosaxon" (click)="notationClick('anglosaxon')" [checked]="notation === 'anglosaxon'"></ion-radio>
       </ion-item>
 
       <ion-item>
         <ion-icon slot="end" [src]="'/assets/flags/eu.svg'"></ion-icon>
-        <ion-label>{{ 'options.european' | translate }}</ion-label>
-        <ion-radio slot="start" value="european" (click)="notationClick('european')" [checked]="notation === 'european'"></ion-radio>
+        <ion-label>{{ 'options.natural' | translate }}</ion-label>
+        <ion-radio slot="start" value="natural" (click)="notationClick('natural')" [checked]="notation === 'natural'"></ion-radio>
       </ion-item>
 
     </ion-radio-group>
