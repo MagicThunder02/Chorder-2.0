@@ -118,7 +118,7 @@ export class PlayerComponent implements OnInit {
     })
 
     //faccio sort su entrambi gli array 
-    
+
     firstOctave.sort();
     //finchè è presente una A o B la sposto al fondo
     while (firstOctave[0].includes('A') || firstOctave[0].includes('B')) {
@@ -128,9 +128,11 @@ export class PlayerComponent implements OnInit {
     console.table('f', firstOctave);
 
     secondOctave.sort();
-    while (secondOctave[0].includes('A') || secondOctave[0].includes('B')) {
-      secondOctave.push(secondOctave[0])
-      secondOctave.shift();
+    if (secondOctave[0]) {
+      while (secondOctave[0].includes('A') || secondOctave[0].includes('B')) {
+        secondOctave.push(secondOctave[0])
+        secondOctave.shift();
+      }
     }
     console.table('s', secondOctave);
 
@@ -194,8 +196,7 @@ export class PlayerComponent implements OnInit {
       if (time >= stopat) {
         //non suona più 
 
-        console.log('stop', time)
-
+        // console.log('stop', time)
         Tone.Transport.stop();
         this.sequence.removeAll();
 
@@ -209,7 +210,7 @@ export class PlayerComponent implements OnInit {
     this.sequence.start();
 
     this.start = Tone.Transport.now();
-    console.log('s', this.start)
+    // console.log('s', this.start)
     Tone.Transport.start();
   }
 
