@@ -20,8 +20,6 @@
     "chordmaker.chords": "accordi",
     "chordmaker.aka": "Conosciuto anche come:",
     "chordmaker.subset_of:": "Sottoinsieme di:",
-    "chordmaker.play_chord": "Suona accordo",
-    "chordmaker.play_arp": "Suona arpeggio",
 
     "helper-title.root": "Fondamentale", 
     "helper-content.root": "Selezionare la fondamentale dell'accordo",
@@ -39,6 +37,11 @@
     "notefinder.dominant":"Di Dominante",
     "notefinder.half-diminished":"Semidiminuiti",
     "notefinder.diminished":"Diminuiti",
-    "notefinder.filter":"Filtra"
+    "notefinder.filter":"Filtra",
+    "notefinder.play_chord": "Suona accordo",
+    "notefinder.play_arp": "Suona arpeggio",
+
+    "player.play_chord": "Suona accordo",
+    "player.play_arp": "Suona arpeggio"
 
 }

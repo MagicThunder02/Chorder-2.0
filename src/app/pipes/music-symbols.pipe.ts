@@ -12,6 +12,9 @@ export class MusicSymbolsPipe implements PipeTransform {
 
     //bemolle
     value = value.toString().replace(/b/g, '\u266D');
+
+    // | to ' '
+    value = value.toString().replace('|', ' ');
     
     return value;
   }

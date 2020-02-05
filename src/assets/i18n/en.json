@@ -20,8 +20,6 @@
     "chordmaker.chords": "chords",
     "chordmaker.aka": "Also known as:",
     "chordmaker.subset_of:": "Subset of:",
-    "chordmaker.play_chord": "Play chord",
-    "chordmaker.play_arp": "Play arpeggio",
 
     "helper-title.root": "Fundamental", 
     "helper-content.root": "Select the root of the chord",
@@ -38,5 +36,10 @@
     "notefinder.dominant":"Dominants",
     "notefinder.half-diminished":"Half-diminished",
     "notefinder.diminished":"Diminished",
-    "notefinder.filter":"Filter"
+    "notefinder.filter":"Filter",
+    "notefinder.play_chord": "Play chord",
+    "notefinder.play_arp": "Play arpeggio",
+
+    "player.play_chord": "Play chord",
+    "player.play_arp": "Play arpeggio"
 }

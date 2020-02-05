@@ -16,7 +16,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpModule, Http } from '@angular/http';
 import { CookieService } from 'ngx-cookie-service';
-import { HelperModule } from './helper/helper.module';
+import { HelperModule } from './utilities/utilities.module';
 // import { Media, MediaObject } from '@ionic-native/media/ngx';
 
 

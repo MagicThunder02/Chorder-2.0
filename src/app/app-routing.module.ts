@@ -9,19 +9,19 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'notefinder',
-    loadChildren: () => import('./notefinder/notefinder.module').then(m => m.NotefinderModule)
+    loadChildren: () => import('./pages/notefinder/notefinder.module').then(m => m.NotefinderModule)
   },
   {
     path: 'options',
-    loadChildren: () => import('./options/options.module').then( m => m.OptionsPageModule)
+    loadChildren: () => import('./pages/options/options.module').then( m => m.OptionsPageModule)
   },
   {
     path: 'chordmaker',
-    loadChildren: () => import('./chordmaker/chordmaker.module').then( m => m.ChordmakerPageModule)
+    loadChildren: () => import('./pages/chordmaker/chordmaker.module').then( m => m.ChordmakerPageModule)
   }
 ];
 

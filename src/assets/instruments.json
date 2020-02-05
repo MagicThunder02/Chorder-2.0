@@ -1,0 +1,1454 @@
+{
+ "instruments": {
+  "bass-electric": {
+   "name": "bass-electric",
+   "notes": [
+    {
+     "name": "As2"
+    },
+    {
+     "name": "As3"
+    },
+    {
+     "name": "As4"
+    },
+    {
+     "name": "As5"
+    },
+    {
+     "name": "Cs2"
+    },
+    {
+     "name": "Cs3"
+    },
+    {
+     "name": "Cs4"
+    },
+    {
+     "name": "Cs5"
+    },
+    {
+     "name": "Cs6"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "E4"
+    },
+    {
+     "name": "E5"
+    },
+    {
+     "name": "G2"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G4"
+    },
+    {
+     "name": "G5"
+    }
+   ]
+  },
+  "bassoon": {
+   "name": "bassoon",
+   "notes": [
+    {
+     "name": "A1"
+    },
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A3"
+    },
+    {
+     "name": "C2"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "G1"
+    },
+    {
+     "name": "G2"
+    },
+    {
+     "name": "G3"
+    }
+   ]
+  },
+  "cello": {
+   "name": "cello",
+   "notes": [
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "As2"
+    },
+    {
+     "name": "As3"
+    },
+    {
+     "name": "As4"
+    },
+    {
+     "name": "B2"
+    },
+    {
+     "name": "B3"
+    },
+    {
+     "name": "B4"
+    },
+    {
+     "name": "C2"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "Cs3"
+    },
+    {
+     "name": "Cs4"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "Ds2"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "Ds4"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "E4"
+    },
+    {
+     "name": "F2 v2"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F3"
+    },
+    {
+     "name": "F4"
+    },
+    {
+     "name": "Fs3"
+    },
+    {
+     "name": "Fs4"
+    },
+    {
+     "name": "G2 v2"
+    },
+    {
+     "name": "G2"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G4"
+    },
+    {
+     "name": "Gs2"
+    },
+    {
+     "name": "Gs3"
+    },
+    {
+     "name": "Gs4"
+    }
+   ]
+  },
+  "clarinet": {
+   "name": "clarinet",
+   "notes": [
+    {
+     "name": "As2"
+    },
+    {
+     "name": "As3"
+    },
+    {
+     "name": "As4"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "D5"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F3"
+    },
+    {
+     "name": "F4"
+    },
+    {
+     "name": "Fs5"
+    }
+   ]
+  },
+  "contrabass": {
+   "name": "contrabass",
+   "notes": [
+    {
+     "name": "A1"
+    },
+    {
+     "name": "As0"
+    },
+    {
+     "name": "B2"
+    },
+    {
+     "name": "C1"
+    },
+    {
+     "name": "Cs2"
+    },
+    {
+     "name": "D1"
+    },
+    {
+     "name": "E1"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "Fs0"
+    },
+    {
+     "name": "Fs1"
+    },
+    {
+     "name": "G0"
+    },
+    {
+     "name": "Gs1"
+    },
+    {
+     "name": "Gs2"
+    }
+   ]
+  },
+  "flute": {
+   "name": "flute",
+   "notes": [
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "A5"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "C6"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "E4"
+    },
+    {
+     "name": "E5"
+    }
+   ]
+  },
+  "french-horn": {
+   "name": "french-horn",
+   "notes": [
+    {
+     "name": "A0"
+    },
+    {
+     "name": "A2"
+    },
+    {
+     "name": "C1"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "Ds1"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F4"
+    },
+    {
+     "name": "G1"
+    }
+   ]
+  },
+  "guitar-acoustic": {
+   "name": "guitar-acoustic",
+   "notes": [
+    {
+     "name": "A1"
+    },
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A3"
+    },
+    {
+     "name": "As1"
+    },
+    {
+     "name": "As2"
+    },
+    {
+     "name": "As3"
+    },
+    {
+     "name": "B1"
+    },
+    {
+     "name": "B2"
+    },
+    {
+     "name": "B3"
+    },
+    {
+     "name": "C2"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "Cs2"
+    },
+    {
+     "name": "Cs3"
+    },
+    {
+     "name": "Cs4"
+    },
+    {
+     "name": "D1"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "Ds1"
+    },
+    {
+     "name": "Ds2"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "E1"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "F1"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F3"
+    },
+    {
+     "name": "Fs1"
+    },
+    {
+     "name": "Fs2"
+    },
+    {
+     "name": "Fs3"
+    },
+    {
+     "name": "G1"
+    },
+    {
+     "name": "G2"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "Gs1"
+    },
+    {
+     "name": "Gs2"
+    },
+    {
+     "name": "Gs3"
+    }
+   ]
+  },
+  "guitar-electric": {
+   "name": "guitar-electric",
+   "notes": [
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "A5"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "C6"
+    },
+    {
+     "name": "Cs2"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "Ds4"
+    },
+    {
+     "name": "Ds5"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "Fs2"
+    },
+    {
+     "name": "Fs3"
+    },
+    {
+     "name": "Fs4"
+    },
+    {
+     "name": "Fs5"
+    }
+   ]
+  },
+  "guitar-nylon": {
+   "name": "guitar-nylon",
+   "notes": [
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "A5"
+    },
+    {
+     "name": "As5"
+    },
+    {
+     "name": "B1"
+    },
+    {
+     "name": "B2"
+    },
+    {
+     "name": "B3"
+    },
+    {
+     "name": "B4"
+    },
+    {
+     "name": "Cs3"
+    },
+    {
+     "name": "Cs4"
+    },
+    {
+     "name": "Cs5"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "D5"
+    },
+    {
+     "name": "Ds4"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "E4"
+    },
+    {
+     "name": "E5"
+    },
+    {
+     "name": "Fs2"
+    },
+    {
+     "name": "Fs3"
+    },
+    {
+     "name": "Fs4"
+    },
+    {
+     "name": "Fs5"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G5"
+    },
+    {
+     "name": "Gs2"
+    },
+    {
+     "name": "Gs4"
+    },
+    {
+     "name": "Gs5"
+    }
+   ]
+  },
+  "harmonium": {
+   "name": "harmonium",
+   "notes": [
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "As2"
+    },
+    {
+     "name": "As3"
+    },
+    {
+     "name": "As4"
+    },
+    {
+     "name": "B2"
+    },
+    {
+     "name": "B3"
+    },
+    {
+     "name": "B4"
+    },
+    {
+     "name": "C2"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "Cs2"
+    },
+    {
+     "name": "Cs3"
+    },
+    {
+     "name": "Cs4"
+    },
+    {
+     "name": "Cs5"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "D5"
+    },
+    {
+     "name": "Ds2"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "Ds4"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "E4"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F3"
+    },
+    {
+     "name": "F4"
+    },
+    {
+     "name": "Fs2"
+    },
+    {
+     "name": "Fs3"
+    },
+    {
+     "name": "G2"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G4"
+    },
+    {
+     "name": "Gs2"
+    },
+    {
+     "name": "Gs3"
+    },
+    {
+     "name": "Gs4"
+    }
+   ]
+  },
+  "harp": {
+   "name": "harp",
+   "notes": [
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "A6"
+    },
+    {
+     "name": "B1"
+    },
+    {
+     "name": "B3"
+    },
+    {
+     "name": "B5"
+    },
+    {
+     "name": "B6"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "D6"
+    },
+    {
+     "name": "D7"
+    },
+    {
+     "name": "E1"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "E5"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F4"
+    },
+    {
+     "name": "F6"
+    },
+    {
+     "name": "F7"
+    },
+    {
+     "name": "G1"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G5"
+    }
+   ]
+  },
+  "organ": {
+   "name": "organ",
+   "notes": [
+    {
+     "name": "A1"
+    },
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "A5"
+    },
+    {
+     "name": "C1"
+    },
+    {
+     "name": "C2"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "C6"
+    },
+    {
+     "name": "Ds1"
+    },
+    {
+     "name": "Ds2"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "Ds4"
+    },
+    {
+     "name": "Ds5"
+    },
+    {
+     "name": "Fs1"
+    },
+    {
+     "name": "Fs2"
+    },
+    {
+     "name": "Fs3"
+    },
+    {
+     "name": "Fs4"
+    },
+    {
+     "name": "Fs5"
+    }
+   ]
+  },
+  "piano": {
+   "name": "piano",
+   "notes": [
+    {
+     "name": "A0"
+    },
+    {
+     "name": "A1"
+    },
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "A5"
+    },
+    {
+     "name": "A6"
+    },
+    {
+     "name": "As0"
+    },
+    {
+     "name": "As1"
+    },
+    {
+     "name": "As2"
+    },
+    {
+     "name": "As3"
+    },
+    {
+     "name": "As4"
+    },
+    {
+     "name": "As5"
+    },
+    {
+     "name": "As6"
+    },
+    {
+     "name": "B0"
+    },
+    {
+     "name": "B1"
+    },
+    {
+     "name": "B2"
+    },
+    {
+     "name": "B3"
+    },
+    {
+     "name": "B4"
+    },
+    {
+     "name": "B5"
+    },
+    {
+     "name": "B6"
+    },
+    {
+     "name": "C0"
+    },
+    {
+     "name": "C1"
+    },
+    {
+     "name": "C2"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "C6"
+    },
+    {
+     "name": "C7"
+    },
+    {
+     "name": "Cs0"
+    },
+    {
+     "name": "Cs1"
+    },
+    {
+     "name": "Cs2"
+    },
+    {
+     "name": "Cs3"
+    },
+    {
+     "name": "Cs4"
+    },
+    {
+     "name": "Cs5"
+    },
+    {
+     "name": "Cs6"
+    },
+    {
+     "name": "D0"
+    },
+    {
+     "name": "D1"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "D5"
+    },
+    {
+     "name": "D6"
+    },
+    {
+     "name": "Ds0"
+    },
+    {
+     "name": "Ds1"
+    },
+    {
+     "name": "Ds2"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "Ds4"
+    },
+    {
+     "name": "Ds5"
+    },
+    {
+     "name": "Ds6"
+    },
+    {
+     "name": "E0"
+    },
+    {
+     "name": "E1"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "E4"
+    },
+    {
+     "name": "E5"
+    },
+    {
+     "name": "E6"
+    },
+    {
+     "name": "F0"
+    },
+    {
+     "name": "F1"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F3"
+    },
+    {
+     "name": "F4"
+    },
+    {
+     "name": "F5"
+    },
+    {
+     "name": "F6"
+    },
+    {
+     "name": "Fs0"
+    },
+    {
+     "name": "Fs1"
+    },
+    {
+     "name": "Fs2"
+    },
+    {
+     "name": "Fs3"
+    },
+    {
+     "name": "Fs4"
+    },
+    {
+     "name": "Fs5"
+    },
+    {
+     "name": "Fs6"
+    },
+    {
+     "name": "G0"
+    },
+    {
+     "name": "G1"
+    },
+    {
+     "name": "G2"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G4"
+    },
+    {
+     "name": "G5"
+    },
+    {
+     "name": "G6"
+    },
+    {
+     "name": "Gs0"
+    },
+    {
+     "name": "Gs1"
+    },
+    {
+     "name": "Gs2"
+    },
+    {
+     "name": "Gs3"
+    },
+    {
+     "name": "Gs4"
+    },
+    {
+     "name": "Gs5"
+    },
+    {
+     "name": "Gs6"
+    }
+   ]
+  },
+  "saxophone": {
+   "name": "saxophone",
+   "notes": [
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "As2"
+    },
+    {
+     "name": "As3"
+    },
+    {
+     "name": "B2"
+    },
+    {
+     "name": "B3"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "Cs2"
+    },
+    {
+     "name": "Cs3"
+    },
+    {
+     "name": "Cs4"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "Ds2"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "Ds4"
+    },
+    {
+     "name": "E2"
+    },
+    {
+     "name": "E3"
+    },
+    {
+     "name": "E4"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F3"
+    },
+    {
+     "name": "F4"
+    },
+    {
+     "name": "Fs2"
+    },
+    {
+     "name": "Fs3"
+    },
+    {
+     "name": "Fs4"
+    },
+    {
+     "name": "G2"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G4"
+    },
+    {
+     "name": "Gs2"
+    },
+    {
+     "name": "Gs3"
+    },
+    {
+     "name": "Gs4"
+    }
+   ]
+  },
+  "trombone": {
+   "name": "trombone",
+   "notes": [
+    {
+     "name": "As0"
+    },
+    {
+     "name": "As1"
+    },
+    {
+     "name": "As2"
+    },
+    {
+     "name": "C2"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "Cs1"
+    },
+    {
+     "name": "Cs3"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "Ds1"
+    },
+    {
+     "name": "Ds2"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "F1"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F3"
+    },
+    {
+     "name": "Gs1"
+    },
+    {
+     "name": "Gs2"
+    }
+   ]
+  },
+  "trumpet": {
+   "name": "trumpet",
+   "notes": [
+    {
+     "name": "A2"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "As3"
+    },
+    {
+     "name": "C3"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "D4"
+    },
+    {
+     "name": "Ds3"
+    },
+    {
+     "name": "F2"
+    },
+    {
+     "name": "F3"
+    },
+    {
+     "name": "F4"
+    },
+    {
+     "name": "G3"
+    }
+   ]
+  },
+  "tuba": {
+   "name": "tuba",
+   "notes": [
+    {
+     "name": "As0"
+    },
+    {
+     "name": "As1"
+    },
+    {
+     "name": "As2"
+    },
+    {
+     "name": "D2"
+    },
+    {
+     "name": "D3"
+    },
+    {
+     "name": "Ds1"
+    },
+    {
+     "name": "F0"
+    },
+    {
+     "name": "F1"
+    },
+    {
+     "name": "F2"
+    }
+   ]
+  },
+  "violin": {
+   "name": "violin",
+   "notes": [
+    {
+     "name": "A3"
+    },
+    {
+     "name": "A4"
+    },
+    {
+     "name": "A5"
+    },
+    {
+     "name": "A6"
+    },
+    {
+     "name": "C4"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "C6"
+    },
+    {
+     "name": "C7"
+    },
+    {
+     "name": "E4"
+    },
+    {
+     "name": "E5"
+    },
+    {
+     "name": "E6"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G4"
+    },
+    {
+     "name": "G5"
+    },
+    {
+     "name": "G6"
+    }
+   ]
+  },
+  "xylophone": {
+   "name": "xylophone",
+   "notes": [
+    {
+     "name": "C4"
+    },
+    {
+     "name": "C5"
+    },
+    {
+     "name": "C6"
+    },
+    {
+     "name": "C7"
+    },
+    {
+     "name": "G3"
+    },
+    {
+     "name": "G4"
+    },
+    {
+     "name": "G5"
+    },
+    {
+     "name": "G6"
+    }
+   ]
+  }
+ }
+}
