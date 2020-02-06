@@ -18,19 +18,27 @@
       </ion-list-header>
 
       <ion-item>
-        <ion-icon slot="end" [src]="'/assets/flags/usa.svg'"></ion-icon>
+        <ion-avatar slot="end">
+          <img src="/assets/flags/usa.svg">
+        </ion-avatar>
         <ion-label>{{ 'options.anglosaxon' | translate }}</ion-label>
-        <ion-radio slot="start" value="anglosaxon" (click)="notationClick('anglosaxon')" [checked]="notation === 'anglosaxon'"></ion-radio>
+        <ion-radio slot="start" value="anglosaxon" (click)="notationClick('anglosaxon')"
+          [checked]="notation === 'anglosaxon'"></ion-radio>
       </ion-item>
 
       <ion-item>
-        <ion-icon slot="end" [src]="'/assets/flags/eu.svg'"></ion-icon>
+        <ion-avatar slot="end">
+          <img src="/assets/flags/eu.svg">
+        </ion-avatar>
         <ion-label>{{ 'options.natural' | translate }}</ion-label>
-        <ion-radio slot="start" value="natural" (click)="notationClick('natural')" [checked]="notation === 'natural'"></ion-radio>
+        <ion-radio slot="start" value="natural" (click)="notationClick('natural')" [checked]="notation === 'natural'">
+        </ion-radio>
       </ion-item>
 
     </ion-radio-group>
+  </ion-list>
 
+  <ion-list>
     <ion-radio-group>
 
       <ion-list-header>
@@ -38,15 +46,36 @@
       </ion-list-header>
 
       <ion-item>
-        <ion-icon slot="end" [src]="'/assets/flags/england.svg'"></ion-icon>
+        <ion-avatar slot="end">
+          <img src="/assets/flags/england.svg">
+        </ion-avatar>
         <ion-label>{{ 'options.english' | translate }} </ion-label>
         <ion-radio slot="start" value="english" (click)="languageClick('en')" [checked]="lang === 'en'"></ion-radio>
       </ion-item>
 
       <ion-item>
-         <ion-icon slot="end" [src]="'/assets/flags/italy.svg'"></ion-icon>
-         <ion-label>{{ 'options.italian' | translate }}</ion-label> 
-        <ion-radio slot="start" value="italian" (click)="languageClick('it')" [checked]="lang === 'it'" ></ion-radio>
+        <ion-avatar slot="end">
+          <img src="/assets/flags/italy.svg">
+        </ion-avatar>
+        <ion-label>{{ 'options.italian' | translate }}</ion-label>
+        <ion-radio slot="start" value="italian" (click)="languageClick('it')" [checked]="lang === 'it'"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-radio-group (ionChange)="radioInstrument($event)">
+
+      <ion-list-header>
+        <ion-label>{{ 'options.instrument' | translate }}</ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let myInstrument of myInstruments">
+        <ion-avatar slot="end">
+          <img [src]="'/assets/icon/'+myInstrument.name+'.jpg'">
+        </ion-avatar>
+        <ion-label>{{'instrument.' + myInstrument.name | translate | titlecase}}</ion-label>
+        <ion-radio slot="start" [value]="myInstrument.name" [checked]="instrument === myInstrument.name"></ion-radio>
       </ion-item>
 
     </ion-radio-group>

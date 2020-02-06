@@ -89,7 +89,6 @@ export class NotefinderPage implements OnInit {
         })
       }
     })
-    console.log(retArray)
     return retArray;
   }
 

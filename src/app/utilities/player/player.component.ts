@@ -218,7 +218,8 @@ export class PlayerComponent implements OnInit {
     this.instruments.getData().subscribe((res) => {
       this.myinstruments = res;
       console.log(this.myinstruments);
-      this.loadSamples(this.myinstruments.instruments['guitar-acoustic']);
+      let tmpInst = this.cookie.get('instrument');
+      this.loadSamples(this.myinstruments.instruments[tmpInst]);
     })
 
   }

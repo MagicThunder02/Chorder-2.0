@@ -3,6 +3,7 @@
     "home.subtitle": "Il supporto definitivo del musicista",
     "home.pages": "Pagine",
     "home.options": "Opzioni",
+    "home.instrument":"Strumento",
 
     "options.title": "Opzioni",
     "options.notation": "notazione",
@@ -11,6 +12,7 @@
     "options.language": "lingua",
     "options.english": "Inglese",
     "options.italian": "Italiano",
+    "options.instrument": "Strumento",
 
     "chordmaker.select_root": "Selezionare la Fondamentale",
     "chordmaker.root": "Fondamentale",
@@ -28,7 +30,6 @@
     "helper-title.category": "Categoria", 
     "helper-content.category":"Selezionare la categoria di accordi che si vuole visualizzare",
 
-
     "notefinder.category":"Categoria",
     "notefinder.root":"Fondamentale",
     "notefinder.all":"Tutti",
@@ -40,6 +41,16 @@
     "notefinder.filter":"Filtra",
     "notefinder.play_chord": "Suona accordo",
     "notefinder.play_arp": "Suona arpeggio",
+
+    "instrument.title": "Stumento",
+    "instrument.cello": "Violoncello",
+    "instrument.contrabass": "Contrabbasso",
+    "instrument.guitar-acoustic": "Chitarra Acustica",
+    "instrument.guitar-nylon": "Chitarra Classica",
+    "instrument.harmonium": "Armonica",
+    "instrument.piano": "Pianoforte",
+    "instrument.saxophone": "Sassofono",
+
 
     "player.play_chord": "Suona accordo",
     "player.play_arp": "Suona arpeggio"

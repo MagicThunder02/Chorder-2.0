@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'chordmaker',
     loadChildren: () => import('./pages/chordmaker/chordmaker.module').then( m => m.ChordmakerPageModule)
+  },
+  {
+    path: 'instrument',
+    loadChildren: () => import('./pages/instrument/instrument.module').then( m => m.InstrumentPageModule)
   }
 ];
 

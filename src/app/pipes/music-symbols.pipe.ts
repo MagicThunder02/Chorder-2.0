@@ -15,7 +15,7 @@ export class MusicSymbolsPipe implements PipeTransform {
 
     // | to ' '
     value = value.toString().replace('|', ' ');
-    
+
     return value;
   }
 

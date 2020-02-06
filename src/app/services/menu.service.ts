@@ -14,12 +14,17 @@ export class MenuService {
     {
       title: 'ChordMaker',
       url: '/chordmaker',
-      icon: 'musical-notes'
+      icon: 'recording'
     },
     {
       title: 'Notefinder',
       url: '/notefinder',
-      icon: 'list'
+      icon: 'search'
+    },
+    {
+      title: 'home.instrument',
+      url: '/instrument',
+      icon: 'musical-notes'
     },
     {
       title: 'home.options',
