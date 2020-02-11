@@ -29,6 +29,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     InstrumentPageRoutingModule
   ],
-  declarations: [InstrumentPage]
+  declarations: [InstrumentPage],
+  // providers: [ScreenOrientation]
 })
 export class InstrumentPageModule {}

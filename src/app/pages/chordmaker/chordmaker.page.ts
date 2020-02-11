@@ -30,7 +30,7 @@ export class ChordmakerPage implements OnInit {
 
 
   constructor(private musicService: MusicService, private popoverCtrl: PopoverController,
-    private translate: TranslateService, private cookie: CookieService, private st: SimpleTimer) {
+    private translate: TranslateService, private cookie: CookieService) {
     this.musicData = <Music>{};
   }
 
