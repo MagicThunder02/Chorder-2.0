@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Metronome
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Time Signature</ion-label>
+    <ion-select [(ngModel)]="metre" interface="popover" (ionChange)="readMetre()">
+      <ion-select-option value="2/4">2/4</ion-select-option>
+      <ion-select-option value="3/4">3/4</ion-select-option>
+      <ion-select-option value="4/4">4/4</ion-select-option>
+      <ion-select-option value="5/4">5/4</ion-select-option>
+      <ion-select-option value="7/4">7/8</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-grid>
+
+    <ion-row class="ion-align-items-center">
+      <ion-col class="ion-text-end">
+        <ion-button shape="round" (click)="minusBpm()">
+          <ion-icon name="remove"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <ion-text>
+          <h1>{{tempo}} bpm</h1>
+        </ion-text>
+      </ion-col>
+      <ion-col class="ion-text-start">
+        <ion-button shape="round" (click)="plusBpm()">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-range [(ngModel)]="tempo" min="30" max="300" color="secondary" (ionChange)="updateTempo()">
+          <ion-label slot="start">30</ion-label>
+          <ion-label slot="end">300</ion-label>
+        </ion-range>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="ion-text-center">
+        <ion-button shape="round" (click)="play()">
+          <ion-icon name="play"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <ion-button shape="round" (click)="stop()">
+          <ion-icon name="square"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

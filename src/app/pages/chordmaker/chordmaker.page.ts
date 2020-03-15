@@ -5,7 +5,6 @@ import { HelperComponent } from '../../utilities/helper/helper.component';
 import { PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
-import { SimpleTimer } from 'ng2-simple-timer';
 
 // import { Media, MediaObject } from '@ionic-native/media/ngx';s
 

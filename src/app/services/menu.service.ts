@@ -22,6 +22,11 @@ export class MenuService {
       icon: 'search'
     },
     {
+      title: 'home.metronome',
+      url: '/metronome',
+      icon: 'stopwatch'
+    },
+    {
       title: 'home.instrument',
       url: '/instrument',
       icon: 'musical-notes'
@@ -32,6 +37,6 @@ export class MenuService {
       icon: 'cog'
     }
   ];
-  
+
   constructor() { }
 }

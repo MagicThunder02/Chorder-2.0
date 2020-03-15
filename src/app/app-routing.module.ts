@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'instrument',
     loadChildren: () => import('./pages/instrument/instrument.module').then( m => m.InstrumentPageModule)
+  },
+  {
+    path: 'metronome',
+    loadChildren: () => import('./pages/metronome/metronome.module').then( m => m.MetronomePageModule)
   }
 ];
 
