@@ -1,78 +1,133 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import * as Tone from "tone";
+import { TranslateService } from '@ngx-translate/core';
+import { ViewPortService } from 'src/app/services/viewport.service';
+import { Subscription } from 'rxjs';
+
+export interface circle {
+  color: string;
+  index: number;
+}
 
 @Component({
   selector: 'app-metronome',
   templateUrl: './metronome.page.html',
   styleUrls: ['./metronome.page.scss'],
 })
+
 export class MetronomePage implements OnInit {
 
-  //create a synth and connect it to the master output (your speakers)
-  public synth: any;
-  private tempo: number = 120;
-  private pulse: number = 0;
-  public metre: string = "4/4";
-  private metreArray: string[] = ["C4", "C4", "C4", "C5"];
+  private viewPortSubscription: Subscription;
+  public orientation: string = '';
 
-  constructor() {
+  public beats: number[] = [];
+  public selectedBeat: number = 4;
+  public bpm: number = 120;
+  public circles: circle[] = [];
+  public myTimer: any;
+  public counter: number = 0;
+  public color: string = '';
+  ;
 
+  constructor(
+    private viewPort: ViewPortService,
+  ) { }
+
+  ionViewWillEnter() {
   }
 
-  public play(): void {
-    Tone.Transport.stop();
-    Tone.Transport.start();
-  }
-
-  public updateTempo(bpm: number): void {
-    Tone.Transport.bpm.value = this.tempo;
-  }
-
-  public stop(): void {
-    Tone.Transport.stop();
-  }
-
-  private readMetre() {
-    this.metreArray = [];
-    this.metreArray.push("C5");
-    for (let i = 0; i < (+this.metre[0] - 1); i++) {
-      this.metreArray.push("C4");
+  beatChange() {
+    this.circles = [];
+    console.log(this.selectedBeat);
+    for (let i = 0; i < this.selectedBeat; i++) {
+      this.circles.push({ color: 'gray', index: i })
     }
   }
 
-  public plusBpm() {
-    if (this.tempo < 300) {
-      this.tempo += 1;
+  addBpm() {
+    if (this.bpm > 30 && this.bpm < 300)
+      this.bpm += 1;
+  }
+  removeBpm() {
+    if (this.bpm > 30 && this.bpm < 300)
+      this.bpm -= 1;
+  }
+
+  tick() {
+
+    if (this.myTimer) {
+      clearInterval(this.myTimer);
+    }
+
+    this.myTimer = setInterval(() => {
+      console.log('tick:', this.counter)
+      this.setColor();
+
+      this.counter++;
+
+      if (this.counter > this.selectedBeat - 1) {
+        this.counter = 0;
+      }
+
+    }, (60 / this.bpm) * 1000);
+  }
+
+  setColor() {
+    this.circles.forEach(circle => {
+      circle.color = 'grey'
+    })
+
+    if (this.counter == 0) {
+      this.circles[this.counter].color = 'red';
+    }
+    else {
+      this.circles[this.counter].color = 'yellow';
+    }
+
+    console.log(this.circles[this.counter].color)
+  }
+
+  runMetronome(type) {
+    console.log('run', this.bpm, type)
+    this.counter = 0;
+
+    switch (type) {
+      case "start":
+      case "change":
+        console.log('start', this.counter)
+        this.tick()
+        break;
+
+      case "stop":
+        console.log('stop');
+        clearInterval(this.myTimer);
+        this.circles.forEach(circle => {
+          circle.color = 'grey'
+        })
+        this.myTimer = '';
+        break;
     }
   }
 
-  public minusBpm() {
-    if (this.tempo > 30) {
-      this.tempo -= 1;
-    }
-  }
 
 
   ngOnInit() {
-    this.synth = new Tone.Synth().toMaster();
+    this.viewPortSubscription = this.viewPort.viewPortObserver.subscribe(info => {
+      if (info.orientation == 'portrait') {
+        this.orientation = 'vertical';
 
-    this.readMetre()
-    Tone.Transport.scheduleRepeat(time => {
-
-      this.synth.triggerAttackRelease(this.metreArray[this.pulse], "16n", time);
-
-      this.pulse += 1;
-
-
-      if (this.pulse >= this.metreArray.length) {
-        this.pulse = 0;
+      } else {
+        this.orientation = 'horizontal';
       }
+      console.log(this.orientation)
+    });
 
+    //fill beats array
+    for (let i = 1; i <= 12; i++) {
+      this.beats.push(i)
+    }
+    this.beatChange();
 
-    }, "4n");
-
-    //default tempo
-    Tone.Transport.bpm.value = this.tempo;
   }
 
 }

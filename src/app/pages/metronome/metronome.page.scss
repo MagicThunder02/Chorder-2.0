@@ -1,0 +1,82 @@
+ion-content {
+    height: 100%;
+}
+
+ion-fab-button {
+    width: 7vmin;
+    height: 7vmin;
+    }
+
+ion-grid {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    border: 2px solid red;
+}
+
+ion-row {
+    // height: 100%;
+    flex-grow: 1;
+    border: 2px solid green;
+}
+
+ion-row {
+    // height: 100%;
+    border: 2px solid blue;
+}
+ 
+.circle {
+    height: 30px;
+    width: 30px;
+    // background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    }
+
+.test {
+    border: green;
+}
+
+.pulse {
+    // background-color: green;
+    -webkit-animation-name: pulse;
+    animation-name: pulse;
+    // -webkit-animation-duration: 2s;
+    // animation-duration: 2s;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    }
+    @-webkit-keyframes pulse {
+    0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    }
+    50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+    transform: scale3d(1.5, 1.5, 1.5);
+    }
+    100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    }
+    }
+    @keyframes pulse {
+    0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    }
+    50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+    transform: scale3d(1.5, 1.5, 1.5);
+    }
+    100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    }
+    } 
+
+.void {
+
+}

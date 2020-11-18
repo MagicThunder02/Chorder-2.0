@@ -4,17 +4,21 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MetronomePageRoutingModule } from './metronome-routing.module';
-
 import { MetronomePage } from './metronome.page';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MetronomePageRoutingModule
+    RouterModule.forChild([
+      {
+        path: '',
+        component: MetronomePage
+      }
+    ]),
   ],
   declarations: [MetronomePage]
 })
-export class MetronomePageModule {}
+export class MetronomePageModule { }

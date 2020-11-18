@@ -2,7 +2,6 @@ import { NgModule, SimpleChange } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ChordmakerPageRoutingModule } from './chordmaker-routing.module';
 import { ChordmakerPage } from './chordmaker.page';
 import { HelperComponent } from '../../utilities/helper/helper.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -11,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { PipesModule } from '../../pipes/pipes-module/pipes.module';
 import { HelperModule } from '../../utilities/utilities.module';
 import { SimpleTimer } from 'ng2-simple-timer';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -18,9 +18,14 @@ import { SimpleTimer } from 'ng2-simple-timer';
     CommonModule,
     FormsModule,
     IonicModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: ChordmakerPage
+      }
+    ]),
     PipesModule,
     HelperModule,
-    ChordmakerPageRoutingModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -33,4 +38,4 @@ import { SimpleTimer } from 'ng2-simple-timer';
   entryComponents: [HelperComponent],
   providers: [SimpleTimer]
 })
-export class ChordmakerPageModule {}
+export class ChordmakerPageModule { }
