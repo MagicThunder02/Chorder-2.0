@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header id="header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -9,77 +9,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content id="content">
   <ion-grid>
     <ion-row>
       <ion-col>
+
         <ion-list>
-
-          <ion-item>
+          <ion-item *ngFor="let metronome of metronomes; let i=index">
             <ion-label>Beats:</ion-label>
-            <ion-select [(ngModel)]="selectedBeat" (ionChange)="beatChange()">
-              <ion-select-option *ngFor=" let beat of beats" [value]="beat" interface="popover"> {{beat}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-label>Bpm:</ion-label>
-            <!-- <ion-fab-button>
-        <ion-icon name="remove"></ion-icon>
-      </ion-fab-button>
-      <ion-text style="padding: 3%;">{{bpm}}</ion-text>
-      <ion-fab-button>
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button> -->
-            <ion-button (click)="removeBpm()">
+            <ion-button (click)="metronome.removeBeat()">
               <ion-icon name="remove"></ion-icon>
             </ion-button>
-            <ion-text style="padding: 3%;">{{bpm}}</ion-text>
-            <ion-button (click)="addBpm()">
+            <ion-text style="padding: 3%;">{{metronome.beats}}</ion-text>
+            <ion-button (click)="metronome.addBeat()">
               <ion-icon name="add"></ion-icon>
             </ion-button>
           </ion-item>
 
-
-          <ion-item>
-            <ion-range [(ngModel)]="bpm" (ionChange)="runMetronome('change')" min="30" max="300" color="secondary">
-              <ion-icon size="small" slot="start" name="musical-note"></ion-icon>
-              <ion-icon slot="end" name="musical-note"></ion-icon>
-            </ion-range>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Run:</ion-label>
-            <ion-button (click)="runMetronome('start')">
-              <ion-icon name="play"></ion-icon>
-            </ion-button>
-            <ion-button (click)="runMetronome('stop')">
-              <ion-icon name="stop"></ion-icon>
-            </ion-button>
-          </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
 
-    <ng-container *ngIf="orientation == 'vertical'">
-      <ion-row *ngFor="let circle of circles">
-        <ion-col class="ion-text-center">
-          <div [ngClass]="{'pulse' : circle.color == 'yellow' || circle.color == 'red'}"
-            [style.background]="circle.color" [style.border-color]="circle.color" class="circle">
-          </div>
-          <!-- <div [ngStyle]="{'background-color':i === (counter % selectedBeat) ? 'red' : 'grey' }" class="circle"></div> -->
-        </ion-col>
-      </ion-row>
-    </ng-container>
-
-    <ion-row *ngIf="orientation == 'horizontal'">
-      <ion-col *ngFor="let circle of circles" class="ion-text-center">
-        <div [ngClass]="{'pulse' : circle.color == 'yellow' || circle.color == 'red'}" [style.background]="circle.color"
-          [style.border-color]="circle.color" class="circle">
-        </div>
+    <ion-row>
+      <ion-col style="text-align: center;">
+        <ion-button (click)="showModal();">
+          <ion-icon name="play"></ion-icon>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" style="padding: 3%;" (click)="fillMetroData()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

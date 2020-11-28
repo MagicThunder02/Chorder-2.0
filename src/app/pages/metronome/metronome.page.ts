@@ -1,13 +1,9 @@
-import { Component, OnInit, SimpleChanges, OnChanges } from '@angular/core';
-import * as Tone from "tone";
-import { TranslateService } from '@ngx-translate/core';
-import { ViewPortService } from 'src/app/services/viewport.service';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { MetroData, } from './metronome.model';
+import { ShowMetronomePage } from './show/show-metronome.page';
 
-export interface circle {
-  color: string;
-  index: number;
-}
+
 
 @Component({
   selector: 'app-metronome',
@@ -17,117 +13,131 @@ export interface circle {
 
 export class MetronomePage implements OnInit {
 
-  private viewPortSubscription: Subscription;
-  public orientation: string = '';
-
-  public beats: number[] = [];
-  public selectedBeat: number = 4;
-  public bpm: number = 120;
-  public circles: circle[] = [];
-  public myTimer: any;
-  public counter: number = 0;
-  public color: string = '';
-  ;
+  public metroData: MetroData;
 
   constructor(
-    private viewPort: ViewPortService,
-  ) { }
+    private modalController: ModalController,
+  ) {
 
-  ionViewWillEnter() {
+
   }
 
-  beatChange() {
-    this.circles = [];
-    console.log(this.selectedBeat);
-    for (let i = 0; i < this.selectedBeat; i++) {
-      this.circles.push({ color: 'gray', index: i })
-    }
-  }
+  fillMetroData() {
+    //passes height of header and content
+    let content = document.getElementById('content');
+    let header = document.getElementById('header');
 
-  addBpm() {
-    if (this.bpm > 30 && this.bpm < 300)
-      this.bpm += 1;
-  }
-  removeBpm() {
-    if (this.bpm > 30 && this.bpm < 300)
-      this.bpm -= 1;
-  }
+    console.log('filling metrodata')
 
-  tick() {
+    this.metroData = {
+      bpm: 120,
+      increase: false,
+      finalBpm: 160,
+      stepBpm: 10,
+      canvas: {
+        headerWidth: header.clientWidth,
+        headerHeight: header.clientHeight,
+        contentWidth: content.clientWidth,
+        contentHeight: content.clientHeight,
+      },
 
-    if (this.myTimer) {
-      clearInterval(this.myTimer);
-    }
-
-    this.myTimer = setInterval(() => {
-      console.log('tick:', this.counter)
-      this.setColor();
-
-      this.counter++;
-
-      if (this.counter > this.selectedBeat - 1) {
-        this.counter = 0;
-      }
-
-    }, (60 / this.bpm) * 1000);
-  }
-
-  setColor() {
-    this.circles.forEach(circle => {
-      circle.color = 'grey'
-    })
-
-    if (this.counter == 0) {
-      this.circles[this.counter].color = 'red';
-    }
-    else {
-      this.circles[this.counter].color = 'yellow';
+      tracks: [
+        {
+          beats: 8,
+          sound1: 'tick',
+          sound2: 'tock',
+        },
+        {
+          beats: 5,
+          sound1: 'tick',
+          sound2: 'tock',
+        },
+        {
+          beats: 11,
+          sound1: 'tick',
+          sound2: 'tock',
+        },
+      ]
     }
 
-    console.log(this.circles[this.counter].color)
+    console.table(this.metroData)
+
   }
 
-  runMetronome(type) {
-    console.log('run', this.bpm, type)
-    this.counter = 0;
 
-    switch (type) {
-      case "start":
-      case "change":
-        console.log('start', this.counter)
-        this.tick()
-        break;
+  //   public addBeat() {
+  //     this.track.beats++;
+  //     this.controlValues();
+  //     console.log(this.beats);
+  // }
+  // public removeBeat() {
+  //     this.beats--;
+  //     this.controlValues();
+  //     console.log(this.beats);
+  // }
 
-      case "stop":
-        console.log('stop');
-        clearInterval(this.myTimer);
-        this.circles.forEach(circle => {
-          circle.color = 'grey'
-        })
-        this.myTimer = '';
-        break;
-    }
-  }
 
+  // controlValues() {
+  //   if (this.metronome.bpm < 30) {
+  //     this.metronome.bpm = 30;
+  //   }
+  //   if (this.metronome.bpm > 300) {
+  //     this.metronome.bpm = 300;
+  //   }
+  //   if (this.metronome.beats < 1) {
+  //     this.metronome.beats = 1;
+  //   }
+  //   if (this.metronome.beats > 12) {
+  //     this.metronome.beats = 12;
+  //   }
+  //   if (this.metronome.initialBpm < 30) {
+  //     this.metronome.initialBpm = 30;
+  //   }
+  //   if (this.metronome.initialBpm > 300) {
+  //     this.metronome.initialBpm = 300;
+  //   }
+  //   if (this.metronome.finalBpm < 30) {
+  //     this.metronome.finalBpm = 30;
+  //   }
+  //   if (this.metronome.finalBpm > 300) {
+  //     this.metronome.finalBpm = 300;
+  //   }
+  //   if (this.metronome.stepBpm < 1) {
+  //     this.metronome.stepBpm = 1;
+  //   }
+  //   if (this.metronome.stepBpm > 30) {
+  //     this.metronome.stepBpm = 30;
+  //   }
+  //   if (this.metronome.stepMeasure < 1) {
+  //     this.metronome.stepMeasure = 1;
+  //   }
+  //   if (this.metronome.stepMeasure > 10) {
+  //     this.metronome.stepMeasure = 10;
+  //   }
+  // }
+  // setStart() {
+  //   this.metronome.bpm = this.metronome.initialBpm;
+  // }
 
 
   ngOnInit() {
-    this.viewPortSubscription = this.viewPort.viewPortObserver.subscribe(info => {
-      if (info.orientation == 'portrait') {
-        this.orientation = 'vertical';
-
-      } else {
-        this.orientation = 'horizontal';
-      }
-      console.log(this.orientation)
-    });
-
-    //fill beats array
-    for (let i = 1; i <= 12; i++) {
-      this.beats.push(i)
-    }
-    this.beatChange();
-
   }
 
+  async showModal() {
+    const modal: HTMLIonModalElement =
+      await this.modalController.create({
+        component: ShowMetronomePage,
+        componentProps: {
+          data: this.metroData
+        },
+        cssClass: 'fullscreen'
+      });
+
+    modal.onDidDismiss().then((result: any) => {
+      if (result.data) {
+      }
+    });
+
+    await modal.present();
+  }
 }

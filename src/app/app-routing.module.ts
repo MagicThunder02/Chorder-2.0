@@ -17,20 +17,24 @@ const routes: Routes = [
   },
   {
     path: 'options',
-    loadChildren: () => import('./pages/options/options.module').then( m => m.OptionsPageModule)
+    loadChildren: () => import('./pages/options/options.module').then(m => m.OptionsPageModule)
   },
   {
     path: 'chordmaker',
-    loadChildren: () => import('./pages/chordmaker/chordmaker.module').then( m => m.ChordmakerPageModule)
+    loadChildren: () => import('./pages/chordmaker/chordmaker.module').then(m => m.ChordmakerPageModule)
   },
   {
     path: 'instrument',
-    loadChildren: () => import('./pages/instrument/instrument.module').then( m => m.InstrumentPageModule)
+    loadChildren: () => import('./pages/instrument/instrument.module').then(m => m.InstrumentPageModule)
   },
   {
     path: 'metronome',
-    loadChildren: () => import('./pages/metronome/metronome.module').then( m => m.MetronomePageModule)
-  }
+    loadChildren: () => import('./pages/metronome/metronome.module').then(m => m.MetronomePageModule)
+  },
+  {
+    path: 'controls-metronome',
+    loadChildren: () => import('./pages/metronome/controls-metronome/controls-metronome.module').then( m => m.ControlsMetronomePageModule)
+  },
 ];
 
 @NgModule({
@@ -39,4 +43,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

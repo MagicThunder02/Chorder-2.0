@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>controls-metronome</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <ion-item>
+      <ion-label>Beats:</ion-label>
+      <ion-button (click)="removeBeat();">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <ion-text style="padding: 3%;">{{metronome.beats}}</ion-text>
+      <ion-button (click)="addBeat()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>Bpm:</ion-label>
+      <ion-button (click)="removeBpm()">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <ion-text style="padding: 3%;">{{metronome.bpm}}</ion-text>
+      <ion-button (click)="addBpm()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-range [(ngModel)]="metronome.bpm" (ionChange)="controlValues()" min="30" max="300" color="secondary"
+        debounce="50">
+        <ion-icon size="small" slot="start" name="musical-note"></ion-icon>
+        <ion-icon slot="end" name="musical-note"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Change:</ion-label>
+      <ion-toggle [(ngModel)]="metronome.increase"></ion-toggle>
+    </ion-item>
+
+    <ion-list *ngIf="metronome.increase" (ionChange)="setStart()" style="margin: 0;">
+      <ion-item lines="none">
+        <ion-label>From:</ion-label>
+        <ion-input [(ngModel)]="metronome.initialBpm" (ionChange)="controlValues()" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>To:</ion-label>
+        <ion-input [(ngModel)]="metronome.finalBpm" (ionChange)="controlValues()" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>Step:</ion-label>
+        <ion-input [(ngModel)]="metronome.stepBpm" (ionChange)="controlValues()" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Number of Measure:</ion-label>
+        <ion-input [(ngModel)]="metronome.stepMeasure" (ionChange)="controlValues()" type="number"></ion-input>
+      </ion-item>
+    </ion-list>
+  </ion-list>
+</ion-content>

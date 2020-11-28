@@ -33,3 +33,8 @@
     --ion-color-shade: var(--ion-color-grey-shade);
     --ion-color-tint: var(--ion-color-grey-tint);
   }
+ion-modal.fullscreen {
+    --width: 100%;
+    --height: 100%;
+    --border-radius: 0;
+    }
