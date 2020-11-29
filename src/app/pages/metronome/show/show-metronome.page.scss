@@ -13,8 +13,18 @@ ion-col {
     position: absolute;
     max-width: 50px;
     max-height: 50px;
+    z-index: 2;
+
     }
 
+.circumpherence {
+    border:1px solid black;    
+    height:100px;
+    border-radius:50%;
+    position: absolute;
+    width:100px;
+    // z-index: -1;
+}
 
 .pulse {
     // background-color: green;

@@ -1,9 +1,17 @@
 import { ApplicationRef, Optional } from '@angular/core';
 import * as Tone from "tone";
 
-export interface ball {
+export interface Ball {
     color: string;
     radius: number;
+    cX: number;
+    cY: number;
+}
+
+export interface Circle {
+    color: string;
+    radius: number;
+    thickness: number;
     cX: number;
     cY: number;
 }
@@ -135,7 +143,8 @@ export class Metronome {
 }
 
 export class Drawings {
-    balls: ball[];
+    balls: Ball[];
+    circle: Circle;
     circRadius: number;
 
     constructor(
@@ -158,10 +167,12 @@ export class Drawings {
         for (let i = 0; i < track.beats; i++) {
             this.balls.push(({ color: 'gray', radius: 0, cX: 0, cY: 0 }))
         }
+        this.circle = { color: 'black', radius: 0, thickness: 0, cX: 0, cY: 0 }
     }
 
     private calcSmallRadius(track: MetroTrack, canvas: MetroCanvas, maxBeats: number) {
         //set radiuses of the balls depending on the beats of the greatest circle
+        console.log(canvas)
         this.balls.forEach(ball => {
             if (canvas.contentHeight >= canvas.contentWidth) {
                 ball.radius = canvas.contentWidth / (maxBeats * 2);
@@ -169,6 +180,8 @@ export class Drawings {
                 ball.radius = canvas.contentHeight / (maxBeats * 2);
             }
         });
+        this.circle.thickness = this.balls[0].radius / 10;
+        this.circle.color = 'black';
     }
 
     private calcCircRadiuses(track: MetroTrack, canvas: MetroCanvas, numTracks: number, index: number) {
@@ -179,9 +192,12 @@ export class Drawings {
         } else {
             this.circRadius = ((canvas.contentHeight / 2) / numTracks) * (index + 1) - ballRadius;
         }
+        this.circle.radius = this.circRadius * 2;
+        console.log(canvas.contentWidth / 2, numTracks, (index + 1), ballRadius)
     }
 
     private drawCircles(track: MetroTrack, canvas: MetroCanvas) {
+        console.log('balls drawed')
 
         if (canvas.headerHeight) {
             this.balls.forEach((ball, i) => {
@@ -194,6 +210,8 @@ export class Drawings {
                 ball.cX = x0 + this.circRadius * Math.cos(angle - Math.PI / 2);
                 ball.cY = y0 + this.circRadius * Math.sin(angle - Math.PI / 2);
 
+                this.circle.cX = x0 + this.circRadius * Math.cos(Math.PI) + ball.radius / 2;
+                this.circle.cY = y0 + this.circRadius * Math.sin(- Math.PI / 2) + ball.radius / 2;
             })
         }
     }

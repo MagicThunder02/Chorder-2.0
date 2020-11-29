@@ -31,10 +31,6 @@ const routes: Routes = [
     path: 'metronome',
     loadChildren: () => import('./pages/metronome/metronome.module').then(m => m.MetronomePageModule)
   },
-  {
-    path: 'controls-metronome',
-    loadChildren: () => import('./pages/metronome/controls-metronome/controls-metronome.module').then( m => m.ControlsMetronomePageModule)
-  },
 ];
 
 @NgModule({

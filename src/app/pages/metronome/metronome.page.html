@@ -10,28 +10,22 @@
 </ion-header>
 
 <ion-content id="content">
+
+  <ion-list>
+    <ion-item *ngFor="let track of metroData.tracks">
+      <ion-label>Beats:</ion-label>
+      <ion-button (click)="removeBeat(track)">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <ion-text style="padding: 3%;">{{track.beats}}</ion-text>
+      <ion-button (click)="addBeat(track)">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
   <ion-grid>
     <ion-row>
-      <ion-col>
-
-        <ion-list>
-          <ion-item *ngFor="let metronome of metronomes; let i=index">
-            <ion-label>Beats:</ion-label>
-            <ion-button (click)="metronome.removeBeat()">
-              <ion-icon name="remove"></ion-icon>
-            </ion-button>
-            <ion-text style="padding: 3%;">{{metronome.beats}}</ion-text>
-            <ion-button (click)="metronome.addBeat()">
-              <ion-icon name="add"></ion-icon>
-            </ion-button>
-          </ion-item>
-
-        </ion-list>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col style="text-align: center;">
+      <ion-col class="playButton">
         <ion-button (click)="showModal();">
           <ion-icon name="play"></ion-icon>
         </ion-button>
@@ -39,7 +33,8 @@
     </ion-row>
   </ion-grid>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" style="padding: 3%;" (click)="fillMetroData()">
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" style="padding: 3%;" (click)="addTrack()">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

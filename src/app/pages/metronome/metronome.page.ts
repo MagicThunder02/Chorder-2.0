@@ -13,13 +13,12 @@ import { ShowMetronomePage } from './show/show-metronome.page';
 
 export class MetronomePage implements OnInit {
 
-  public metroData: MetroData;
+  public metroData: MetroData | any;
 
   constructor(
     private modalController: ModalController,
   ) {
-
-
+    this.metroData = {};
   }
 
   fillMetroData() {
@@ -40,20 +39,9 @@ export class MetronomePage implements OnInit {
         contentWidth: content.clientWidth,
         contentHeight: content.clientHeight,
       },
-
       tracks: [
         {
           beats: 8,
-          sound1: 'tick',
-          sound2: 'tock',
-        },
-        {
-          beats: 5,
-          sound1: 'tick',
-          sound2: 'tock',
-        },
-        {
-          beats: 11,
           sound1: 'tick',
           sound2: 'tock',
         },
@@ -61,66 +49,44 @@ export class MetronomePage implements OnInit {
     }
 
     console.table(this.metroData)
+  }
 
+  addTrack() {
+    this.metroData.tracks.push({
+      beats: 8,
+      sound1: 'tick',
+      sound2: 'tock',
+    })
+  }
+
+  public addBeat(track) {
+    track.beats++;
+    this.controlValues();
+  }
+  public removeBeat(track) {
+    track.beats--;
+    this.controlValues();
   }
 
 
-  //   public addBeat() {
-  //     this.track.beats++;
-  //     this.controlValues();
-  //     console.log(this.beats);
-  // }
-  // public removeBeat() {
-  //     this.beats--;
-  //     this.controlValues();
-  //     console.log(this.beats);
-  // }
+  controlValues() {
+    this.metroData.tracks.forEach(track => {
+      if (track.beats < 1) {
+        track.beats = 1;
+      }
+      if (track.beats > 12) {
+        track.beats = 12;
+      }
+    });
+  }
 
-
-  // controlValues() {
-  //   if (this.metronome.bpm < 30) {
-  //     this.metronome.bpm = 30;
-  //   }
-  //   if (this.metronome.bpm > 300) {
-  //     this.metronome.bpm = 300;
-  //   }
-  //   if (this.metronome.beats < 1) {
-  //     this.metronome.beats = 1;
-  //   }
-  //   if (this.metronome.beats > 12) {
-  //     this.metronome.beats = 12;
-  //   }
-  //   if (this.metronome.initialBpm < 30) {
-  //     this.metronome.initialBpm = 30;
-  //   }
-  //   if (this.metronome.initialBpm > 300) {
-  //     this.metronome.initialBpm = 300;
-  //   }
-  //   if (this.metronome.finalBpm < 30) {
-  //     this.metronome.finalBpm = 30;
-  //   }
-  //   if (this.metronome.finalBpm > 300) {
-  //     this.metronome.finalBpm = 300;
-  //   }
-  //   if (this.metronome.stepBpm < 1) {
-  //     this.metronome.stepBpm = 1;
-  //   }
-  //   if (this.metronome.stepBpm > 30) {
-  //     this.metronome.stepBpm = 30;
-  //   }
-  //   if (this.metronome.stepMeasure < 1) {
-  //     this.metronome.stepMeasure = 1;
-  //   }
-  //   if (this.metronome.stepMeasure > 10) {
-  //     this.metronome.stepMeasure = 10;
-  //   }
-  // }
-  // setStart() {
-  //   this.metronome.bpm = this.metronome.initialBpm;
-  // }
+  ionViewDidEnter() {
+    this.fillMetroData();
+  }
 
 
   ngOnInit() {
+
   }
 
   async showModal() {

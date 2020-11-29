@@ -10,21 +10,7 @@ ion-label {
     font-weight: bolder; 
 } 
 
-ion-grid {
-    height: 100%;
-    // display: flex;
-    // flex-flow: column;
-    border: 2px solid red;
-}
-
-ion-row {
-    // height: 100%;
-    // flex-grow: 1;
-    border: 2px solid green;
-}
-
-ion-row {
-    // height: 100%;
-    border: 2px solid blue;
+.playButton {
+    text-align: center;
 }
  
