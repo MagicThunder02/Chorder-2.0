@@ -42,8 +42,7 @@ export class MetronomePage implements OnInit {
       tracks: [
         {
           beats: 8,
-          sound1: 'tick',
-          sound2: 'tock',
+          sounds: ['tick', 'tock'],
         },
       ]
     }
@@ -54,8 +53,7 @@ export class MetronomePage implements OnInit {
   addTrack() {
     this.metroData.tracks.push({
       beats: 8,
-      sound1: 'tick',
-      sound2: 'tock',
+      sounds: ['tick', 'tock'],
     })
   }
 

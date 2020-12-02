@@ -10,11 +10,15 @@
     <div *ngFor="let ball of track.drawings.balls" [style.background]="ball.color" [style.height]="ball.radius + 'px'"
       [style.width]="ball.radius + 'px'" [style.left]="ball.cX + 'px'" [style.top]="ball.cY + 'px'" class="circle">
     </div>
-    <div *ngFor="let track of metronome.data.tracks"
-      [style.border]="track.drawings.circle.thickness + 'px' + ' solid ' + track.drawings.circle.color"
-      [style.height]="track.drawings.circle.radius + 'px'" [style.width]="track.drawings.circle.radius + 'px'"
-      [style.left]="track.drawings.circle.cX + 'px'" [style.top]="track.drawings.circle.cY + 'px'"
-      class="circumpherence"></div>
+
+    <ng-container *ngIf="metronome.data.tracks.length >= 2">
+      <div *ngFor="let track of metronome.data.tracks"
+        [style.border]="track.drawings.circle.thickness + 'px' + ' solid ' + track.drawings.circle.color"
+        [style.height]="track.drawings.circle.radius + 'px'" [style.width]="track.drawings.circle.radius + 'px'"
+        [style.left]="track.drawings.circle.cX + 'px'" [style.top]="track.drawings.circle.cY + 'px'"
+        class="circumpherence">
+      </div>
+    </ng-container>
     <!-- <ion-text> {{index}}</ion-text> -->
   </ng-container>
 

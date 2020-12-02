@@ -25,8 +25,9 @@ export interface MetroCanvas {
 
 export interface MetroTrack {
     beats: number;
-    sound1: string;
-    sound2: string;
+    sounds: string[];
+    synth: any;
+    voice: any;
     drawings?: Drawings;
 }
 
@@ -43,6 +44,8 @@ export class Metronome {
     private data: MetroData;
     private index: number = 0;
     private appRef: ApplicationRef;
+
+    private synth;
 
     constructor(
         params: any,
@@ -63,8 +66,15 @@ export class Metronome {
                 this.data.tracks.length,
                 this.data.tracks[this.data.tracks.length - 1].beats, //bigger number of beats
                 index++
-            )
-        })
+            );
+            track.synth = this.createSynth();
+            track.voice = this.createVoice(track.beats);
+        });
+
+        Tone.Transport.loop = true;
+        Tone.Transport.loopStart = 0;
+
+
     }
 
     private sortTracks() {
@@ -88,28 +98,77 @@ export class Metronome {
         }
     }
 
-    // public play() {
-    //     // create two monophonic synths
-    //     const synthA = new Tone.FMSynth().toMaster();
-    //     const synthB = new Tone.AMSynth().toMaster();
-    //     //play a note every quarter-note
-    //     const loopA = new Tone.Loop(time => {
-    //         synthA.triggerAttackRelease("C2", "8n", time);
-    //         // console.log(this.index % this.beats, this.drawings.balls, this.drawings.balls[this.index % this.beats])
-    //         this.drawings.balls[this.index % this.beats].color = 'red';
+    private createSynth() {
+        const synth = new Tone.Synth({
+            oscillator: {
+                type: 'sine',
+            },
+            envelope: {
+                //attack: 0,
+                decay: 0.1,
+                //sustain: 0,
+                release: 0.1,
+            }
+        }).toDestination();
+        return synth
+    }
 
-    //         this.index++;
-    //         console.log('tick')
-    //         this.appRef.tick();
-    //     }, "4n").start(0);
-    //     //play another note every off quarter-note, by starting it "8n"
-    //     const loopB = new Tone.Loop(time => {
-    //         synthB.triggerAttackRelease("C4", "8n", time);
-    //     }, "4n").start("8n");
-    //     // the loops start when the Transport is started
-    //     Tone.Transport.start()
+    private createVoice(beats: number) {
+        const ratio = 1 / beats;
+        const seq = new Tone.Part(this.trigger.bind(this), []);
+        seq.start(0);
+        seq.loop = true;
+        seq.loopStart = 0;
+        seq.loopEnd = 1;
+        return seq;
+    }
+
+    private trigger(time: number, value: any) {
+        this.synth.triggerAttackRelease(
+            'C4',
+            0.01,
+            time,
+            0.1);
+    }
+    // private assignPlayer() {
+    //     this.data.tracks.forEach((track, i) => {
+    //         if (this.data.tracks.length == 1) {
+    //             this.synth = new Tone.Players({
+    //                 "player1": `assets/${track.sounds[0]}.wav`,
+    //                 "player2": `assets/${track.sounds[1]}.wav`
+    //             });
+    //         }
+    //         else {
+    //             this.synth = new Tone.Players({
+    //                 "player1": `assets/${track.sounds[0]}.wav`,
+    //                 "player2": `assets/${track.sounds[1]}.wav`
+    //             });
+    //         }
+    //         this.synth.toMaster();
+    //     })
 
     // }
+
+    public play() {
+
+        Tone.Transport.bpm.value = this.data.bpm;
+        console.log(Tone.Transport.bpm.value)
+
+        let player1 = this.synth.get('player1');
+        let player2 = this.synth.get('player2');
+
+        const loopA = new Tone.Loop(time => {
+            player1.start()
+        }, "4n").start(0);
+
+        const loopB = new Tone.Loop(time => {
+            player2.start();
+
+        }, '4n').start(0);
+
+        Tone.Transport.start()
+
+    }
 
     public runMetronome(command: string) {
         console.log('run', this.data.bpm, command)
@@ -117,6 +176,7 @@ export class Metronome {
         switch (command) {
             case "start":
                 // this.play();
+                Tone.Transport.start()
                 break;
 
             case "pause":
@@ -141,6 +201,7 @@ export class Metronome {
         }
     }
 }
+
 
 export class Drawings {
     balls: Ball[];
@@ -180,7 +241,7 @@ export class Drawings {
                 ball.radius = canvas.contentHeight / (maxBeats * 2);
             }
         });
-        this.circle.thickness = this.balls[0].radius / 10;
+        this.circle.thickness = this.balls[0].radius / 20;
         this.circle.color = 'black';
     }
 
@@ -210,8 +271,8 @@ export class Drawings {
                 ball.cX = x0 + this.circRadius * Math.cos(angle - Math.PI / 2);
                 ball.cY = y0 + this.circRadius * Math.sin(angle - Math.PI / 2);
 
-                this.circle.cX = x0 + this.circRadius * Math.cos(Math.PI) + ball.radius / 2;
-                this.circle.cY = y0 + this.circRadius * Math.sin(- Math.PI / 2) + ball.radius / 2;
+                this.circle.cX = x0 + this.circRadius * Math.cos(Math.PI) + ball.radius / 2 + this.circle.thickness / 2;
+                this.circle.cY = y0 + this.circRadius * Math.sin(- Math.PI / 2) + ball.radius / 2 + this.circle.thickness / 2;
             })
         }
     }
