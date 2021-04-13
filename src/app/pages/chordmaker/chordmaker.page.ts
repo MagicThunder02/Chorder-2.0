@@ -1,16 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicService } from '../../services/music.service';
-import { Music, ChordComponent, Tonality, Interval } from '../../services/music.model';
-import { HelperComponent } from '../../utilities/helper/helper.component';
-import { PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
+import { Chord, Interval } from "@tonaljs/tonal";
+import * as Tone from 'tone';
+// import * as SampleLibrary from 'tjss.js';
 
-// import { Media, MediaObject } from '@ionic-native/media/ngx';s
 
+export interface Tile {
+  name: string;
+  color: string;
+  selected?: boolean;
+}
 
-// import * as MidiWriter from 'midi-writer-js';
-
+export interface myChord {
+  name?: string;
+  symbol: string;
+  tonic?: string;
+  root?: string;
+  type?: string;
+  aliases?: string[];
+  intervals?: string[];
+  extensions?: string[];
+  reductions?: string[];
+  notes?: string[];
+  show?: boolean;
+}
 
 @Component({
   selector: 'app-chordmaker',
@@ -19,254 +33,207 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class ChordmakerPage implements OnInit {
 
-  private musicData: Music;
-  private keyplace: string;
-  private selectedTonic: string;
-  public noteplace: string[] = [];
-  public components: ChordComponent[] = [];
-  private actualTonality: Tonality;
-  public FinalChords: string[] = [];
+  private tiles: Tile[] = [];
+  private notes: string[] = [];
+  private chords: myChord[] = [];
 
+  private instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
+  private myInstrument: string = '';
 
-  constructor(private musicService: MusicService, private popoverCtrl: PopoverController,
+  // private synth = new Tone.PolySynth().toDestination();
+  private synth;
+
+  constructor(
     private translate: TranslateService, private cookie: CookieService) {
-    this.musicData = <Music>{};
+
+    this.synth = new Tone.Sampler({
+      urls: {
+        A2: "pianoA2.wav",
+      },
+      baseUrl: "assets/instruments/",
+
+    }).toDestination();
+  }
+
+  selectTile(tile: Tile) {
+    this.chords = [];
+    this.toggleTile(tile)
+    this.checkEquals(tile)
+    this.colorTiles()
+    this.findChord()
+  }
+
+  selectInstrument() {
+    this.synth = '';
+
+    console.log(this.myInstrument + ".wav")
+
+    this.synth = new Tone.Sampler({
+      urls: {
+        A2: this.myInstrument.toLowerCase() + "A2.wav",
+      },
+      baseUrl: "assets/instruments/",
+
+    }).toDestination();
+  }
+
+  //select or deselect a tile
+  toggleTile(tile: Tile) {
+    if (tile.selected == false) {
+      tile.selected = true;
+    } else {
+      tile.selected = false;
+    }
+  }
+
+  //check if two note with the same value are both checked, if yes deselects the last selected one
+  checkEquals(selectedTile: Tile) {
+    this.tiles.forEach((tile) => {
+
+      //if the interval is 0 
+      let interval = Interval.distance(selectedTile.name, tile.name);
+      if (interval == "0A" || interval == "2d") {
+        tile.selected = false
+      }
+    });
+
+  }
+
+  //color the tiles if selected
+  colorTiles() {
+    this.tiles.forEach(tile => {
+      if (tile.selected) {
+        tile.color = "secondary"
+      }
+      else {
+        tile.color = "light"
+      }
+    })
+  }
+
+  findChord() {
+    this.notes = [];
+
+    this.tiles.forEach(tile => {
+      if (tile.selected) {
+        this.notes.push(tile.name)
+      }
+    });
+
+    if (this.notes.length >= 3) {
+
+      let chordNames = Chord.detect(this.notes);
+      chordNames.forEach((chordName, idx) => {
+        this.chords.push({ symbol: chordName });
+
+        if (chordName.includes("/") && (chordName.split("/")[1].length == 1 || chordName.split("/")[1].length == 2)) {
+          let cropName = chordName.split("/")[0];
+          let cropChord = Chord.get(cropName);
+          this.chords[idx].name = cropChord.name + " slash " + chordName.split("/")[1];
+          this.chords[idx].root = chordName.split("/")[1];
+          this.chords[idx].intervals = cropChord.intervals;
+          this.chords[idx].type = cropChord.type + " slashed";
+          this.chords[idx].tonic = cropChord.tonic;
+
+          this.chords[idx].notes = cropChord.notes;
+          this.chords[idx].notes.push(chordName.split("/")[1])
+        }
+        else {
+          let newChord = Chord.get(chordName);
+          this.chords[idx].name = newChord.name;
+          this.chords[idx].root = newChord.root;
+          this.chords[idx].intervals = newChord.intervals;
+          this.chords[idx].aliases = newChord.aliases;
+          this.chords[idx].notes = newChord.notes;
+          this.chords[idx].type = newChord.type;
+          this.chords[idx].tonic = newChord.tonic;
+        }
+
+        this.chords[idx].extensions = Chord.extended(chordName);
+        this.chords[idx].reductions = Chord.reduced(chordName);
+
+        this.chords.forEach(chord => {
+          chord.show = false;
+        });
+      })
+
+      console.log(this.chords);
+    }
+  }
+
+  toggleCard(chord: myChord) {
+    if (chord.show == false) {
+      chord.show = true;
+    } else {
+      chord.show = false;
+    }
+  }
+
+  playChord(chord: myChord, mode: string) {
+    //assigns octave 4 to all notes than plays them together
+
+    let scale = ["Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
+
+    let notes = chord.notes.map(function (note, idx) {
+
+      if (note.includes("##")) {
+        let idx = scale.indexOf(note.slice(0, -1));
+        note = scale[(idx + 2) % scale.length];
+        // console.log(idx, note, scale[idx % scale.length], scale[(idx + 2) % scale.length])
+      }
+
+      if (note.includes("bb")) {
+        let idx = scale.indexOf(note);
+        note = scale[(idx - 2) % scale.length];
+      }
+
+      if (parseInt(chord.intervals[idx], 10) <= 7) {
+        return note = note + "3"
+      } else {
+        return note = note + "4"
+      }
+    });
+    // console.log(notes, chord.intervals);
+
+    if (mode == "arp")
+      notes.forEach((note, idx) => {
+        this.synth.triggerAttackRelease(note, "4n", Tone.now() + idx / 2);
+      })
+    else {
+      if (mode == "chord") {
+        this.synth.triggerAttackRelease(notes, "2n");
+      }
+    }
+  }
+
+  beautify(array: string[]) {
+    let myString: string = '';
+    array.forEach((element, idx) => {
+      if (idx != 0 && idx != array.length && element != '') {
+        myString = myString + ", " + element;
+      }
+      else {
+        myString = myString + element;
+      }
+    })
+    return myString;
   }
 
   ionViewDidEnter(): void {
-
     this.translate.setDefaultLang('en');
-
     let lang = this.cookie.get('language');
-
     if (lang) {
       this.translate.use(lang);
     }
   }
 
-
-  private checkHides() {
-    let toRemoveArray: string[] = [];
-
-    //array di note da togliere
-    this.components.forEach(cmp => {
-      if (cmp.selected != '') {
-        toRemoveArray.push(cmp.selected);
-      }
-    })
-
-    //ripristiniamo visibili tutte le note
-    this.components.forEach((cmp, index) => {
-      cmp.intervals.forEach(int => {
-        int.hide = false;
-      })
-    })
-
-    this.components.forEach((cmp, index) => {
-      toRemoveArray.forEach(rem => {
-        cmp.intervals.forEach(int => {
-          if (int.name == rem) {
-            //se la nota da rimuovere è diversa da quella selezionata
-            if (rem != cmp.selected) {
-              int.hide = true;
-              // console.log(`idx: ${index} rem: ${rem} cmp: ${JSON.stringify(this.actualTonality.intervals)}`);
-            }
-          }
-        })
-      })
-    })
-
-
-  }
-
-  /*-----------------------------------------------------------------------------------------------
-    se il grado è uguale a 2, 4 o 6 abilita il selettore dell'ottava 
-    -----------------------------------------------------------------------------------------------*/
-  public showOctaveButton(component: ChordComponent) {
-    let lastNote: string[] = [];
-
-    lastNote.push(component.selected);
-    let dist = this.gradeFinder(lastNote);
-
-    if ((dist[0].includes('2')) || (dist[0].includes('4')) || (dist[0].includes('6'))) {
-      component.octaveEnable = true;
-    }
-    else {
-      component.octaveEnable = null;
-      component.octaveSelected = false;
-    }
-  }
-
-  /*-----------------------------------------------------------------------------------------------
-    elimino la scelta della tonica e ripristino le condizioni di partenza
-  -----------------------------------------------------------------------------------------------*/
-  public deleteKey() {
-    this.selectedTonic = '';
-    this.keyplace = '';
-    this.actualTonality = null;
-    this.components = [];
-  }
-
-  /*-----------------------------------------------------------------------------------------------
-    evento sulla selezione della tonica
-  -----------------------------------------------------------------------------------------------*/
-  public selectedKey(): void {
-    this.selectedTonic = this.keyplace;
-    if (this.keyplace != '') {
-      //creo un array con le note che saranno nelle tendine delle note
-      this.musicData.tonalities.forEach(tonality => {
-        if (tonality.Name == this.selectedTonic) {
-          //memorizziamo la tonalità scelta
-          this.actualTonality = tonality;
-        }
-      })
-
-      //inizializiamo l'array dei componenti con un solo elemento
-      let clone: Interval[] = JSON.parse(JSON.stringify(this.actualTonality.intervals));
-      this.components = [{ selected: '', intervals: clone, octaveSelected: false, octaveEnable: false }]
-    }
-
-  }
-
-  /*-----------------------------------------------------------------------------------------------
-    elimino la nota
-  -----------------------------------------------------------------------------------------------*/
-  public deleteNote(idx) {
-    this.components.splice(idx, 1);
-    this.checkHides();
-    this.selectedNote();
-  }
-
-  /*-----------------------------------------------------------------------------------------------
-    evento sulla selezione di una nota
-  -----------------------------------------------------------------------------------------------*/
-  public selectedNote(idx?: number, component?: ChordComponent): void {
-    // console.log(`i: ${idx} c: ${JSON.stringify(component)}`);
-
-    if (component) {
-      if ((idx < 6) && (idx == this.components.length - 1)) {
-        let clone: Interval[] = JSON.parse(JSON.stringify(this.actualTonality.intervals));
-        this.components.push({ selected: '', intervals: clone, octaveSelected: false, octaveEnable: false });
-      }
-    }
-
-    this.checkHides();
-
-    let notes: string[] = [];
-    this.components.forEach(c => {
-      notes.push(c.selected);
-    })
-
-    if (component) {
-      this.showOctaveButton(component);
-    }
-
-    let grades: string[] = this.gradeFinder(notes);
-
-    grades.forEach((g, index) => {
-      if (g.includes('2')) {
-        if (this.components[index].octaveSelected) {
-          g = g.replace('2', '9')
-          grades[index] = g;
-        }
-      }
-      if (g.includes('4')) {
-        if (this.components[index].octaveSelected) {
-          g = g.replace('4', '11')
-          grades[index] = g;
-        }
-      }
-      if (g.includes('6')) {
-        if (this.components[index].octaveSelected) {
-          g = g.replace('6', '13')
-          grades[index] = g;
-        }
-      }
-    })
-
-    console.log(grades)
-    this.matchChord(grades);
-  }
-
-
-  private gradeFinder(chord: string[]): string[] {
-
-    //per ogni nota selezionata trovo l'intervallo corrispondente nella sua tonalità
-    let found: string[] = [];
-
-    chord.forEach(note => {
-      this.musicData.tonalities.forEach(tonality => {
-        if (tonality.Name == this.selectedTonic) {
-          tonality.intervals.forEach(myinterval => {
-            if (note == myinterval.name) {
-              found.push(myinterval.dist);
-            }
-          })
-        }
-      })
-    })
-
-    return found;
-  }
-
-  private matcher(master: string[], child: string[]): boolean {
-    master.sort();
-    child.sort();
-
-    let i: number, j: number;
-
-    for (i = 0, j = 0; i < master.length && j < child.length;) {
-      if (master[i] < child[j]) {
-        ++i;
-      } else if (master[i] == child[j]) {
-        ++i; ++j;
-      } else {
-        return false;
-      }
-    }
-
-    return j == child.length;
-  }
-
-  //la funzione "ritorna" tutti i sottoinsiemi che combaciano
-  private matchChord(grades: string[]): void {
-    let chordResult: string[] = [];
-    let AllChordsFound: any = [];
-
-    this.musicData.chords.forEach(chord => {
-      if (this.matcher(chord.formula, grades)) {
-        chordResult = [];
-        chord.names.forEach(name => {
-          chordResult.push(this.selectedTonic + name);
-        })
-        AllChordsFound.push(chordResult);
-      }
-    })
-
-    // console.log('r', AllChordsFound);
-    this.FinalChords = AllChordsFound;
-  }
-
-
   ngOnInit() {
-    this.musicService.getData().subscribe((res) => {
-      this.musicData = res;
-      console.log(this.musicData);
-    })
+    let scale = ["Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
+    scale.forEach((note, idx) => {
+      this.tiles.push({ name: note, color: "light", selected: false })
+    });
+    console.log(this.tiles);
+
   }
 
-  //popover function
-  async helper(ev: any, contextTitle: string, contextContent: string) {
-    const popover = await this.popoverCtrl.create({
-      component: HelperComponent,
-      componentProps: {
-        contextTitle: contextTitle,
-        contextContent: contextContent
-      },
-      event: ev,
-      showBackdrop: true,
-      translucent: true
-    });
-    return await popover.present();
-  }
 }

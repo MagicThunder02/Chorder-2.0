@@ -35,7 +35,7 @@ export class OptionsPage implements OnInit {
 
   public radioInstrument(event: any) {
     console.log(event.detail)
-    this.instrument = event.detail.value
+    this.instrument = event.detail.value;
     this.cookie.set('instrument', this.instrument);
   }
 

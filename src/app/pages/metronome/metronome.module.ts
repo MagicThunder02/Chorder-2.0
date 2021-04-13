@@ -15,6 +15,7 @@ import { ControlsMetronomePage } from './controls-metronome/controls-metronome.p
     CommonModule,
     FormsModule,
     IonicModule,
+
     RouterModule.forChild([
       {
         path: '',

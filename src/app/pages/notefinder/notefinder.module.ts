@@ -15,7 +15,7 @@ import { HelperComponent } from '../../utilities/helper/helper.component';
 
 @NgModule({
   imports: [
-    CommonModule, 
+    CommonModule,
     FormsModule,
     IonicModule,
     PipesModule,
@@ -37,4 +37,4 @@ import { HelperComponent } from '../../utilities/helper/helper.component';
   declarations: [NotefinderPage],
   entryComponents: [HelperComponent]
 })
-export class NotefinderModule {}
+export class NotefinderModule { }

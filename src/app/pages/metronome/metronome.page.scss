@@ -6,11 +6,17 @@ ion-input {
     text-align: right;
 }
 
-ion-label {
-    font-weight: bolder; 
+ion-text {
+    padding-left: 3%;
+    padding-right: 3%;
 } 
 
-.playButton {
+.center {
     text-align: center;
 }
  
+.bpmNumber{
+display: block;
+    align-content: center!important;
+    // align-items: center!important;
+}

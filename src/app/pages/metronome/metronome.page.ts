@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ApplicationRef, Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { MetroData, } from './metronome.model';
+import { MetroData, Metronome, } from './metronome.model';
 import { ShowMetronomePage } from './show/show-metronome.page';
-
+import * as Tone from "tone";
 
 
 @Component({
@@ -13,94 +13,51 @@ import { ShowMetronomePage } from './show/show-metronome.page';
 
 export class MetronomePage implements OnInit {
 
-  public metroData: MetroData | any;
+  public metronome: Metronome
+  public toggled: boolean = false;
+  public sliderValue: number = 120;
+  public increase: boolean = false;
 
   constructor(
     private modalController: ModalController,
+    private applicationRef: ApplicationRef,
   ) {
-    this.metroData = {};
+
   }
 
-  fillMetroData() {
-    //passes height of header and content
-    let content = document.getElementById('content');
-    let header = document.getElementById('header');
-
-    console.log('filling metrodata')
-
-    this.metroData = {
-      bpm: 120,
-      increase: false,
-      finalBpm: 160,
-      stepBpm: 10,
-      canvas: {
-        headerWidth: header.clientWidth,
-        headerHeight: header.clientHeight,
-        contentWidth: content.clientWidth,
-        contentHeight: content.clientHeight,
-      },
-      tracks: [
-        {
-          beats: 8,
-          sounds: ['tick', 'tock'],
-        },
-      ]
+  public toggleOptions() {
+    if (this.toggled) {
+      this.toggled = false;
     }
-
-    console.table(this.metroData)
-  }
-
-  addTrack() {
-    this.metroData.tracks.push({
-      beats: 8,
-      sounds: ['tick', 'tock'],
-    })
-  }
-
-  public addBeat(track) {
-    track.beats++;
-    this.controlValues();
-  }
-  public removeBeat(track) {
-    track.beats--;
-    this.controlValues();
-  }
-
-
-  controlValues() {
-    this.metroData.tracks.forEach(track => {
-      if (track.beats < 1) {
-        track.beats = 1;
-      }
-      if (track.beats > 12) {
-        track.beats = 12;
-      }
-    });
+    else {
+      this.toggled = true;
+    }
   }
 
   ionViewDidEnter() {
-    this.fillMetroData();
+    this.metronome = new Metronome(this.applicationRef, document);
   }
-
 
   ngOnInit() {
 
   }
 
   async showModal() {
+    //audiocontext resume
+    Tone.start();
+
+
     const modal: HTMLIonModalElement =
       await this.modalController.create({
         component: ShowMetronomePage,
         componentProps: {
-          data: this.metroData
+          metronome: this.metronome,
+          document: document,
         },
         cssClass: 'fullscreen'
       });
 
-    modal.onDidDismiss().then((result: any) => {
-      if (result.data) {
-      }
-    });
+    modal.onDidDismiss().then((result: any) => { });
 
     await modal.present();
   }

@@ -1,26 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import { Music, Chord, ChordComponent } from '../../services/music.model';
-import { MusicService } from '../../services/music.service';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
-import { PopoverController } from '@ionic/angular';
-import { HelperComponent } from '../../utilities/helper/helper.component';
-import { SimpleTimer } from 'ng2-simple-timer';
+import { Chord, ChordType } from "@tonaljs/tonal";
+import * as Tone from 'tone';
+// import SampleLibrary from '../notefinder/inst-loader.js'
+
+export interface Tile {
+  name?: string;
+  color: string;
+  selected?: boolean;
+}
+
+export interface myChord {
+  chord: any;
+  show?: boolean;
+}
 
 @Component({
   selector: 'app-notefinder',
   templateUrl: 'notefinder.page.html',
   styleUrls: ['notefinder.page.scss']
 })
-export class NotefinderPage implements OnInit {
-  public musicData: Music;
-  private keyplace: string;
-  private categoryplace: string;
-  public filteredChords: Chord[] = [];
 
-  constructor(private musicService: MusicService, private popoverCtrl: PopoverController,
-    private translate: TranslateService, private cookie: CookieService, private st: SimpleTimer) {
-    this.musicData = <Music>{};
+export class NotefinderPage implements OnInit {
+
+  private instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
+  private myInstrument: string = '';
+
+  private scale: string[] = [];
+  private typesTiles: Tile[] = [];
+  private gradesTiles: Tile[] = [];
+  private key: string = '';
+  private type: string = '';
+  private grade: string = '';
+  private chords: myChord[] = [];
+  private filteredChords: myChord[] = [];
+  private status: string = "";
+  private serVal: string = "";
+  // private synth = SampleLibrary.load({
+  //   instruments: "piano"
+  // }).toDestination();
+  // private synth = new Tone.PolySynth().toDestination(); 
+
+  private synth;
+
+  constructor(
+    private translate: TranslateService, private cookie: CookieService) {
 
     this.translate.setDefaultLang('en');
     let lang = this.cookie.get('language');
@@ -28,108 +53,286 @@ export class NotefinderPage implements OnInit {
       this.translate.use(lang);
     }
 
-    this.categoryplace = 'all';
+    this.synth = new Tone.Sampler({
+      urls: {
+        A2: "pianoA2.wav",
+      },
+      baseUrl: "assets/instruments/",
+
+    }).toDestination();
   }
 
-  //selezionata la tonica la aggiunge a ogni nome nella struttura MusicData
-  public fillSearch(): void {
-    this.musicData.chords.forEach((chord, index) => {
-      chord.names.forEach((name, index) => {
-        chord.names[index] = this.keyplace + name;
+
+  selectInstrument() {
+    this.synth = '';
+
+    console.log(this.myInstrument + ".wav")
+
+    this.synth = new Tone.Sampler({
+      urls: {
+        A2: this.myInstrument.toLowerCase() + "A2.wav",
+      },
+      baseUrl: "assets/instruments/",
+
+    }).toDestination();
+  }
+
+  //fist byte = key
+  //second byte = type
+  //third byte = grade
+  checkStatus() {
+    this.status = "";
+
+    if (this.key == " " || this.key == "") {
+      this.status = this.status + "0";
+    }
+    else {
+      this.status = this.status + "1";
+    }
+
+    if (!this.typesTiles[0].selected && !this.typesTiles[1].selected &&
+      !this.typesTiles[2].selected && !this.typesTiles[3].selected) {
+      this.status = this.status + "0";
+    }
+    else {
+      this.status = this.status + "1";
+    }
+
+    if (!this.gradesTiles[0].selected && !this.gradesTiles[1].selected &&
+      !this.gradesTiles[2].selected && !this.gradesTiles[3].selected && !this.gradesTiles[4].selected) {
+      this.status = this.status + "0";
+    }
+    else {
+      this.status = this.status + "1";
+    }
+
+    console.log(this.status)
+  }
+
+  pushAll() {
+    this.chords = [];
+    let chordName = this.key.trim() + "major"
+    this.pushExtendedChords(chordName);
+    chordName = this.key.trim() + "min"
+    this.pushExtendedChords(chordName);
+    chordName = this.key.trim() + "dim"
+    this.pushExtendedChords(chordName);
+    chordName = this.key.trim() + "aug"
+    this.pushExtendedChords(chordName);
+  }
+
+  pushExtendedChords(chordName) {
+    let chordNameArray = Chord.extended(chordName);
+    this.chords.push({ chord: Chord.get(chordName), show: false })
+    chordNameArray.forEach(chord => {
+      this.chords.push({ chord: Chord.get(chord), show: false })
+    })
+  }
+
+  selectTypeTile(tile: Tile) {
+    this.type = this.convertName(tile.name);
+    this.toggleTypeTile(tile);
+    this.colorTiles()
+    this.searchChord();
+    console.log(this.type)
+  }
+
+  selectGradeTile(tile: Tile) {
+    this.grade = tile.name;
+    this.toggleGradeTile(tile);
+    this.colorTiles()
+    this.searchChord();
+    console.log(this.type)
+  }
+
+  //select or deselect a tile
+  toggleTypeTile(tile: Tile) {
+    if (tile.selected == false) {
+      this.typesTiles.forEach(tile => {
+        tile.selected = false;
       })
-    })
+      tile.selected = true;
+    } else {
+      tile.selected = false;
+    }
+  }
 
-    //se non viene effettuata una ricerca vengono mostrati tutti gli accordi
-    this.musicData.chords.forEach(chord => {
-      this.filteredChords.push(chord);
+  toggleGradeTile(tile: Tile) {
+
+    if (tile.selected == false) {
+      this.gradesTiles.forEach(tile => {
+        tile.selected = false;
+      })
+      tile.selected = true;
+    } else {
+      tile.selected = false;
+    }
+  }
+
+  convertName(name) {
+    // console.log(name)
+    switch (name) {
+      case "Major": return "major"
+      case "Minor": return "min"
+      case "Diminished": return "dim"
+      case "Augmented": return "aug"
+      default:
+        console.log("type error: ", name);
+        return name;
+    }
+  }
+
+  //color the tiles if selected
+  colorTiles() {
+    this.typesTiles.forEach(tile => {
+      if (tile.selected) {
+        tile.color = "secondary"
+      }
+      else {
+        tile.color = "light"
+      }
+    })
+    this.gradesTiles.forEach(tile => {
+      if (tile.selected) {
+        tile.color = "secondary"
+      }
+      else {
+        tile.color = "light"
+      }
     })
   }
 
-  public catSelected(): void {
-    console.log(this.categoryplace);
+  gradeFilter() {
+    //if the chord doesnt't contain the grade it is removed
+    if (this.status[2] == "1") {
+
+      let tmp: myChord[] = [];
+      this.chords.forEach(chord => {
+        if (chord.chord.symbol.includes(this.grade)) {
+          tmp.push(chord);
+        }
+      });
+
+      this.chords = tmp;
+    }
   }
 
-  getChords(ev: any) {
+  searchChord() {
+    this.checkStatus();
+    let chordName = this.key.trim() + this.type;
+    this.chords = [];
+    switch (this.status) {
+      case "000":
+        break;
 
-    let serVal = ev.target.value;
-    console.log(serVal)
+      case "010":
+      case "110":
+      case "011":
+      case "111":
+        this.pushExtendedChords(chordName);
+        this.gradeFilter();
+        this.getChords();
+        break;
+
+      default:
+        console.log("default")
+        this.pushAll();
+        this.gradeFilter();
+        this.getChords();
+        break;
+
+    }
+
+    console.log(chordName, this.chords)
+  }
+
+  getChords(ev?: any) {
+
+    if (ev) {
+      this.serVal = ev.target.value;
+    }
+
     let tmp: any[] = [];
 
-    this.musicData.chords.forEach(chord => {
-      let found: boolean = false;
-      chord.names.forEach(name => {
-        if (name.includes(serVal)) {
-          found = true;
+    this.chords.forEach(chord => {
+      if (chord.chord.symbol.toLowerCase().trim().includes(this.serVal)) {
 
-        }
-      })
-      if (found) {
         tmp.push(chord);
       }
-
     })
+
     this.filteredChords = tmp;
+    console.log(this.serVal, this.filteredChords)
   }
 
+  toggleCard(chord: myChord) {
+    if (chord.show == false) {
+      chord.show = true;
+    } else {
+      chord.show = false;
+    }
+  }
 
-  public findNotes(formula: string[]): string[] {
-    let retArray: string[] = [];
-    //cerca le note che compongono l'accordo 
-    this.musicData.tonalities.forEach(tonality => {
-      if (tonality.Name == this.keyplace) {
-        formula.forEach(num => {
-          num = num.replace('9', '2');
-          num = num.replace('11', '4');
-          num = num.replace('13', '6');
-          tonality.intervals.forEach(int => {
-            if (int.dist == num) {
-              retArray.push(int.name);
-            }
-          })
-        })
+  playChord(chord: myChord, mode: string) {
+    //assigns octave 4 to all notes than plays them together
+
+    let scale = ["Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
+
+    let notes = chord.chord.notes.map(function (note, idx) {
+
+      if (note.includes("##")) {
+        let idx = scale.indexOf(note.slice(0, -1));
+        note = scale[(idx + 2) % scale.length];
+        // console.log(idx, note, scale[idx % scale.length], scale[(idx + 2) % scale.length])
       }
-    })
-    return retArray;
-  }
 
-  public makeComponents(formula: string[]): ChordComponent[] {
-    // console.log('succhia', formula);
-    let notes: string[] = this.findNotes(formula);
-    let components: ChordComponent[] = [];
+      if (note.includes("bb")) {
+        let idx = scale.indexOf(note);
+        note = scale[(idx - 2) % scale.length];
+      }
 
-    //se la formula richiede l'ottava il componente viene creato con essa
-    notes.forEach((note, idx) => {
-      if (formula[idx].includes('9') || formula[idx].includes('11') || formula[idx].includes('13')) {
-        let component: ChordComponent = { selected: note, octaveSelected: true };
-        components.push(component);
+      if (parseInt(chord.chord.intervals[idx], 10) <= 7) {
+        return note = note + "3"
       } else {
-        let component: ChordComponent = { selected: note, octaveSelected: false };
-        components.push(component);
+        return note = note + "4"
+      }
+    });
+    console.log(notes);
+
+    if (mode == "arp")
+      notes.forEach((note, idx) => {
+        this.synth.triggerAttackRelease(note, "4n", Tone.now() + idx / 2);
+      })
+    else {
+      if (mode == "chord") {
+        this.synth.triggerAttackRelease(notes, "2n");
+      }
+    }
+  }
+
+  beautify(array: string[]) {
+    let myString: string = '';
+    array.forEach((element, idx) => {
+      if (idx != 0 && idx != array.length && element != '') {
+        myString = myString + ", " + element;
+      }
+      else {
+        myString = myString + element;
       }
     })
-
-    return components;
+    return myString;
   }
 
   ngOnInit() {
-    this.musicService.getData().subscribe((res) => {
-      this.musicData = res;
-      console.log(this.musicData);
+    this.scale = ["", "Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
+    let types = ["Major", "Minor", "Diminished", "Augmented"];
+    let grades = ["5", "7", "9", "11", "13"]
 
-    })
-  }
-
-  async helper(ev: any, contextTitle: string, contextContent: string) {
-    const popover = await this.popoverCtrl.create({
-      component: HelperComponent,
-      componentProps: {
-        contextTitle: contextTitle,
-        contextContent: contextContent
-      },
-      event: ev,
-      showBackdrop: true,
-      translucent: true
+    types.forEach(name => {
+      this.typesTiles.push({ name: name, color: "light", selected: false })
     });
-    return await popover.present();
+    grades.forEach(name => {
+      this.gradesTiles.push({ name: name, color: "light", selected: false })
+    });
   }
 }

@@ -11,22 +11,148 @@
 
 <ion-content id="content">
 
-  <ion-list>
-    <ion-item *ngFor="let track of metroData.tracks">
-      <ion-label>Beats:</ion-label>
-      <ion-button (click)="removeBeat(track)">
-        <ion-icon name="remove"></ion-icon>
-      </ion-button>
-      <ion-text style="padding: 3%;">{{track.beats}}</ion-text>
-      <ion-button (click)="addBeat(track)">
-        <ion-icon name="add"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
+  <ion-grid *ngIf="metronome">
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-text>BPM </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center">
+      <ion-col class="ion-text-right">
+        <ion-button size="small" color="secondary" (click)="metronome.modSettings('bpm', 'remove')">
+          <ion-icon name="remove"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="ion-text-center" size="2">
+        <ion-text> {{metronome.data.bpm}}</ion-text>
+      </ion-col>
+      <ion-col class="ion-text-left">
+        <!-- <ion-button disabled class="bpmNumber"> {{metronome.data.bpm}}</ion-button> -->
+        <ion-button size="small" color="secondary" (click)="metronome.modSettings('bpm', 'add')">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <ion-range [(ngModel)]="sliderValue" min="30" max="300" debounce="20" color="secondary"
+          (ionChange)="metronome.getSlider(sliderValue)">
+          <ion-icon name="musical-note" slot="start" size="small"></ion-icon>
+          <ion-icon name="musical-note" slot="end"></ion-icon>
+        </ion-range>
+      </ion-col>
+    </ion-row>
+
+
+
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <ion-text>Increase:</ion-text>
+      </ion-col>
+      <ion-col class="ion-text-right">
+        <ion-toggle [(ngModel)]="increase" color="secondary" (ionChange)="metronome.toggleIncrease(increase)">
+        </ion-toggle>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="increase" class="ion-align-items-center">
+      <ion-col size="6.5">
+        <ion-text>Final BPM:</ion-text>
+      </ion-col>
+      <ion-col size="2" class="ion-text-right">
+        <ion-button size="small" color="secondary" (click)="metronome.modSettings('final', 'remove')">
+          <ion-icon name="remove"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="1.5" class="ion-text-center">
+        <ion-text>{{metronome.data.finalBpm}}</ion-text>
+      </ion-col>
+      <ion-col size="2" class="ion-text-left">
+        <ion-button size="small" color="secondary" (click)="metronome.modSettings('final', 'add')">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="increase" class="ion-align-items-center">
+      <ion-col size="6.5">
+        <ion-text>Step:</ion-text>
+      </ion-col>
+      <ion-col size="2" class="ion-text-right">
+        <ion-button size="small" color="secondary" (click)="metronome.modSettings('step', 'remove')">
+          <ion-icon name="remove"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="1.5" class="ion-text-center">
+        <ion-text>{{metronome.data.stepBpm}}</ion-text>
+      </ion-col>
+      <ion-col size="2" class="ion-text-left">
+        <ion-button size="small" color="secondary" (click)="metronome.modSettings('step', 'add')">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row *ngIf="increase" style="padding-bottom: 3%;" class="ion-align-items-center">
+      <ion-col size="6.5">
+        <ion-text>Measures:</ion-text>
+      </ion-col>
+      <ion-col size="2" class="ion-text-right">
+        <ion-button size="small" color="secondary" (click)="metronome.modSettings('measures', 'remove')">
+          <ion-icon name="remove"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="1.5" class="ion-text-center">
+        <ion-text>{{metronome.data.measures}}</ion-text>
+      </ion-col>
+      <ion-col size="2" class="ion-text-left">
+        <ion-button size="small" color="secondary" (click)="metronome.modSettings('measures', 'add')">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="border-bottom: 1px solid rgb(184, 184, 184);">
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ng-container *ngFor="let track of metronome.data.tracks">
+
+      <ion-row style="padding-top: 3%;" class="ion-align-items-center">
+        <ion-col size="6.5">
+          <ion-text>Beats:</ion-text>
+        </ion-col>
+        <ion-col size="2" class="ion-text-right">
+          <ion-button size="small" color="secondary" (click)="metronome.modSettings('beat', 'remove', track)">
+            <ion-icon name="remove"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="1.5" class="ion-text-center">
+          <ion-text>{{track.beats}}</ion-text>
+        </ion-col>
+        <ion-col size="2" class="ion-text-left">
+          <ion-button size="small" color="secondary" (click)="metronome.modSettings('beat', 'add', track)">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ng-container>
+
+    <ion-row style="border-bottom: 1px solid rgb(184, 184, 184);">
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
   <ion-grid>
     <ion-row>
-      <ion-col class="playButton">
-        <ion-button (click)="showModal();">
+      <ion-col class="center">
+        <ion-button color="secondary" (click)="metronome.initializeMetronome();showModal();">
           <ion-icon name="play"></ion-icon>
         </ion-button>
       </ion-col>
@@ -34,9 +160,16 @@
   </ion-grid>
 
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" style="padding: 3%;" (click)="addTrack()">
-    <ion-fab-button>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="metronome.addTrack()">
+    <ion-fab-button color="secondary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" (click)="metronome.removeTrack()">
+    <ion-fab-button color="danger">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

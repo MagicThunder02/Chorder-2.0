@@ -11,90 +11,46 @@
 
 <ion-content>
 
-  <!-- <audio controls src="assets/ScarTissue.mp3"></audio> -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" *ngFor="let tile of tiles">
 
-  <ion-list>
+        <ion-button [color]="tile.color" expand="block" class="tiles" (click)="selectTile(tile)">
 
-    <!-- selezione della tonica -->
-    <ion-chip color="secondary" (click)="helper($event, 'helper-title.root', 'helper-content.root')">
-      <ion-label color="dark">{{'chordmaker.select_root' | translate}}</ion-label>
-      <ion-icon name="help-circle"></ion-icon>
-    </ion-chip>
+          {{tile.name}}
+
+        </ion-button>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 
-    <ion-item>
-      <ion-icon [name]="'trash'" color="danger" slot="start" (click)="deleteKey()"></ion-icon>
-      <ion-label>{{'chordmaker.root' | translate}}</ion-label>
-      <ion-select [(ngModel)]="keyplace" interface="popover" (ionChange)="selectedKey($event)">
-        <ion-select-option *ngFor="let tonality of musicData.tonalities" [value]="tonality.Name">
-          {{tonality.Name | musicNotation }}</ion-select-option>
+  <ion-card *ngFor="let chord of chords">
+    <ion-card-header (click)="toggleCard(chord)">
+      <ion-card-title>{{chord.symbol}}</ion-card-title>
+      <ion-card-subtitle *ngIf="chord.show"> {{chord.name}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="chord.show">
+      <ion-text *ngIf="chord.tonic">tonic: {{chord.tonic}} <br></ion-text>
+      <ion-text *ngIf="chord.root">root: {{chord.root}}<br></ion-text>
+      <ion-text *ngIf="chord.intervals">intervals: {{beautify(chord.intervals)}} <br></ion-text>
+      <ion-text *ngIf="chord.type"> type: {{chord.type}} <br></ion-text>
+      <ion-text *ngIf="chord.aliases"> aliases: {{beautify(chord.aliases)}} <br><br></ion-text>
+
+      <ion-text *ngIf="chord.extensions != ''"> extensions: {{beautify(chord.extensions)}} <br></ion-text>
+
+      <ion-text *ngIf="chord.reductions != ''"> reductions: {{beautify(chord.reductions)}}<br> <br></ion-text>
+
+      <ion-select [(ngModel)]="myInstrument" placeholder="Piano" slot="end" color="light" interface="popover"
+        (ionChange)="selectInstrument()">
+        <ion-select-option *ngFor="let instrument of instruments" [value]="instrument"> {{ instrument }}
+        </ion-select-option>
       </ion-select>
-    </ion-item>
+      <ion-button color="secondary" (click)="playChord(chord, 'chord')"> play chord </ion-button>
+      <ion-button color="secondary" (click)="playChord(chord, 'arp')"> play arpeggio </ion-button>
+    </ion-card-content>
+  </ion-card>
 
-  </ion-list>
-
-
-  <ion-list *ngIf="keyplace">
-
-    <!-- disegnamo i componenti dell'accordo -->
-    <ion-chip color="secondary" (click)="helper($event, 'helper-title.notes', 'helper-content.notes')">
-      <ion-label color="dark">{{'chordmaker.select_notes' | translate}}</ion-label>
-      <ion-icon name="help-circle"></ion-icon>
-    </ion-chip>
-
-    <ion-item *ngFor="let component of components; let idx = index; let lst = last">
-      <ion-icon *ngIf="!lst" [name]="'trash'" color="danger" slot="start" (click)="deleteNote(idx)">
-      </ion-icon>
-      <ion-icon *ngIf="lst" [name]="'arrow-dropright'" color="medium" slot="start"></ion-icon>
-      <ion-label>{{'chordmaker.notes' | translate}}</ion-label>
-      <ion-select [(ngModel)]="component.selected" interface="popover" (ionChange)="selectedNote(idx, component)">
-        <ng-container *ngFor="let interval of component.intervals">
-          <ion-select-option *ngIf="!interval.hide" [value]="interval.name">{{interval.name | musicNotation}}
-          </ion-select-option>
-        </ng-container>
-      </ion-select>
-      <ion-checkbox slot="end" color="success" [disabled]="!component.octaveEnable"
-        [(ngModel)]="component.octaveSelected" (ionChange)="selectedNote(idx, component)"></ion-checkbox>
-    </ion-item>
-
-    <ion-card *ngIf="(components.length > 3) && (FinalChords.length != 0)">
-      <ion-card-header>
-        <ion-card-title>{{ FinalChords[0][0] | musicSymbols | musicNotation}}</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-
-        <ng-container *ngIf="FinalChords[0].length > 1">
-          {{'chordmaker.aka' | translate}}
-          <strong>
-            <ng-container *ngFor="let chordName of FinalChords[0]; let lst = last; let fst = first">
-              <ion-text *ngIf="!lst && !fst">{{chordName | musicSymbols | musicNotation}}, </ion-text>
-              <ion-text *ngIf="lst">{{chordName | musicSymbols }}</ion-text>
-            </ng-container>
-          </strong>
-          <br> <br>
-        </ng-container>
-
-
-
-        <ng-container *ngIf="FinalChords.length > 1">
-          {{'chordmaker.subset_of:' | translate}}
-          <strong>
-            <ng-container *ngFor="let chords of FinalChords; let lst = last; let idx = index; let fst = first">
-              <ion-text *ngIf="!fst && idx<3">{{chords[0] | musicSymbols}}, </ion-text>
-              <ion-text *ngIf="idx==3">{{chords[0] | musicSymbols}} </ion-text>
-              <ion-text *ngIf="lst && FinalChords.length-5>0">{{'chordmaker.and_other' | translate}} {{FinalChords.length-5}} {{'chordmaker.chords' | translate}}</ion-text>
-            </ng-container>
-          </strong>
-        </ng-container>
-      </ion-card-content>
-      <ion-card-content>
-
-        <!-- visuallizzo i bottoni per suonare l'accordo -->
-        <app-player [components]="components"></app-player>
-
-      </ion-card-content>
-    </ion-card>
-
-  </ion-list>
 </ion-content>

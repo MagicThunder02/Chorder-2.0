@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Notefinder
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <!-- selezione della categoria -->
+    <ion-chip color="secondary" (click)="helper($event, 'helper-title.category', 'helper-content.category')">
+      <ion-label color="dark">{{'notefinder.category' | translate}}</ion-label>
+      <ion-icon name="help-circle"></ion-icon>
+    </ion-chip>
+
+    <ion-item>
+      <ion-select slot="end" [(ngModel)]="categoryplace" interface="popover" (ionChange)="catSelected()">
+        <ion-select-option [selected]="true" value="all"> {{'notefinder.all' | translate}} </ion-select-option>
+        <ion-select-option value="major"> {{'notefinder.major' | translate}} </ion-select-option>
+        <ion-select-option value="minor"> {{'notefinder.minor' | translate}} </ion-select-option>
+        <ion-select-option value="dominant"> {{'notefinder.dominant' | translate}} </ion-select-option>
+        <ion-select-option value="half-diminished"> {{'notefinder.half-diminished' | translate}} </ion-select-option>
+        <ion-select-option value="diminished"> {{'notefinder.diminished' | translate}} </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+    <!-- selezione della tonica -->
+    <ion-chip color="secondary" (click)="helper($event, 'helper-title.root', 'helper-content.root')">
+      <ion-label color="dark">{{'notefinder.root' | translate}}</ion-label>
+      <ion-icon name="help-circle"></ion-icon>
+    </ion-chip>
+
+    <ion-item>
+      <ion-select slot="end" [(ngModel)]="keyplace" interface="popover" (ionChange)="fillSearch()">
+        <ion-select-option *ngFor="let tonality of musicData.tonalities" [value]="tonality.Name">
+          {{tonality.Name | musicNotation }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list *ngIf="keyplace">
+
+    <ion-chip color="secondary">
+      <ion-label color="dark">{{'notefinder.filter' | translate}}</ion-label>
+    </ion-chip>
+    <ion-searchbar animated (ionChange)="getChords($event)"></ion-searchbar>
+
+
+    <ion-list *ngIf="categoryplace">
+      <ion-list-header>{{'notefinder.' + categoryplace | translate}}</ion-list-header>
+      <ng-container *ngFor="let chord of filteredChords">
+        <ng-container *ngIf="categoryplace == 'all' || chord.category === categoryplace">
+
+          <ion-card color="grey" >
+            <ion-card-header>
+              <ion-card-title (click)="chord.showCard = !chord.showCard">
+                {{chord.names[0] | musicSymbols | musicNotation}}
+              </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content *ngIf="chord.showCard">
+              <ng-container *ngIf="chord.names.length > 1">
+
+                <ion-chip>
+                  <ion-label>aka:</ion-label>
+                  <ng-container *ngFor="let chordName of chord.names; let lst = last; let fst = first">
+                    <ion-text *ngIf="!lst && !fst">{{chordName | musicSymbols | musicNotation}}, </ion-text> <br>
+                    <ion-text *ngIf="lst">{{chordName | musicSymbols}}</ion-text><br>
+                  </ng-container>
+                </ion-chip>
+
+                <br> <br>
+              </ng-container>
+
+              <ion-chip>
+                <ion-label>formula:</ion-label>
+                <ng-container *ngFor="let num of chord.formula; let lst = last">
+                  <ion-text *ngIf="!lst">{{num | musicSymbols}}, </ion-text>
+                  <ion-text *ngIf="lst">{{num | musicSymbols}}</ion-text>
+                </ng-container>
+              </ion-chip>
+
+              <!-- visuallizzo i bottoni per suonare l'accordo -->
+              <app-player [components]="makeComponents(chord.formula)"></app-player>
+
+            </ion-card-content>
+
+          </ion-card>
+
+        </ng-container>
+      </ng-container>
+    </ion-list>
+
+  </ion-list>
+</ion-content>

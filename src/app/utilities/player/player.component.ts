@@ -191,7 +191,7 @@ export class PlayerComponent implements OnInit {
       this.sampler.triggerAttackRelease(note, 1, time);
 
       let stopat = this.start + (this.notes.length - 1) - 0.001 //millesimo di secondo per l'arrotondamento
-      console.table(time, stopat, this.notes.length)
+      console.log(time, stopat, this.notes.length)
 
       if (time >= stopat) {
         //non suona più 

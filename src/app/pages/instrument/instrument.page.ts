@@ -22,14 +22,14 @@ export class InstrumentPage implements OnInit {
 
   constructor(private musicService: MusicService, private translate: TranslateService,
     private cookie: CookieService) {
-   
+
   }
 
-  public boardClick(event) {
-    let X0 = event.clientX;
-    let Y0 = event.clientY;
-    console.table(X0, Y0, event);
-  }
+  // public boardClick(event) {
+  //   let X0 = event.clientX;
+  //   let Y0 = event.clientY;
+  //   console.table(X0, Y0, event);
+  // }
 
   ngOnInit() {
   }

@@ -2,7 +2,6 @@ import { NgModule, SimpleChange } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ChordmakerPage } from './chordmaker.page';
 import { HelperComponent } from '../../utilities/helper/helper.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../home/home.module';
@@ -11,6 +10,7 @@ import { PipesModule } from '../../pipes/pipes-module/pipes.module';
 import { HelperModule } from '../../utilities/utilities.module';
 import { SimpleTimer } from 'ng2-simple-timer';
 import { RouterModule } from '@angular/router';
+import { ChordmakerPage } from './chordmaker.page';
 
 
 @NgModule({

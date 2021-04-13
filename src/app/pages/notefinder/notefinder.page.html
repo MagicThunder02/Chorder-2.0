@@ -11,93 +11,89 @@
 
 <ion-content>
 
-  <ion-list>
+  <ion-item>
+    <ion-select [(ngModel)]="key" slot="end" color="light" interface="popover" (ionChange)="searchChord()">
+      <ion-select-option *ngFor="let note of scale"> {{ note }}</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-    <!-- selezione della categoria -->
-    <ion-chip color="secondary" (click)="helper($event, 'helper-title.category', 'helper-content.category')">
-      <ion-label color="dark">{{'notefinder.category' | translate}}</ion-label>
-      <ion-icon name="help-circle"></ion-icon>
-    </ion-chip>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3" *ngFor="let tile of typesTiles">
+        <ion-button [color]="tile.color" expand="block" class="tiles" (click)="selectTypeTile(tile)">
+          {{tile.name}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    <ion-item>
-      <ion-select slot="end" [(ngModel)]="categoryplace" interface="popover" (ionChange)="catSelected()">
-        <ion-select-option [selected]="true" value="all"> {{'notefinder.all' | translate}} </ion-select-option>
-        <ion-select-option value="major"> {{'notefinder.major' | translate}} </ion-select-option>
-        <ion-select-option value="minor"> {{'notefinder.minor' | translate}} </ion-select-option>
-        <ion-select-option value="dominant"> {{'notefinder.dominant' | translate}} </ion-select-option>
-        <ion-select-option value="half-diminished"> {{'notefinder.half-diminished' | translate}} </ion-select-option>
-        <ion-select-option value="diminished"> {{'notefinder.diminished' | translate}} </ion-select-option>
-      </ion-select>
-    </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12/5" *ngFor="let tile of gradesTiles">
+        <ion-button [color]="tile.color" expand="block" class="tiles" (click)="selectGradeTile(tile)">
+          {{tile.name}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-searchbar animated color="light" (ionChange)="getChords($event)"></ion-searchbar>
+
+  <ng-container *ngIf="filteredChords.length == 0 ">
+    <ion-card *ngFor="let chord of chords">
+      <ion-card-header (click)="toggleCard(chord)" *ngIf="!chord.chord.empty">
+        <ion-card-title>{{chord.chord.symbol}}</ion-card-title>
+        <ion-card-subtitle *ngIf="chord.show"> {{chord.chord.name}}</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="chord.show && chord.chord.notes.length != 0"> notes: {{beautify(chord.chord.notes)}}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content *ngIf="chord.show">
+        <ion-text *ngIf="chord.chord.tonic">tonic: {{chord.chord.tonic}} <br></ion-text>
+        <ion-text *ngIf="chord.chord.root">root: {{chord.chord.root}}<br></ion-text>
+        <ion-text *ngIf="chord.chord.intervals">intervals: {{beautify(chord.chord.intervals)}} <br></ion-text>
+        <ion-text *ngIf="chord.chord.type"> type: {{chord.chord.type}} <br></ion-text>
+        <ion-text *ngIf="chord.chord.aliases"> aliases: {{beautify(chord.chord.aliases)}}<br></ion-text>
+
+        <ion-button (click)=playChord()> play </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- if the searchbar is active -->
+  <ng-container *ngIf="filteredChords.length > 0 ">
+    <ion-card *ngFor="let chord of filteredChords">
+      <ion-card-header (click)="toggleCard(chord)" *ngIf="!chord.chord.empty">
+        <ion-card-title>{{chord.chord.symbol}}</ion-card-title>
+        <ion-card-subtitle *ngIf="chord.show"> {{chord.chord.name}}</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="chord.show && chord.chord.notes.length != 0"> notes: {{beautify(chord.chord.notes)}}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content *ngIf="chord.show">
+        <ion-text *ngIf="chord.chord.tonic">tonic: {{chord.chord.tonic}} <br></ion-text>
+        <ion-text *ngIf="chord.chord.root">root: {{chord.chord.root}}<br></ion-text>
+        <ion-text *ngIf="chord.chord.intervals">intervals: {{beautify(chord.chord.intervals)}} <br></ion-text>
+        <ion-text *ngIf="chord.chord.type"> type: {{chord.chord.type}} <br></ion-text>
+        <ion-text *ngIf="chord.chord.aliases"> aliases: {{beautify(chord.chord.aliases)}}<br><br></ion-text>
 
 
-    <!-- selezione della tonica -->
-    <ion-chip color="secondary" (click)="helper($event, 'helper-title.root', 'helper-content.root')">
-      <ion-label color="dark">{{'notefinder.root' | translate}}</ion-label>
-      <ion-icon name="help-circle"></ion-icon>
-    </ion-chip>
+        <ion-select *ngIf="status[0]==1" [(ngModel)]="myInstrument" placeholder="Piano" slot="end" color="light"
+          interface="popover" (ionChange)="selectInstrument()">
+          <ion-select-option *ngFor="let instrument of instruments" [value]="instrument"> {{ instrument }}
+          </ion-select-option>
+        </ion-select>
 
-    <ion-item>
-      <ion-select slot="end" [(ngModel)]="keyplace" interface="popover" (ionChange)="fillSearch()">
-        <ion-select-option *ngFor="let tonality of musicData.tonalities" [value]="tonality.Name">
-          {{tonality.Name | musicNotation }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+        <ion-button *ngIf="status[0]==1" color="secondary" (click)="playChord(chord, 'chord')">
+          play chord
+        </ion-button>
 
-  </ion-list>
+        <ion-button *ngIf="status[0]==1" color="secondary" (click)="playChord(chord, 'arp')">
+          play arpeggio
+        </ion-button>
 
-  <ion-list *ngIf="keyplace">
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 
-    <ion-chip color="secondary">
-      <ion-label color="dark">{{'notefinder.filter' | translate}}</ion-label>
-    </ion-chip>
-    <ion-searchbar animated (ionChange)="getChords($event)"></ion-searchbar>
-
-
-    <ion-list *ngIf="categoryplace">
-      <ion-list-header>{{'notefinder.' + categoryplace | translate}}</ion-list-header>
-      <ng-container *ngFor="let chord of filteredChords">
-        <ng-container *ngIf="categoryplace == 'all' || chord.category === categoryplace">
-
-          <ion-card color="grey" >
-            <ion-card-header>
-              <ion-card-title (click)="chord.showCard = !chord.showCard">
-                {{chord.names[0] | musicSymbols | musicNotation}}
-              </ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content *ngIf="chord.showCard">
-              <ng-container *ngIf="chord.names.length > 1">
-
-                <ion-chip>
-                  <ion-label>aka:</ion-label>
-                  <ng-container *ngFor="let chordName of chord.names; let lst = last; let fst = first">
-                    <ion-text *ngIf="!lst && !fst">{{chordName | musicSymbols | musicNotation}}, </ion-text> <br>
-                    <ion-text *ngIf="lst">{{chordName | musicSymbols}}</ion-text><br>
-                  </ng-container>
-                </ion-chip>
-
-                <br> <br>
-              </ng-container>
-
-              <ion-chip>
-                <ion-label>formula:</ion-label>
-                <ng-container *ngFor="let num of chord.formula; let lst = last">
-                  <ion-text *ngIf="!lst">{{num | musicSymbols}}, </ion-text>
-                  <ion-text *ngIf="lst">{{num | musicSymbols}}</ion-text>
-                </ng-container>
-              </ion-chip>
-
-              <!-- visuallizzo i bottoni per suonare l'accordo -->
-              <app-player [components]="makeComponents(chord.formula)"></app-player>
-
-            </ion-card-content>
-
-          </ion-card>
-
-        </ng-container>
-      </ng-container>
-    </ion-list>
-
-  </ion-list>
 </ion-content>

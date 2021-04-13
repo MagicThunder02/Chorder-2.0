@@ -7,9 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { OptionsPageRoutingModule } from './options-routing.module';
 
 import { OptionsPage } from './options.page';
-import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CookieService } from 'ngx-cookie-service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -29,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     OptionsPageRoutingModule
   ],
-  declarations: [OptionsPage]
+  declarations: [OptionsPage],
+  providers: [CookieService],
 })
-export class OptionsPageModule {}
+export class OptionsPageModule { }

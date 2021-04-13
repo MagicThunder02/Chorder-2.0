@@ -7,14 +7,13 @@ ion-col {
 }
 
 
-.circle {
-    background-color: grey;
+.ball {
     border-radius: 50%;
     position: absolute;
-    max-width: 50px;
-    max-height: 50px;
+    max-width: 40px;
+    max-height: 40px;
     z-index: 2;
-
+    border: 1px solid gray;
     }
 
 .circumpherence {

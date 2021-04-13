@@ -4,22 +4,29 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content (click)="printMousePos($event)">
 
-  <ng-container *ngFor="let track of metronome.data.tracks">
-    <div *ngFor="let ball of track.drawings.balls" [style.background]="ball.color" [style.height]="ball.radius + 'px'"
-      [style.width]="ball.radius + 'px'" [style.left]="ball.cX + 'px'" [style.top]="ball.cY + 'px'" class="circle">
-    </div>
+  <ng-container *ngIf="metronome">
 
-    <ng-container *ngIf="metronome.data.tracks.length >= 2">
-      <div *ngFor="let track of metronome.data.tracks"
-        [style.border]="track.drawings.circle.thickness + 'px' + ' solid ' + track.drawings.circle.color"
-        [style.height]="track.drawings.circle.radius + 'px'" [style.width]="track.drawings.circle.radius + 'px'"
-        [style.left]="track.drawings.circle.cX + 'px'" [style.top]="track.drawings.circle.cY + 'px'"
-        class="circumpherence">
+    <ion-item lines="none" *ngIf="metronome" class="ion-text-center">
+      <ion-label>BPM: <br>{{metronome.data.showBpm}}</ion-label>
+    </ion-item>
+
+    <ng-container *ngFor="let track of metronome.data.tracks">
+      <div *ngFor="let ball of track.drawings.balls" [style.background]="ball.color" [style.height]="ball.radius + 'px'"
+        [style.width]="ball.radius + 'px'" [style.left]="ball.cX + 'px'" [style.top]="ball.cY + 'px'" class="ball">
       </div>
+
+      <ng-container *ngIf="metronome.data.tracks.length >= 2">
+        <div *ngFor="let track of metronome.data.tracks"
+          [style.border]="track.drawings.circle.thickness + 'px' + ' solid ' + track.drawings.circle.color"
+          [style.height]="track.drawings.circle.radius + 'px'" [style.width]="track.drawings.circle.radius + 'px'"
+          [style.left]="track.drawings.circle.cX + 'px'" [style.top]="track.drawings.circle.cY + 'px'"
+          class="circumpherence">
+        </div>
+      </ng-container>
+      <!-- <ion-text> {{index}}</ion-text> -->
     </ng-container>
-    <!-- <ion-text> {{index}}</ion-text> -->
   </ng-container>
 
 </ion-content>
@@ -29,28 +36,27 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-button (click)="metronome.runMetronome('removeBpm')">
+          <ion-button color="secondary" (click)="metronome.runMetronome('removeBpm')">
             <ion-icon name="remove"></ion-icon>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="metronome.runMetronome('stop'); closeModal()">
+          <ion-button color="secondary" (click)="metronome.runMetronome('stop'); closeModal()">
             <ion-icon name="arrow-back"></ion-icon>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="metronome.runMetronome('start')">
-
+          <ion-button color="secondary" (click)="metronome.runMetronome('start'); metronome.refreshActualBpm();">
             <ion-icon name="play"></ion-icon>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="metronome.runMetronome('pause')">
+          <ion-button color="secondary" (click)="metronome.runMetronome('pause')">
             <ion-icon name="pause"></ion-icon>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="metronome.runMetronome('addBpm')">
+          <ion-button color="secondary" (click)="metronome.runMetronome('addBpm')">
             <ion-icon name="add"></ion-icon>
           </ion-button>
         </ion-col>
