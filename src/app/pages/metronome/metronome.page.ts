@@ -1,6 +1,6 @@
 import { ApplicationRef, Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { MetroData, Metronome, } from './metronome.model';
+import { Metronome, } from './metronome.model';
 import { ShowMetronomePage } from './show/show-metronome.page';
 import * as Tone from "tone";
 

@@ -3,7 +3,7 @@ import { MetroTrack } from "./metronome.model";
 
 export interface Ball {
     color: string;
-    radius: number;
+    diameter: number;
     cX: number;
     cY: number;
 }
@@ -27,7 +27,7 @@ export class Drawings {
     canvas: MetroCanvas;
     balls: Ball[];
     circle: Circle;
-    circRadius: number;
+    circDiameter: number;
 
     constructor(
         track: MetroTrack,
@@ -38,8 +38,8 @@ export class Drawings {
     ) {
         this.getCanvas(doc);
         this.createBalls(track);
-        this.calcSmallRadius(track, maxBeats);
-        this.calcCircRadiuses(numTracks, index);
+        this.calcBallDiameter(track, maxBeats);
+        this.calcCircRadius(numTracks, index);
         this.drawCircles(track);
     }
 
@@ -60,34 +60,40 @@ export class Drawings {
         //generate the balls, 
         this.balls = [];
         for (let i = 0; i < track.beats; i++) {
-            this.balls.push(({ color: '#9d9fa6', radius: 0, cX: 0, cY: 0 }))
+            this.balls.push(({ color: '#9d9fa6', diameter: 0, cX: 0, cY: 0 }))
         }
         this.circle = { color: 'black', radius: 0, thickness: 0, cX: 0, cY: 0 }
     }
 
-    private calcSmallRadius(track: MetroTrack, maxBeats: number) {
-        //set radiuses of the balls depending on the beats of the greatest circle
+    private calcBallDiameter(track: MetroTrack, maxBeats: number) {
+        //set diameteres of the balls depending on the beats of the greatest circle
         // console.log(this.canvas)
         this.balls.forEach(ball => {
             if (this.canvas.contentHeight >= this.canvas.contentWidth) {
-                ball.radius = this.canvas.contentWidth / (maxBeats * 2);
+
+                ball.diameter = this.canvas.contentWidth / (maxBeats * 2);
+                if (ball.diameter > 40) {
+                    ball.diameter = 40;
+                }
+
+                console.log(ball.diameter)
             } else {
-                ball.radius = this.canvas.contentHeight / (maxBeats * 2);
+                ball.diameter = this.canvas.contentHeight / (maxBeats * 2);
             }
         });
         this.circle.thickness = 2;
         this.circle.color = 'black';
     }
 
-    private calcCircRadiuses(numTracks: number, index: number) {
-        //set radiuses of each outern circumference
-        let ballRadius = this.balls[0].radius;
+    private calcCircRadius(numTracks: number, index: number) {
+        //set diameteres of each outern circumference
+        let ballDiameter = this.balls[0].diameter;
         if (this.canvas.contentHeight >= this.canvas.contentWidth) {
-            this.circRadius = ((this.canvas.contentWidth / 2) / numTracks) * (index + 1) - ballRadius;
+            this.circDiameter = ((this.canvas.contentWidth / 2) / numTracks) * (index + 1) - ballDiameter;
         } else {
-            this.circRadius = ((this.canvas.contentHeight / 2) / numTracks) * (index + 1) - ballRadius;
+            this.circDiameter = ((this.canvas.contentHeight / 2) / numTracks) * (index + 1) - ballDiameter;
         }
-        this.circle.radius = this.circRadius * 2;
+        this.circle.radius = this.circDiameter * 2;
     }
 
     private drawCircles(track: MetroTrack) {
@@ -96,17 +102,18 @@ export class Drawings {
             this.balls.forEach((ball, i) => {
 
                 //set x e y
-                let x0 = this.canvas.contentWidth / 2 - ball.radius / 2;
-                let y0 = this.canvas.contentHeight / 2 - ball.radius;
+                let x0 = this.canvas.contentWidth / 2 - ball.diameter / 2;
+                let y0 = this.canvas.contentHeight / 2 - ball.diameter / 2;
                 let angle = 2 * Math.PI / track.beats * i
 
-                ball.cX = x0 + this.circRadius * Math.cos(angle - Math.PI / 2);
-                ball.cY = y0 + this.circRadius * Math.sin(angle - Math.PI / 2);
+                ball.cX = x0 + this.circDiameter * Math.cos(angle - Math.PI / 2);
+                ball.cY = y0 + this.circDiameter * Math.sin(angle - Math.PI / 2);
 
-                this.circle.cX = x0 + this.circRadius * Math.cos(Math.PI) + ball.radius / 2 + this.circle.thickness / 2;
-                this.circle.cY = y0 + this.circRadius * Math.sin(- Math.PI / 2) + ball.radius / 2 + this.circle.thickness / 2;
 
-                // console.log('balls drawed', ball.cX, ball.cY)
+                this.circle.cX = x0 + this.circDiameter * Math.cos(Math.PI) + ball.diameter / 2 + this.circle.thickness / 2;
+                this.circle.cY = y0 + this.circDiameter * Math.sin(- Math.PI / 2) + ball.diameter / 2 + this.circle.thickness / 2;
+
+                // console.log('balls drawed', x0, y0, ball.diameter)
             })
         }
     }

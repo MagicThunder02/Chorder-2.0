@@ -29,7 +29,7 @@ export class Metronome {
     private synth: any = [];
     private events: any[] = [];
     private doc: any;
-    private longpress: any = 'press';
+    // private longpress: any = 'press';
 
     constructor(
         appRef: ApplicationRef,

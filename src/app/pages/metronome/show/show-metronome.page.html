@@ -13,8 +13,9 @@
     </ion-item>
 
     <ng-container *ngFor="let track of metronome.data.tracks">
-      <div *ngFor="let ball of track.drawings.balls" [style.background]="ball.color" [style.height]="ball.radius + 'px'"
-        [style.width]="ball.radius + 'px'" [style.left]="ball.cX + 'px'" [style.top]="ball.cY + 'px'" class="ball">
+      <div *ngFor="let ball of track.drawings.balls" [style.background]="ball.color"
+        [style.height]="ball.diameter + 'px'" [style.width]="ball.diameter + 'px'" [style.left]="ball.cX + 'px'"
+        [style.top]="ball.cY + 'px'" class="ball">
       </div>
 
       <ng-container *ngIf="metronome.data.tracks.length >= 2">
