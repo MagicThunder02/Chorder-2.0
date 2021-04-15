@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from "ngx-cookie-service";
 import { TranslateService } from '@ngx-translate/core';
-import { InstrumentsService } from 'src/app/services/instruments.service';
 
 @Component({
   selector: 'app-options',
@@ -14,7 +13,7 @@ export class OptionsPage implements OnInit {
   public instrument: string = 'piano';
   public myInstruments = [];
 
-  constructor(private cookie: CookieService, private instruments: InstrumentsService, private translate: TranslateService) { }
+  constructor(private cookie: CookieService, private translate: TranslateService) { }
 
   ionViewDidEnter(): void {
 
@@ -50,12 +49,6 @@ export class OptionsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.instruments.getData().subscribe((res) => {
-      Object.keys(res.instruments).forEach(key => {
-        this.myInstruments.push(res.instruments[key])
-      })
-      console.log(this.myInstruments);
-    })
-  }
 
+  }
 }

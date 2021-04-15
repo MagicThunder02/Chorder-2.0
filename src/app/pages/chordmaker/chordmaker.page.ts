@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Chord, Interval } from "@tonaljs/tonal";
 import * as Tone from 'tone';
+import { MusicNotationPipe } from 'src/app/pipes/music-notation.pipe';
 // import * as SampleLibrary from 'tjss.js';
 
 
@@ -33,9 +34,12 @@ export interface myChord {
 })
 export class ChordmakerPage implements OnInit {
 
+  private musicNotationPipe = new MusicNotationPipe();
+
   private tiles: Tile[] = [];
   private notes: string[] = [];
   private chords: myChord[] = [];
+  public notation: string = 'american';
 
   private instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
   private myInstrument: string = '';
@@ -210,11 +214,12 @@ export class ChordmakerPage implements OnInit {
     let myString: string = '';
     array.forEach((element, idx) => {
       if (idx != 0 && idx != array.length && element != '') {
-        myString = myString + ", " + element;
+        myString = myString + ", " + this.musicNotationPipe.transform(element, this.notation);
       }
       else {
-        myString = myString + element;
+        myString = myString + this.musicNotationPipe.transform(element, this.notation);
       }
+
     })
     return myString;
   }

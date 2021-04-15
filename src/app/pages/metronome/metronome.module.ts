@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { MetronomePage } from './metronome.page';
 import { RouterModule } from '@angular/router';
 import { ShowMetronomePage } from './show/show-metronome.page';
-import { ControlsMetronomePage } from './controls-metronome/controls-metronome.page';
-
 
 @NgModule({
   imports: [
@@ -25,13 +23,9 @@ import { ControlsMetronomePage } from './controls-metronome/controls-metronome.p
         path: '/show',
         component: ShowMetronomePage
       },
-      {
-        path: '/controls',
-        component: ControlsMetronomePage
-      }
     ]),
   ],
   // declarations: [MetronomePage, ControlsMetronomePage],
-  declarations: [MetronomePage, ShowMetronomePage, ControlsMetronomePage],
+  declarations: [MetronomePage, ShowMetronomePage],
 })
 export class MetronomePageModule { }

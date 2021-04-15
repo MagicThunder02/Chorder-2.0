@@ -7,16 +7,32 @@ ion-input {
 }
 
 ion-text {
-    padding-left: 3%;
-    padding-right: 3%;
+    font-size: medium;
+    padding-left: 2%;
+    padding-right: 2%;
 } 
 
 .center {
     text-align: center;
 }
- 
-.bpmNumber{
-display: block;
-    align-content: center!important;
-    // align-items: center!important;
+
+.showColor {
+    margin: 0 auto;
+    width: 6vmin;
+    height: 6vmin;
+    border-radius: 50%;
+    border: 1px solid black;
+    background-color: grey;
+}
+
+.bpmClass {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    padding: 1%;
+    margin: 0 auto;
+    width: 20vmin;
+    height: 12vmin;
+    border-radius: 5px;
+    border: 2px solid gray;
 }

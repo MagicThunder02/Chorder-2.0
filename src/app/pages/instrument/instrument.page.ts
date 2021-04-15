@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicService } from 'src/app/services/music.service';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
-import { BoardModel } from './board.model';
+
 
 @Component({
   selector: 'app-instrument',
@@ -11,16 +10,8 @@ import { BoardModel } from './board.model';
 })
 export class InstrumentPage implements OnInit {
 
-  private guitarBoard: BoardModel = {
-    offsetX: 0,
-    offsetY: 0,
-    kX: 0,
-    kY: 0,
-    thresholdX: 0,
-    thresholdY: 0,
-  };
 
-  constructor(private musicService: MusicService, private translate: TranslateService,
+  constructor(private translate: TranslateService,
     private cookie: CookieService) {
 
   }

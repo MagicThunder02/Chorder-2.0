@@ -9,32 +9,32 @@ export class MenuService {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'home-outline'
     },
     {
       title: 'ChordMaker',
       url: '/chordmaker',
-      icon: 'recording'
+      icon: 'hammer-outline'
     },
     {
       title: 'Notefinder',
       url: '/notefinder',
-      icon: 'search'
+      icon: 'search-outline'
     },
     {
       title: 'home.metronome',
       url: '/metronome',
-      icon: 'stopwatch'
+      icon: 'stopwatch-outline'
     },
     {
       title: 'home.instrument',
       url: '/instrument',
-      icon: 'musical-notes'
+      icon: 'musical-notes-outline'
     },
     {
       title: 'home.options',
       url: '/options',
-      icon: 'cog'
+      icon: 'settings-outline'
     }
   ];
 

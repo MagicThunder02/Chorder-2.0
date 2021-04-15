@@ -8,7 +8,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MusicService } from './services/music.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TooltipsModule } from 'ionic4-tooltips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -47,8 +46,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
-    MusicService,
-    // Media,
     CookieService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MusicNotationPipe } from '../music-notation.pipe';
-import { MusicSymbolsPipe } from '../music-symbols.pipe';
-
-
 
 @NgModule({
-  declarations: [MusicNotationPipe, MusicSymbolsPipe],
+  declarations: [MusicNotationPipe],
   imports: [
     CommonModule
   ],
   exports: [
-    MusicNotationPipe, MusicSymbolsPipe
+    MusicNotationPipe
   ]
 })
 export class PipesModule { }

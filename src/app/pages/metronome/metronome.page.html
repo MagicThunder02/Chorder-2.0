@@ -12,20 +12,23 @@
 <ion-content id="content">
 
   <ion-grid *ngIf="metronome">
-    <ion-row>
-      <ion-col class="ion-text-center">
-        <ion-text>BPM </ion-text>
-      </ion-col>
-    </ion-row>
 
-    <ion-row class="ion-align-items-center">
+    <ion-row class="ion-align-items-center" style="padding-top: 5%;">
       <ion-col class="ion-text-right">
         <ion-button size="small" color="secondary" (click)="metronome.modSettings('bpm', 'remove')">
           <ion-icon name="remove"></ion-icon>
         </ion-button>
       </ion-col>
-      <ion-col class="ion-text-center" size="2">
-        <ion-text> {{metronome.data.bpm}}</ion-text>
+      <ion-col class="ion-text-center">
+
+        <div class="container">
+          <div *ngIf="metronome" class="bpmClass">
+            <ion-text> BPM <br>
+              {{metronome.data.bpm}}
+            </ion-text>
+          </div>
+        </div>
+
       </ion-col>
       <ion-col class="ion-text-left">
         <!-- <ion-button disabled class="bpmNumber"> {{metronome.data.bpm}}</ion-button> -->
@@ -39,8 +42,8 @@
       <ion-col>
         <ion-range [(ngModel)]="sliderValue" min="30" max="300" debounce="20" color="secondary"
           (ionChange)="metronome.getSlider(sliderValue)">
-          <ion-icon name="musical-note" slot="start" size="small"></ion-icon>
-          <ion-icon name="musical-note" slot="end"></ion-icon>
+          <ion-icon name="musical-notes" slot="start" size="small"></ion-icon>
+          <ion-icon name="musical-notes" slot="end"></ion-icon>
         </ion-range>
       </ion-col>
     </ion-row>
@@ -122,9 +125,22 @@
     <ng-container *ngFor="let track of metronome.data.tracks">
 
       <ion-row style="padding-top: 3%;" class="ion-align-items-center">
-        <ion-col size="6.5">
+
+        <ion-col *ngIf="!track.toggle" size="1">
+          <ion-icon name="caret-forward-circle-outline" size="large" color="medium"
+            (click)="metronome.toggleTrackOptions($event, track)">
+          </ion-icon>
+        </ion-col>
+        <ion-col *ngIf="track.toggle" size="1">
+          <ion-icon name="caret-down-circle-outline" size="large" color="medium"
+            (click)="metronome.toggleTrackOptions($event, track)">
+          </ion-icon>
+        </ion-col>
+
+        <ion-col size="5.5">
           <ion-text>Beats:</ion-text>
         </ion-col>
+
         <ion-col size="2" class="ion-text-right">
           <ion-button size="small" color="secondary" (click)="metronome.modSettings('beat', 'remove', track)">
             <ion-icon name="remove"></ion-icon>
@@ -138,6 +154,49 @@
             <ion-icon name="add"></ion-icon>
           </ion-button>
         </ion-col>
+
+      </ion-row>
+
+      <ion-row *ngIf="track.toggle" style="padding-top: 3%;" class="ion-align-items-center">
+        <ion-col size="6.5">
+          <ion-text>Color:</ion-text>
+        </ion-col>
+
+        <ion-col size="2" class="ion-text-right">
+          <ion-button size="small" color="secondary" (click)="metronome.changeTrackOptions('color', 'remove', track)">
+            <ion-icon name="caret-back-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="1.5" class="ion-text-center">
+          <div class="showColor" [style.background-color]="track.color"></div>
+        </ion-col>
+        <ion-col size="2" class="ion-text-left">
+          <ion-button size="small" color="secondary" (click)="metronome.changeTrackOptions('color', 'add', track)">
+            <ion-icon name="caret-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row *ngIf="track.toggle" style="padding-top: 3%;" class="ion-align-items-center">
+        <ion-col size="6.5">
+          <ion-text>Sound:</ion-text>
+        </ion-col>
+
+        <ion-col size="2" class="ion-text-right">
+          <ion-button size="small" color="secondary" (click)="metronome.changeTrackOptions('sound', 'remove', track)">
+            <ion-icon name="caret-back-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="1.5" class="ion-text-center">
+          <ion-text>{{track.sound}}</ion-text>
+        </ion-col>
+        <ion-col size="2" class="ion-text-left">
+          <ion-button size="small" color="secondary" (click)="metronome.changeTrackOptions('sound', 'add', track)">
+            <ion-icon name="caret-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+
       </ion-row>
 
     </ng-container>

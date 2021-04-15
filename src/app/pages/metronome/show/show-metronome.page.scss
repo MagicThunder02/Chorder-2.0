@@ -2,7 +2,7 @@ ion-content {
     --overflow: hidden;
 }
 ion-col {
-    border: 1px solid red;
+    // border: 1px solid red;
     text-align: center;
 }
 
@@ -25,42 +25,21 @@ ion-col {
     // z-index: -1;
 }
 
-.pulse {
-    // background-color: green;
-    -webkit-animation-name: pulse;
-    animation-name: pulse;
-    // -webkit-animation-duration: 2s;
-    // animation-duration: 2s;
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    }
-    @-webkit-keyframes pulse {
-    0% {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-    }
-    50% {
-    -webkit-transform: scale3d(1.05, 1.05, 1.05);
-    transform: scale3d(1.5, 1.5, 1.5);
-    }
-    100% {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-    }
-    }
-    @keyframes pulse {
-    0% {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-    }
-    50% {
-    -webkit-transform: scale3d(1.05, 1.05, 1.05);
-    transform: scale3d(1.5, 1.5, 1.5);
-    }
-    100% {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-    }
-    } 
+.container {
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    text-align: center;
+}
+
+.bpmClass {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    text-align: center;
+    width: 20vmin;
+    height: 12vmin;
+    border-radius: 5px;
+    border: 2px solid gray;
+}

@@ -4,11 +4,13 @@ import { Drawings } from './drawings.model';
 
 
 export interface MetroTrack {
+    toggle: boolean;
     beats: number;
     idx?: number;
-
     drawings?: Drawings;
+    color: string;
     sound: string;
+    synth: any;
 }
 
 export class MetroData {
@@ -20,13 +22,14 @@ export class MetroData {
     measureCount: number;
     showBpm: number;
     tracks: MetroTrack[];
+    colors: string[];
+    sounds: string[];
 }
 
 export class Metronome {
     private data: MetroData;
 
     public appRef: ApplicationRef;
-    private synth: any = [];
     private events: any[] = [];
     private doc: any;
     // private longpress: any = 'press';
@@ -62,11 +65,17 @@ export class Metronome {
             showBpm: 120,
             tracks: [
                 {
+                    toggle: false,
                     beats: 8,
                     idx: 0,
-                    sound: "tick.wav",
+                    sound: "Tick",
+                    color: "#3dc2ff",
+                    synth: '',
                 },
-            ]
+            ],
+            //secondary, success, warning, danger
+            colors: ["#3dc2ff", "#2dd36f", "#ffc409", "#eb445a"],
+            sounds: ["Tick", "Tock", "Bell", "Tube"],
         }
 
         console.table(this.data);
@@ -112,23 +121,26 @@ export class Metronome {
 
             switch (this.data.tracks.length) {
                 case 0:
-                    sound = "tick.wav";
+                    sound = "Tick";
                     break;
                 case 1:
-                    sound = "tock.wav";
+                    sound = "Tock";
                     break;
                 case 2:
-                    sound = "cowbell.wav";
+                    sound = "Bell";
                     break;
                 case 3:
-                    sound = "ding.wav";
+                    sound = "Tube";
                     break;
             }
 
             this.data.tracks.push({
+                toggle: false,
                 beats: 8,
                 idx: 0,
                 sound: sound,
+                color: "#3dc2ff",
+                synth: '',
             })
         }
         console.log('tracks', this.data.tracks)
@@ -140,6 +152,55 @@ export class Metronome {
         }
     }
 
+    public changeTrackOptions(parameter, operation, track: MetroTrack) {
+
+        let idx: number = 0;
+
+        switch (parameter) {
+
+            case "color":
+                idx = this.data.colors.indexOf(track.color)
+                if (operation == "add") {
+                    idx = (idx + 1) % this.data.colors.length;
+                }
+                else {
+                    if (idx == 0) {
+                        idx = this.data.colors.length;
+                    }
+                    idx = (idx - 1) % this.data.colors.length;
+                }
+
+                track.color = this.data.colors[idx];
+                break;
+
+            case "sound":
+                idx = this.data.sounds.indexOf(track.sound);
+                if (operation == "add") {
+                    idx = (idx + 1) % this.data.sounds.length;
+                }
+                else {
+                    if (idx == 0) {
+                        idx = this.data.sounds.length;
+                    }
+                    idx = (idx - 1) % this.data.sounds.length;
+                }
+                track.sound = this.data.sounds[idx]
+                break;
+        }
+
+    }
+
+    public toggleTrackOptions(event, track: MetroTrack) {
+        if (track) {
+            if (track.toggle) {
+                track.toggle = false;
+            }
+            else {
+                track.toggle = true;
+            }
+            event.stopPropagation();
+        }
+    }
     // public longPress(parameter: string, operation: string, track?: MetroTrack) {
     //     console.log(this.longpress);
 
@@ -292,12 +353,12 @@ export class Metronome {
         this.data.tracks.forEach(track => {
             let sampler = new Tone.Sampler({
                 urls: {
-                    C3: `${track.sound}`,
+                    C3: `${track.sound}.wav`,
                 },
                 baseUrl: "assets/instruments/"
 
             }).toDestination();
-            this.synth.push(sampler)
+            track.synth = sampler;
         })
     }
 
@@ -311,13 +372,13 @@ export class Metronome {
 
             let part = new Tone.Part(((time, value) => {
                 // the value is an object which contains both the note and the velocity
-                this.synth[i].triggerAttackRelease(value.note, "4n", time);
+                track.synth.triggerAttackRelease(value.note, "4n", time);
 
             }), this.createMeasure(track)).start(0);
 
             let loop = new Tone.Loop((time) => {
 
-                track.drawings.lightBall(track.idx, this.appRef);
+                track.drawings.lightBall(track, this.appRef);
                 this.increaseBpm();
 
                 track.idx++;

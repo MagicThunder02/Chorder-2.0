@@ -76,7 +76,6 @@ export class Drawings {
                     ball.diameter = 40;
                 }
 
-                console.log(ball.diameter)
             } else {
                 ball.diameter = this.canvas.contentHeight / (maxBeats * 2);
             }
@@ -117,17 +116,23 @@ export class Drawings {
             })
         }
     }
-    public lightBall(idx, appRef) {
+
+    public lightBall(track, appRef) {
         this.balls.forEach(ball => {
-            ball.color = '#9d9fa6';
+            ball.color = '#9d9fa6'; //grey
         })
-        if (idx == 0) {
-            this.balls[idx].color = '#3880ff';
+        if (track.idx == 0) {
+            this.balls[track.idx].color = this.shadeColor(track.color, -80);
         }
         else {
-            this.balls[idx].color = '#50c8ff';
+            this.balls[track.idx].color = track.color;
         }
         appRef.tick();
+    }
+
+    private shadeColor(color: string, amount: number) {
+
+        return '#' + color.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
     }
 }
 

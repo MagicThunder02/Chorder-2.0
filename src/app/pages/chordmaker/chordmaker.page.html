@@ -17,7 +17,7 @@
 
         <ion-button [color]="tile.color" expand="block" class="tiles" (click)="selectTile(tile)">
 
-          {{tile.name}}
+          {{tile.name | musicNotation}}
 
         </ion-button>
 
@@ -28,20 +28,22 @@
 
   <ion-card *ngFor="let chord of chords">
     <ion-card-header (click)="toggleCard(chord)">
-      <ion-card-title>{{chord.symbol}}</ion-card-title>
-      <ion-card-subtitle *ngIf="chord.show"> {{chord.name}}</ion-card-subtitle>
+      <ion-card-title>{{chord.symbol | musicNotation}}</ion-card-title>
+      <ion-card-subtitle *ngIf="chord.show"> {{chord.name | musicNotation}}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content *ngIf="chord.show">
-      <ion-text *ngIf="chord.tonic">tonic: {{chord.tonic}} <br></ion-text>
-      <ion-text *ngIf="chord.root">root: {{chord.root}}<br></ion-text>
+      <ion-text *ngIf="chord.tonic">tonic: {{chord.tonic | musicNotation}} <br></ion-text>
+      <ion-text *ngIf="chord.root">root: {{chord.root | musicNotation}}<br></ion-text>
       <ion-text *ngIf="chord.intervals">intervals: {{beautify(chord.intervals)}} <br></ion-text>
-      <ion-text *ngIf="chord.type"> type: {{chord.type}} <br></ion-text>
+      <ion-text *ngIf="chord.type"> type: {{chord.type }} <br></ion-text>
       <ion-text *ngIf="chord.aliases"> aliases: {{beautify(chord.aliases)}} <br><br></ion-text>
 
-      <ion-text *ngIf="chord.extensions != ''"> extensions: {{beautify(chord.extensions)}} <br></ion-text>
+      <ion-text *ngIf="chord.extensions != ''"> extensions: {{beautify(chord.extensions)}} <br>
+      </ion-text>
 
-      <ion-text *ngIf="chord.reductions != ''"> reductions: {{beautify(chord.reductions)}}<br> <br></ion-text>
+      <ion-text *ngIf="chord.reductions != ''"> reductions: {{beautify(chord.reductions)}}<br> <br>
+      </ion-text>
 
       <ion-select [(ngModel)]="myInstrument" placeholder="Piano" slot="end" color="light" interface="popover"
         (ionChange)="selectInstrument()">

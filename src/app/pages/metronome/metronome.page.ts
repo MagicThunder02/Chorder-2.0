@@ -14,24 +14,13 @@ import * as Tone from "tone";
 export class MetronomePage implements OnInit {
 
   public metronome: Metronome
-  public toggled: boolean = false;
   public sliderValue: number = 120;
-  public increase: boolean = false;
 
   constructor(
     private modalController: ModalController,
     private applicationRef: ApplicationRef,
   ) {
 
-  }
-
-  public toggleOptions() {
-    if (this.toggled) {
-      this.toggled = false;
-    }
-    else {
-      this.toggled = true;
-    }
   }
 
   ionViewDidEnter() {

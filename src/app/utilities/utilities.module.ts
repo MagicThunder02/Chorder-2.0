@@ -6,10 +6,9 @@ import { PipesModule } from '../pipes/pipes-module/pipes.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../pages/home/home.module';
 import { HttpClient } from '@angular/common/http';
-import { PlayerComponent } from './player/player.component';
 
 @NgModule({
-  declarations: [HelperComponent, PlayerComponent],
+  declarations: [HelperComponent],
   imports: [
     CommonModule,
     IonicModule,
@@ -23,7 +22,7 @@ import { PlayerComponent } from './player/player.component';
     }),
   ],
   exports: [
-    HelperComponent, PlayerComponent
+    HelperComponent,
   ]
 })
 export class HelperModule { }
