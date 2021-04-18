@@ -36,13 +36,15 @@ export class ChordmakerPage implements OnInit {
 
   private musicNotationPipe = new MusicNotationPipe();
 
-  private tiles: Tile[] = [];
+  public tiles: Tile[] = [];
   private notes: string[] = [];
-  private chords: myChord[] = [];
+  public chords: myChord[] = [];
   public notation: string = 'american';
+  public expandReduction: boolean = false;
+  public expandExtensions: boolean = false;
 
-  private instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
-  private myInstrument: string = '';
+  public instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
+  public myInstrument: string = '';
 
   // private synth = new Tone.PolySynth().toDestination();
   private synth;
@@ -210,18 +212,34 @@ export class ChordmakerPage implements OnInit {
     }
   }
 
-  beautify(array: string[]) {
+  beautify(array: string[], pipe: boolean = true) {
     let myString: string = '';
-    array.forEach((element, idx) => {
-      if (idx != 0 && idx != array.length && element != '') {
-        myString = myString + ", " + this.musicNotationPipe.transform(element, this.notation);
-      }
-      else {
-        myString = myString + this.musicNotationPipe.transform(element, this.notation);
-      }
 
-    })
-    return myString;
+    switch (pipe) {
+
+      case true:
+        array.forEach((element, idx) => {
+          if (idx != 0 && idx != array.length && element != '') {
+            myString = myString + ", " + this.musicNotationPipe.transform(element, this.notation);
+          }
+          else {
+            myString = myString + this.musicNotationPipe.transform(element, this.notation);
+          }
+
+        })
+        return myString;
+
+      case false: array.forEach((element, idx) => {
+        if (idx != 0 && idx != array.length && element != '') {
+          myString = myString + ", " + element;
+        }
+        else {
+          myString = myString + element
+        }
+
+      })
+        return myString;
+    }
   }
 
   ionViewDidEnter(): void {

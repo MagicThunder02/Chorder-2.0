@@ -3,23 +3,39 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      ChordMaker
-    </ion-title>
+
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col class="ion-text-left" size="10.5">
+          <ion-title>
+            ChordMaker
+          </ion-title>
+        </ion-col>
+        <ion-col size="1.5" style="display: flex !important;">
+          <ion-icon name="information-circle-outline" color="medium" size="large"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
 
   <ion-grid>
     <ion-row>
-      <ion-col size="4" *ngFor="let tile of tiles">
+      <ion-col size="4" *ngFor="let tile of tiles" class="col-tiles">
 
-        <ion-button [color]="tile.color" expand="block" class="tiles" (click)="selectTile(tile)">
+        <ion-card [color]="tile.color" (click)="selectTile(tile)" class="card-tiles">
 
-          {{tile.name | musicNotation}}
+          <ion-card-content class="card-title">
+            {{tile.name | musicNotation}}
+          </ion-card-content>
 
-        </ion-button>
+
+        </ion-card>
 
       </ion-col>
     </ion-row>
@@ -28,22 +44,49 @@
 
   <ion-card *ngFor="let chord of chords">
     <ion-card-header (click)="toggleCard(chord)">
-      <ion-card-title>{{chord.symbol | musicNotation}}</ion-card-title>
-      <ion-card-subtitle *ngIf="chord.show"> {{chord.name | musicNotation}}</ion-card-subtitle>
+      <ion-card-title class="card-title">{{chord.symbol | musicNotation}}</ion-card-title>
+      <ion-card-subtitle *ngIf="chord.show" class="card-subtitle"> {{chord.name | musicNotation}}</ion-card-subtitle>
     </ion-card-header>
 
-    <ion-card-content *ngIf="chord.show">
+    <ion-card-content *ngIf="chord.show" class="card-content">
       <ion-text *ngIf="chord.tonic">tonic: {{chord.tonic | musicNotation}} <br></ion-text>
       <ion-text *ngIf="chord.root">root: {{chord.root | musicNotation}}<br></ion-text>
-      <ion-text *ngIf="chord.intervals">intervals: {{beautify(chord.intervals)}} <br></ion-text>
+      <ion-text *ngIf="chord.intervals">intervals: {{beautify(chord.intervals, false)}} <br></ion-text>
       <ion-text *ngIf="chord.type"> type: {{chord.type }} <br></ion-text>
       <ion-text *ngIf="chord.aliases"> aliases: {{beautify(chord.aliases)}} <br><br></ion-text>
 
-      <ion-text *ngIf="chord.extensions != ''"> extensions: {{beautify(chord.extensions)}} <br>
-      </ion-text>
+      <ng-container *ngIf="!expandExtensions">
+        <ion-text *ngIf="chord.extensions != ''" class="center"> extensions:
+          {{beautify(chord.extensions.slice(0, 3))}}
+          <ion-icon *ngIf="chord.extensions.length > 3" name="ellipsis-horizontal" style="padding-left: 3%;"
+            (click)="expandExtensions=true"></ion-icon> <br>
+        </ion-text>
+      </ng-container>
 
-      <ion-text *ngIf="chord.reductions != ''"> reductions: {{beautify(chord.reductions)}}<br> <br>
-      </ion-text>
+      <ng-container *ngIf="expandExtensions">
+        <ion-text *ngIf="chord.extensions != ''" class="center"> extensions: {{beautify(chord.extensions)}}
+        </ion-text>
+        <ion-icon *ngIf="chord.extensions.length > 3" name="ellipsis-horizontal" (click)="expandExtensions=false">
+        </ion-icon>
+        <br>
+      </ng-container>
+
+
+      <ng-container *ngIf="!expandReduction">
+        <ion-text *ngIf="chord.reductions != ''" class="center"> reductions:
+          {{beautify(chord.reductions.slice(0, 3))}}
+          <ion-icon *ngIf="chord.reductions.length > 3" name="ellipsis-horizontal" style="padding-left: 3%;"
+            (click)="expandReduction=true"></ion-icon> <br>
+        </ion-text>
+      </ng-container>
+
+      <ng-container *ngIf="expandReduction">
+        <ion-text *ngIf="chord.reductions != ''" class="center"> reductions: {{beautify(chord.reductions)}}
+        </ion-text>
+        <ion-icon *ngIf="chord.reductions.length > 3" name="ellipsis-horizontal" (click)="expandReduction=false">
+        </ion-icon>
+        <br>
+      </ng-container>
 
       <ion-select [(ngModel)]="myInstrument" placeholder="Piano" slot="end" color="light" interface="popover"
         (ionChange)="selectInstrument()">

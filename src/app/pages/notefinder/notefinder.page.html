@@ -3,9 +3,20 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Notefinder
-    </ion-title>
+
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col class="ion-text-left" size="10.5">
+          <ion-title>
+            Notefinder
+          </ion-title>
+        </ion-col>
+        <ion-col size="1.5" style="display: flex !important;">
+          <ion-icon name="information-circle-outline" color="medium" size="large"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
   </ion-toolbar>
 </ion-header>
 
@@ -54,8 +65,6 @@
         <ion-text *ngIf="chord.chord.intervals">intervals: {{beautify(chord.chord.intervals)}} <br></ion-text>
         <ion-text *ngIf="chord.chord.type"> type: {{chord.chord.type}} <br></ion-text>
         <ion-text *ngIf="chord.chord.aliases"> aliases: {{beautify(chord.chord.aliases)}}<br></ion-text>
-
-        <ion-button (click)=playChord()> play </ion-button>
       </ion-card-content>
     </ion-card>
   </ng-container>
@@ -78,17 +87,17 @@
         <ion-text *ngIf="chord.chord.aliases"> aliases: {{beautify(chord.chord.aliases)}}<br><br></ion-text>
 
 
-        <ion-select *ngIf="status[0]==1" [(ngModel)]="myInstrument" placeholder="Piano" slot="end" color="light"
+        <ion-select *ngIf="status[0]=='1'" [(ngModel)]="myInstrument" placeholder="Piano" slot="end" color="light"
           interface="popover" (ionChange)="selectInstrument()">
           <ion-select-option *ngFor="let instrument of instruments" [value]="instrument"> {{ instrument }}
           </ion-select-option>
         </ion-select>
 
-        <ion-button *ngIf="status[0]==1" color="secondary" (click)="playChord(chord, 'chord')">
+        <ion-button *ngIf="status[0]=='1'" color="secondary" (click)="playChord(chord, 'chord')">
           play chord
         </ion-button>
 
-        <ion-button *ngIf="status[0]==1" color="secondary" (click)="playChord(chord, 'arp')">
+        <ion-button *ngIf="status[0]=='1'" color="secondary" (click)="playChord(chord, 'arp')">
           play arpeggio
         </ion-button>
 

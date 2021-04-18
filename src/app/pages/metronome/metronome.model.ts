@@ -27,7 +27,7 @@ export class MetroData {
 }
 
 export class Metronome {
-    private data: MetroData;
+    public data: MetroData;
 
     public appRef: ApplicationRef;
     private events: any[] = [];

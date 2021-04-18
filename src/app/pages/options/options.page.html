@@ -3,42 +3,46 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      {{ 'options.title' | translate }}
-    </ion-title>
+
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col class="ion-text-left" size="10.5">
+          <ion-title>
+            ChordMaker
+          </ion-title>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-radio-group>
+    <ion-radio-group value="default">
 
       <ion-list-header>
         <ion-label>{{ 'options.notation' | translate }}</ion-label>
       </ion-list-header>
 
       <ion-item>
-        <ion-avatar slot="end">
-          <img src="/assets/flags/usa.svg">
-        </ion-avatar>
         <ion-label>{{ 'options.anglosaxon' | translate }}</ion-label>
-        <ion-radio slot="start" value="anglosaxon" (click)="notationClick('anglosaxon')"></ion-radio>
+        <ion-radio slot="start" value="default" (click)="notationClick('american')"></ion-radio>
+        <ion-text> C, D, E ...</ion-text>
       </ion-item>
 
       <ion-item>
-        <ion-avatar slot="end">
-          <img src="/assets/flags/eu.svg">
-        </ion-avatar>
         <ion-label>{{ 'options.natural' | translate }}</ion-label>
-        <ion-radio slot="start" value="natural" (click)="notationClick('natural')">
-        </ion-radio>
+        <ion-radio slot="start" (click)="notationClick('normal')"></ion-radio>
+        <ion-text> Do, Re, Mi ...</ion-text>
       </ion-item>
 
     </ion-radio-group>
   </ion-list>
 
   <ion-list>
-    <ion-radio-group>
+    <ion-radio-group value="default">
 
       <ion-list-header>
         <ion-label>{{ 'options.language' | translate }}</ion-label>
@@ -49,7 +53,7 @@
           <img src="/assets/flags/england.svg">
         </ion-avatar>
         <ion-label>{{ 'options.english' | translate }} </ion-label>
-        <ion-radio slot="start" value="english" (click)="languageClick('en')"></ion-radio>
+        <ion-radio slot="start" value="default" (click)="languageClick('en')"></ion-radio>
       </ion-item>
 
       <ion-item>
@@ -57,7 +61,7 @@
           <img src="/assets/flags/italy.svg">
         </ion-avatar>
         <ion-label>{{ 'options.italian' | translate }}</ion-label>
-        <ion-radio slot="start" value="italian" (click)="languageClick('it')"></ion-radio>
+        <ion-radio slot="start" (click)="languageClick('it')"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>

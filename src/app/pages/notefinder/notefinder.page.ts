@@ -24,18 +24,18 @@ export interface myChord {
 
 export class NotefinderPage implements OnInit {
 
-  private instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
-  private myInstrument: string = '';
+  public instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
+  public myInstrument: string = '';
 
-  private scale: string[] = [];
-  private typesTiles: Tile[] = [];
-  private gradesTiles: Tile[] = [];
-  private key: string = '';
+  public scale: string[] = [];
+  public typesTiles: Tile[] = [];
+  public gradesTiles: Tile[] = [];
+  public key: string = '';
   private type: string = '';
   private grade: string = '';
-  private chords: myChord[] = [];
-  private filteredChords: myChord[] = [];
-  private status: string = "";
+  public chords: myChord[] = [];
+  public filteredChords: myChord[] = [];
+  public status: string = "";
   private serVal: string = "";
   // private synth = SampleLibrary.load({
   //   instruments: "piano"

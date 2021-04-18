@@ -1,5 +1,46 @@
-.tiles {
+.col-tiles {
     text-align: center;
     text-transform: none;
-    font-weight: bold;
+    // border: 1px solid red;
+    height: 14%;
+}
+
+.card-tiles {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: auto;
+    height: 100%;
+    border: 1px solid gray;
+}
+
+.card-title {
+  font-size: 5vmin;
+  font-weight: normal;
+}
+
+.card-subtitle {
+    font-size: 4.5vmin;
+    font-weight: normal;
+  }
+
+.card-content {
+    font-size: 4vmin;
+    font-weight: normal;
+  }
+
+.center {
+display: flex;
+// justify-content: center;
+align-items: center; 
+}
+
+ion-grid {
+    // border: 1px solid green;
+    height: 70%;
+}
+
+ion-row {
+    // border: 1px solid blue;
+    height: 100%;
 }

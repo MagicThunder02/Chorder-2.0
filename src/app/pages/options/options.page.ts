@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from "ngx-cookie-service";
 import { TranslateService } from '@ngx-translate/core';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-options',
@@ -8,44 +9,37 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./options.page.scss'],
 })
 export class OptionsPage implements OnInit {
-  public lang: string = 'en';
-  public notation: string = 'natural';
-  public instrument: string = 'piano';
-  public myInstruments = [];
 
-  constructor(private cookie: CookieService, private translate: TranslateService) { }
+  constructor(private translate: TranslateService, public global: GlobalService) { }
 
   ionViewDidEnter(): void {
 
-    if (this.cookie.get('language')) {
-      this.lang = this.cookie.get('language');
-    }
-    if (this.cookie.get('notation')) {
-      this.notation = this.cookie.get('notation');
-    }
-    if (this.cookie.get('instrument')) {
-      this.instrument = this.cookie.get('instrument');
-    }
+    // if (this.cookie.get('language')) {
+    //   this.lang = this.cookie.get('language');
+    // }
+    // if (this.cookie.get('notation')) {
+    //   this.notation = this.cookie.get('notation');
+    // }
+    // if (this.cookie.get('instrument')) {
+    //   this.instrument = this.cookie.get('instrument');
+    // }
 
-    this.translate.setDefaultLang(this.lang);
-    this.translate.use(this.lang);
-
-  }
-
-  public radioInstrument(event: any) {
-    console.log(event.detail)
-    this.instrument = event.detail.value;
-    this.cookie.set('instrument', this.instrument);
+    this.translate.setDefaultLang(this.global.language);
+    this.translate.use(this.global.language);
   }
 
   public notationClick(lang: string) {
-    this.notation = lang;
-    this.cookie.set('notation', this.notation);
+    // this.notation = lang;
+    this.global.notation = lang;
+    console.log(this.global.notation)
+    // this.cookie.set('notation', this.notation);
   }
 
   public languageClick(lang: string) {
-    this.cookie.set('language', lang);
-    location.reload();
+    // this.cookie.set('language', lang);
+    this.global.language = lang;
+    console.log(this.global.language)
+    this.translate.use(this.global.language);
   }
 
   ngOnInit() {

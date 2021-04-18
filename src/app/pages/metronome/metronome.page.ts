@@ -15,6 +15,7 @@ export class MetronomePage implements OnInit {
 
   public metronome: Metronome
   public sliderValue: number = 120;
+  public increase: boolean = false;
 
   constructor(
     private modalController: ModalController,
