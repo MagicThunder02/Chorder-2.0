@@ -8,7 +8,7 @@
       <ion-row class="ion-align-items-center">
         <ion-col class="ion-text-left" size="10.5">
           <ion-title>
-            ChordMaker
+            {{'home.options' | translate}}
           </ion-title>
         </ion-col>
 
@@ -28,13 +28,13 @@
 
       <ion-item>
         <ion-label>{{ 'options.anglosaxon' | translate }}</ion-label>
-        <ion-radio slot="start" value="default" (click)="notationClick('american')"></ion-radio>
+        <ion-radio slot="start" value="default" (click)="optionClick('notation', 'american')"></ion-radio>
         <ion-text> C, D, E ...</ion-text>
       </ion-item>
 
       <ion-item>
         <ion-label>{{ 'options.natural' | translate }}</ion-label>
-        <ion-radio slot="start" (click)="notationClick('normal')"></ion-radio>
+        <ion-radio slot="start" (click)="optionClick('notation', 'normal')"></ion-radio>
         <ion-text> Do, Re, Mi ...</ion-text>
       </ion-item>
 
@@ -53,7 +53,7 @@
           <img src="/assets/flags/england.svg">
         </ion-avatar>
         <ion-label>{{ 'options.english' | translate }} </ion-label>
-        <ion-radio slot="start" value="default" (click)="languageClick('en')"></ion-radio>
+        <ion-radio slot="start" value="default" (click)="optionClick('language', 'en')"></ion-radio>
       </ion-item>
 
       <ion-item>
@@ -61,9 +61,25 @@
           <img src="/assets/flags/italy.svg">
         </ion-avatar>
         <ion-label>{{ 'options.italian' | translate }}</ion-label>
-        <ion-radio slot="start" (click)="languageClick('it')"></ion-radio>
+        <ion-radio slot="start" (click)="optionClick('language', 'it')"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>
 
+  <ion-list>
+    <ion-radio-group value="piano">
+
+      <ion-list-header>
+        <ion-label>{{ 'options.instrument' | translate }}</ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let instrument of instruments">
+        <ion-avatar slot="end">
+          <ion-img [src]="'assets/icons/'+instrument+'.jpg'"></ion-img>
+        </ion-avatar>
+        <ion-label> {{ 'instrument.'+instrument | translate }}</ion-label>
+        <ion-radio slot="start" [value]="instrument" (click)="optionClick('instrument', instrument)"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
 </ion-content>

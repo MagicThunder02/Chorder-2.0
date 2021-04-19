@@ -7,7 +7,7 @@ import { GlobalService } from '../services/global.service';
 export class MusicNotationPipe implements PipeTransform {
 
 
-  constructor(private global?: GlobalService) {
+  constructor(public global?: GlobalService) {
   }
 
   transform(value: string, ...args: string[]): string {

@@ -26,11 +26,11 @@ export class MenuService {
       url: '/metronome',
       icon: 'stopwatch-outline'
     },
-    {
-      title: 'home.instrument',
-      url: '/instrument',
-      icon: 'musical-notes-outline'
-    },
+    // {
+    //   title: 'home.instrument',
+    //   url: '/instrument',
+    //   icon: 'musical-notes-outline'
+    // },
     {
       title: 'home.options',
       url: '/options',

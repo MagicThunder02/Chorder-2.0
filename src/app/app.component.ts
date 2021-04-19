@@ -4,6 +4,8 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MenuService } from './services/menu.service';
+import { GlobalService } from './services/global.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,9 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private menu: MenuService
+    private menu: MenuService,
+    private global: GlobalService,
+    private translate: TranslateService
   ) {
     this.appPages = menu.appPages;
     this.initializeApp();
@@ -29,5 +33,11 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+    this.translate.setDefaultLang('en');
+    let lang = this.global.language;
+    if (lang) {
+      this.translate.use(lang);
+    }
   }
 }

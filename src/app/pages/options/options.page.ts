@@ -10,6 +10,8 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class OptionsPage implements OnInit {
 
+  public instruments: string[] = ["cello", "contrabass", "guitar-nylon", "guitar-acoustic", "harmonium", "piano", "saxophone"];
+
   constructor(private translate: TranslateService, public global: GlobalService) { }
 
   ionViewDidEnter(): void {
@@ -28,18 +30,25 @@ export class OptionsPage implements OnInit {
     this.translate.use(this.global.language);
   }
 
-  public notationClick(lang: string) {
-    // this.notation = lang;
-    this.global.notation = lang;
-    console.log(this.global.notation)
-    // this.cookie.set('notation', this.notation);
-  }
+  public optionClick(parameter, value) {
 
-  public languageClick(lang: string) {
-    // this.cookie.set('language', lang);
-    this.global.language = lang;
-    console.log(this.global.language)
-    this.translate.use(this.global.language);
+    switch (parameter) {
+      case 'notation':
+        this.global.notation = value;
+        console.log(this.global.notation)
+        break;
+
+      case 'language':
+        this.global.language = value;
+        console.log(this.global.language)
+        this.translate.use(this.global.language);
+        break;
+
+      case 'instrument':
+        this.global.instrument = value;
+        console.log(this.global.instrument)
+        break;
+    }
   }
 
   ngOnInit() {

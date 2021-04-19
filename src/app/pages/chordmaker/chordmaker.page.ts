@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Chord, Interval } from "@tonaljs/tonal";
 import * as Tone from 'tone';
 import { MusicNotationPipe } from 'src/app/pipes/music-notation.pipe';
+import { GlobalService } from 'src/app/services/global.service';
 // import * as SampleLibrary from 'tjss.js';
 
 
@@ -34,23 +35,18 @@ export interface myChord {
 })
 export class ChordmakerPage implements OnInit {
 
-  private musicNotationPipe = new MusicNotationPipe();
+  private musicNotationPipe = new MusicNotationPipe(this.global);
 
   public tiles: Tile[] = [];
   private notes: string[] = [];
   public chords: myChord[] = [];
-  public notation: string = 'american';
   public expandReduction: boolean = false;
   public expandExtensions: boolean = false;
-
-  public instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
-  public myInstrument: string = '';
 
   // private synth = new Tone.PolySynth().toDestination();
   private synth;
 
-  constructor(
-    private translate: TranslateService, private cookie: CookieService) {
+  constructor(private translate: TranslateService, public global: GlobalService) {
 
     this.synth = new Tone.Sampler({
       urls: {
@@ -72,11 +68,10 @@ export class ChordmakerPage implements OnInit {
   selectInstrument() {
     this.synth = '';
 
-    console.log(this.myInstrument + ".wav")
-
+    console.log(this.global.instrument)
     this.synth = new Tone.Sampler({
       urls: {
-        A2: this.myInstrument.toLowerCase() + "A2.wav",
+        A2: this.global.instrument + "A2.wav",
       },
       baseUrl: "assets/instruments/",
 
@@ -220,10 +215,10 @@ export class ChordmakerPage implements OnInit {
       case true:
         array.forEach((element, idx) => {
           if (idx != 0 && idx != array.length && element != '') {
-            myString = myString + ", " + this.musicNotationPipe.transform(element, this.notation);
+            myString = myString + ", " + this.musicNotationPipe.transform(element);
           }
           else {
-            myString = myString + this.musicNotationPipe.transform(element, this.notation);
+            myString = myString + this.musicNotationPipe.transform(element);
           }
 
         })
@@ -243,11 +238,7 @@ export class ChordmakerPage implements OnInit {
   }
 
   ionViewDidEnter(): void {
-    this.translate.setDefaultLang('en');
-    let lang = this.cookie.get('language');
-    if (lang) {
-      this.translate.use(lang);
-    }
+    this.selectInstrument()
   }
 
   ngOnInit() {

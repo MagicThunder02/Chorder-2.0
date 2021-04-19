@@ -49,14 +49,18 @@
     </ion-card-header>
 
     <ion-card-content *ngIf="chord.show" class="card-content">
-      <ion-text *ngIf="chord.tonic">tonic: {{chord.tonic | musicNotation}} <br></ion-text>
-      <ion-text *ngIf="chord.root">root: {{chord.root | musicNotation}}<br></ion-text>
-      <ion-text *ngIf="chord.intervals">intervals: {{beautify(chord.intervals, false)}} <br></ion-text>
-      <ion-text *ngIf="chord.type"> type: {{chord.type }} <br></ion-text>
-      <ion-text *ngIf="chord.aliases"> aliases: {{beautify(chord.aliases)}} <br><br></ion-text>
+      <ion-text *ngIf="chord.tonic">{{'chordmaker.tonic' | translate}}: {{chord.tonic | musicNotation}} <br></ion-text>
+      <ion-text *ngIf="chord.root">{{'chordmaker.root' | translate}}: {{chord.root | musicNotation}}<br></ion-text>
+      <ion-text *ngIf="chord.intervals != ''">{{'chordmaker.intervals' | translate}}: {{beautify(chord.intervals,
+        false)}}
+        <br>
+      </ion-text>
+      <ion-text *ngIf="chord.type"> {{'chordmaker.type' | translate}}: {{chord.type}} <br></ion-text>
+      <ion-text *ngIf="chord.aliases != ''"> {{'chordmaker.aliases' | translate}}: {{beautify(chord.aliases)}} <br><br>
+      </ion-text>
 
       <ng-container *ngIf="!expandExtensions">
-        <ion-text *ngIf="chord.extensions != ''" class="center"> extensions:
+        <ion-text *ngIf="chord.extensions != ''" class="center"> {{'chordmaker.extensions' | translate}}:
           {{beautify(chord.extensions.slice(0, 3))}}
           <ion-icon *ngIf="chord.extensions.length > 3" name="ellipsis-horizontal" style="padding-left: 3%;"
             (click)="expandExtensions=true"></ion-icon> <br>
@@ -64,7 +68,8 @@
       </ng-container>
 
       <ng-container *ngIf="expandExtensions">
-        <ion-text *ngIf="chord.extensions != ''" class="center"> extensions: {{beautify(chord.extensions)}}
+        <ion-text *ngIf="chord.extensions != ''" class="center"> {{'chordmaker.extensions' | translate}}:
+          {{beautify(chord.extensions)}}
         </ion-text>
         <ion-icon *ngIf="chord.extensions.length > 3" name="ellipsis-horizontal" (click)="expandExtensions=false">
         </ion-icon>
@@ -73,7 +78,7 @@
 
 
       <ng-container *ngIf="!expandReduction">
-        <ion-text *ngIf="chord.reductions != ''" class="center"> reductions:
+        <ion-text *ngIf="chord.reductions != ''" class="center"> {{'chordmaker.reductions' | translate}}:
           {{beautify(chord.reductions.slice(0, 3))}}
           <ion-icon *ngIf="chord.reductions.length > 3" name="ellipsis-horizontal" style="padding-left: 3%;"
             (click)="expandReduction=true"></ion-icon> <br>
@@ -81,20 +86,18 @@
       </ng-container>
 
       <ng-container *ngIf="expandReduction">
-        <ion-text *ngIf="chord.reductions != ''" class="center"> reductions: {{beautify(chord.reductions)}}
+        <ion-text *ngIf="chord.reductions != ''" class="center"> {{'chordmaker.reductions' | translate}}:
+          {{beautify(chord.reductions)}}
         </ion-text>
         <ion-icon *ngIf="chord.reductions.length > 3" name="ellipsis-horizontal" (click)="expandReduction=false">
         </ion-icon>
-        <br>
-      </ng-container>
 
-      <ion-select [(ngModel)]="myInstrument" placeholder="Piano" slot="end" color="light" interface="popover"
-        (ionChange)="selectInstrument()">
-        <ion-select-option *ngFor="let instrument of instruments" [value]="instrument"> {{ instrument }}
-        </ion-select-option>
-      </ion-select>
-      <ion-button color="secondary" (click)="playChord(chord, 'chord')"> play chord </ion-button>
-      <ion-button color="secondary" (click)="playChord(chord, 'arp')"> play arpeggio </ion-button>
+      </ng-container>
+      <br>
+      <ion-button color="secondary" (click)="playChord(chord, 'chord')"> {{'chordmaker.play_chord' | translate}}
+      </ion-button>
+      <ion-button color="secondary" (click)="playChord(chord, 'arp')"> {{'chordmaker.play_arp' | translate}}
+      </ion-button>
     </ion-card-content>
   </ion-card>
 
