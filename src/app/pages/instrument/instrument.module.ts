@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".js");
 }
 
 @NgModule({
@@ -32,4 +32,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [InstrumentPage],
   // providers: [ScreenOrientation]
 })
-export class InstrumentPageModule {}
+export class InstrumentPageModule { }

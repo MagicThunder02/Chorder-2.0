@@ -213,16 +213,19 @@ export class ChordmakerPage implements OnInit {
     switch (pipe) {
 
       case true:
-        array.forEach((element, idx) => {
-          if (idx != 0 && idx != array.length && element != '') {
-            myString = myString + ", " + this.musicNotationPipe.transform(element);
-          }
-          else {
-            myString = myString + this.musicNotationPipe.transform(element);
-          }
+        if (array) {
+          array.forEach((element, idx) => {
+            if (idx != 0 && idx != array.length && element != '') {
+              myString = myString + ", " + this.musicNotationPipe.transform(element);
+            }
+            else {
+              myString = myString + this.musicNotationPipe.transform(element);
+            }
 
-        })
-        return myString;
+          })
+          return myString;
+        }
+        break;
 
       case false: array.forEach((element, idx) => {
         if (idx != 0 && idx != array.length && element != '') {

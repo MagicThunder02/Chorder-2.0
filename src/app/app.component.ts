@@ -25,6 +25,7 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     this.appPages = menu.appPages;
+
     this.initializeApp();
   }
 

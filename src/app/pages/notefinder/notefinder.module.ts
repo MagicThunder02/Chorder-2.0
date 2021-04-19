@@ -9,7 +9,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../home/home.module';
 import { HttpClient } from '@angular/common/http';
 import { PipesModule } from '../../pipes/pipes-module/pipes.module';
-import { HelperModule } from '../../utilities/utilities.module';
+import { UtilitiesModule } from '../../utilities/utilities.module';
 import { HelperComponent } from '../../utilities/helper/helper.component';
 
 
@@ -19,7 +19,7 @@ import { HelperComponent } from '../../utilities/helper/helper.component';
     FormsModule,
     IonicModule,
     PipesModule,
-    HelperModule,
+    UtilitiesModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

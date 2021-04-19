@@ -30,23 +30,31 @@ export class OptionsPage implements OnInit {
     this.translate.use(this.global.language);
   }
 
-  public optionClick(parameter, value) {
+  public optionClick(parameter: string, value) {
+    console.log(parameter, value);
 
     switch (parameter) {
+
+      case 'darkmode':
+        if (value.detail.checked) {
+          document.body.setAttribute('color-theme', 'dark')
+        }
+        else {
+          document.body.setAttribute('color-theme', 'light')
+        }
+        break;
+
       case 'notation':
         this.global.notation = value;
-        console.log(this.global.notation)
         break;
 
       case 'language':
         this.global.language = value;
-        console.log(this.global.language)
         this.translate.use(this.global.language);
         break;
 
       case 'instrument':
         this.global.instrument = value;
-        console.log(this.global.instrument)
         break;
     }
   }

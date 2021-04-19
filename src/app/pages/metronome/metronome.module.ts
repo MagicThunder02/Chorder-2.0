@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { MetronomePage } from './metronome.page';
 import { RouterModule } from '@angular/router';
 import { ShowMetronomePage } from './show/show-metronome.page';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpLoaderFactory } from 'src/app/app.module';
 
 @NgModule({
   imports: [
@@ -24,6 +27,13 @@ import { ShowMetronomePage } from './show/show-metronome.page';
         component: ShowMetronomePage
       },
     ]),
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   // declarations: [MetronomePage, ControlsMetronomePage],
   declarations: [MetronomePage, ShowMetronomePage],

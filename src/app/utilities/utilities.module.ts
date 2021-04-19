@@ -25,4 +25,4 @@ import { HttpClient } from '@angular/common/http';
     HelperComponent,
   ]
 })
-export class HelperModule { }
+export class UtilitiesModule { }

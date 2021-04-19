@@ -63,7 +63,7 @@
 
     <ion-row class="ion-align-items-center">
       <ion-col>
-        <ion-text>Increase:</ion-text>
+        <ion-text>{{'metronome.increase' | translate}}:</ion-text>
       </ion-col>
       <ion-col class="ion-text-right">
         <ion-toggle [(ngModel)]="increase" color="secondary" (ionChange)="metronome.toggleIncrease(increase)">
@@ -73,7 +73,7 @@
 
     <ion-row *ngIf="increase" class="ion-align-items-center">
       <ion-col size="6.5">
-        <ion-text>Final BPM:</ion-text>
+        <ion-text>{{'metronome.finalbpm' | translate}}:</ion-text>
       </ion-col>
       <ion-col size="2" class="ion-text-right">
         <ion-button size="small" color="secondary" (click)="metronome.modSettings('final', 'remove')">
@@ -92,7 +92,7 @@
 
     <ion-row *ngIf="increase" class="ion-align-items-center">
       <ion-col size="6.5">
-        <ion-text>Step:</ion-text>
+        <ion-text>{{'metronome.step' | translate}}:</ion-text>
       </ion-col>
       <ion-col size="2" class="ion-text-right">
         <ion-button size="small" color="secondary" (click)="metronome.modSettings('step', 'remove')">
@@ -112,7 +112,7 @@
 
     <ion-row *ngIf="increase" style="padding-bottom: 3%;" class="ion-align-items-center">
       <ion-col size="6.5">
-        <ion-text>Measures:</ion-text>
+        <ion-text>{{'metronome.measures' | translate}}:</ion-text>
       </ion-col>
       <ion-col size="2" class="ion-text-right">
         <ion-button size="small" color="secondary" (click)="metronome.modSettings('measures', 'remove')">
@@ -149,7 +149,7 @@
         </ion-col>
 
         <ion-col size="5.5">
-          <ion-text>Beats:</ion-text>
+          <ion-text>{{'metronome.beats' | translate}}:</ion-text>
         </ion-col>
 
         <ion-col size="2" class="ion-text-right">
@@ -170,7 +170,7 @@
 
       <ion-row *ngIf="track.toggle" style="padding-top: 3%;" class="ion-align-items-center">
         <ion-col size="6.5">
-          <ion-text>Color:</ion-text>
+          <ion-text>{{'metronome.color' | translate}}:</ion-text>
         </ion-col>
 
         <ion-col size="2" class="ion-text-right">
@@ -191,7 +191,7 @@
 
       <ion-row *ngIf="track.toggle" style="padding-top: 3%;" class="ion-align-items-center">
         <ion-col size="6.5">
-          <ion-text>Sound:</ion-text>
+          <ion-text>{{'metronome.sound' | translate}}:</ion-text>
         </ion-col>
 
         <ion-col size="2" class="ion-text-right">

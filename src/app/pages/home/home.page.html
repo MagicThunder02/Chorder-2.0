@@ -11,16 +11,13 @@
 
 <ion-content>
   <ion-card class="welcome-card">
-    <img src="/assets/musicbg2.jpg" alt=""/>
+    <img src="/assets/musicbg2.jpg" alt="" />
     <ion-card-header>
       <ion-card-subtitle>{{ 'home.subtitle' | translate }}</ion-card-subtitle>
       <ion-card-title>{{ 'home.title' | translate }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>
-        Now that your app has been created, you'll want to start building out features
-        and components. Check out some of the resources below for next steps.
-      </p>
+
     </ion-card-content>
   </ion-card>
 
@@ -29,10 +26,10 @@
       <ion-label>{{'home.pages' | translate}}</ion-label>
     </ion-list-header>
     <ng-container *ngFor="let p of appPages">
-    <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-      <ion-icon slot="start" color="medium"  [name]="p.icon"></ion-icon>
-      <ion-label>{{p.title | translate}}</ion-label>
-    </ion-item>
-  </ng-container>
+      <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+        <ion-icon slot="start" color="medium" [name]="p.icon"></ion-icon>
+        <ion-label>{{p.title | translate}}</ion-label>
+      </ion-item>
+    </ng-container>
   </ion-list>
 </ion-content>

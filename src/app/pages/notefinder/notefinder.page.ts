@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CookieService } from 'ngx-cookie-service';
-import { Chord, ChordType } from "@tonaljs/tonal";
+import { Chord } from "@tonaljs/tonal";
 import * as Tone from 'tone';
+import { GlobalService } from 'src/app/services/global.service';
 // import SampleLibrary from '../notefinder/inst-loader.js'
 
 export interface Tile {
@@ -45,13 +45,7 @@ export class NotefinderPage implements OnInit {
   private synth;
 
   constructor(
-    private translate: TranslateService, private cookie: CookieService) {
-
-    this.translate.setDefaultLang('en');
-    let lang = this.cookie.get('language');
-    if (lang) {
-      this.translate.use(lang);
-    }
+    private translate: TranslateService, private global: GlobalService) {
 
     this.synth = new Tone.Sampler({
       urls: {
@@ -62,15 +56,17 @@ export class NotefinderPage implements OnInit {
     }).toDestination();
   }
 
+  ionViewDidEnter(): void {
+    this.selectInstrument()
+  }
 
   selectInstrument() {
     this.synth = '';
 
-    console.log(this.myInstrument + ".wav")
-
+    console.log(this.global.instrument)
     this.synth = new Tone.Sampler({
       urls: {
-        A2: this.myInstrument.toLowerCase() + "A2.wav",
+        A2: this.global.instrument + "A2.wav",
       },
       baseUrl: "assets/instruments/",
 
@@ -130,7 +126,7 @@ export class NotefinderPage implements OnInit {
   }
 
   selectTypeTile(tile: Tile) {
-    this.type = this.convertName(tile.name);
+    this.type = tile.name;
     this.toggleTypeTile(tile);
     this.colorTiles()
     this.searchChord();
@@ -166,19 +162,6 @@ export class NotefinderPage implements OnInit {
       tile.selected = true;
     } else {
       tile.selected = false;
-    }
-  }
-
-  convertName(name) {
-    // console.log(name)
-    switch (name) {
-      case "Major": return "major"
-      case "Minor": return "min"
-      case "Diminished": return "dim"
-      case "Augmented": return "aug"
-      default:
-        console.log("type error: ", name);
-        return name;
     }
   }
 
@@ -325,7 +308,7 @@ export class NotefinderPage implements OnInit {
 
   ngOnInit() {
     this.scale = ["", "Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
-    let types = ["Major", "Minor", "Diminished", "Augmented"];
+    let types = ["major", "min", "dim", "aug"];
     let grades = ["5", "7", "9", "11", "13"]
 
     types.forEach(name => {
