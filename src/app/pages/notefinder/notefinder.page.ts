@@ -3,6 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Chord } from "@tonaljs/tonal";
 import * as Tone from 'tone';
 import { GlobalService } from 'src/app/services/global.service';
+import { MusicNotationPipe } from 'src/app/pipes/music-notation.pipe';
+import { ModalController } from '@ionic/angular';
+import { InfoModalComponent } from '../infoModal/infoModal.component';
 // import SampleLibrary from '../notefinder/inst-loader.js'
 
 export interface Tile {
@@ -23,9 +26,7 @@ export interface myChord {
 })
 
 export class NotefinderPage implements OnInit {
-
-  public instruments: string[] = ["Cello", "Contrabass", "Guitar-Nylon", "Guitar-Acoustic ", "Harmonium", "Piano", "Saxophone"];
-  public myInstrument: string = '';
+  private musicNotationPipe = new MusicNotationPipe(this.global);
 
   public scale: string[] = [];
   public typesTiles: Tile[] = [];
@@ -37,15 +38,11 @@ export class NotefinderPage implements OnInit {
   public filteredChords: myChord[] = [];
   public status: string = "";
   private serVal: string = "";
-  // private synth = SampleLibrary.load({
-  //   instruments: "piano"
-  // }).toDestination();
-  // private synth = new Tone.PolySynth().toDestination(); 
 
   private synth;
 
   constructor(
-    private translate: TranslateService, private global: GlobalService) {
+    private translate: TranslateService, private global: GlobalService, private modalCtrl: ModalController) {
 
     this.synth = new Tone.Sampler({
       urls: {
@@ -242,6 +239,14 @@ export class NotefinderPage implements OnInit {
 
         tmp.push(chord);
       }
+      else {
+        chord.chord.aliases.forEach(alias => {
+          if (alias.toLowerCase().trim().includes(this.serVal)) {
+
+            tmp.push(chord);
+          }
+        });
+      }
     })
 
     this.filteredChords = tmp;
@@ -293,17 +298,37 @@ export class NotefinderPage implements OnInit {
     }
   }
 
-  beautify(array: string[]) {
+  beautify(array: string[], pipe: boolean = true) {
     let myString: string = '';
-    array.forEach((element, idx) => {
-      if (idx != 0 && idx != array.length && element != '') {
-        myString = myString + ", " + element;
-      }
-      else {
-        myString = myString + element;
-      }
-    })
-    return myString;
+
+    switch (pipe) {
+
+      case true:
+        if (array) {
+          array.forEach((element, idx) => {
+            if (idx != 0 && idx != array.length && element != '') {
+              myString = myString + ", " + this.musicNotationPipe.transform(element);
+            }
+            else {
+              myString = myString + this.musicNotationPipe.transform(element);
+            }
+
+          })
+          return myString;
+        }
+        break;
+
+      case false: array.forEach((element, idx) => {
+        if (idx != 0 && idx != array.length && element != '') {
+          myString = myString + ", " + element;
+        }
+        else {
+          myString = myString + element
+        }
+
+      })
+        return myString;
+    }
   }
 
   ngOnInit() {
@@ -317,5 +342,16 @@ export class NotefinderPage implements OnInit {
     grades.forEach(name => {
       this.gradesTiles.push({ name: name, color: "light", selected: false })
     });
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: InfoModalComponent,
+      componentProps: {
+        pageName: "notefinder",
+      },
+      cssClass: 'fullscreen'
+    });
+    await modal.present();
   }
 }

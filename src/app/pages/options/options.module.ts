@@ -9,12 +9,9 @@ import { OptionsPageRoutingModule } from './options-routing.module';
 import { OptionsPage } from './options.page';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CookieService } from 'ngx-cookie-service';
+import { HttpLoaderFactory } from 'src/app/app.module';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
-}
 
 @NgModule({
   imports: [

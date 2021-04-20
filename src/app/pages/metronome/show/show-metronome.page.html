@@ -1,10 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title style="text-align:center;">Metronome</ion-title>
+
+    <ion-item lines="none">
+      <ion-title style="padding: 0;" class="ion-text-center">
+        {{'home.metronome' | translate}}
+      </ion-title>
+    </ion-item>
+
   </ion-toolbar>
 </ion-header>
-
-<ion-content (click)="printMousePos($event)">
+<ion-content>
 
   <ng-container *ngIf="metronome">
 

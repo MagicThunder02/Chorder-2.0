@@ -37,10 +37,12 @@ export class OptionsPage implements OnInit {
 
       case 'darkmode':
         if (value.detail.checked) {
-          document.body.setAttribute('color-theme', 'dark')
+          document.body.setAttribute('color-theme', 'dark');
+          this.global.darkmode = true;
         }
         else {
-          document.body.setAttribute('color-theme', 'light')
+          document.body.setAttribute('color-theme', 'light');
+          this.global.darkmode = false;
         }
         break;
 

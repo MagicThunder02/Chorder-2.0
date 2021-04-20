@@ -15,9 +15,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpModule, Http } from '@angular/http';
 import { CookieService } from 'ngx-cookie-service';
-import { UtilitiesModule } from './utilities/utilities.module';
-// import { Media, MediaObject } from '@ionic-native/media/ngx';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -31,7 +28,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     BrowserAnimationsModule,
     HttpModule,
-    UtilitiesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

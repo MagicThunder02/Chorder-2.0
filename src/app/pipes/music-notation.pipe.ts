@@ -23,8 +23,8 @@ export class MusicNotationPipe implements PipeTransform {
       value = value.toString().replace('B', 'Si');
     }
 
-    value = value = value.toString().replace('b', '\u266D');
-    value = value = value.toString().replace('#', '\u266F');
+    value = value.split('b').join('\u266D');
+    value = value.split('#').join('\u266F');
 
     return value;
   }

@@ -1,17 +1,16 @@
 .col-tiles {
-    text-align: center;
-    text-transform: none;
-    // border: 1px solid red;
-    height: 14%;
+  text-transform: none;
+  // border: 1px solid red;
+  height: 14%;
 }
 
 .card-tiles {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    margin: auto;
-    height: 100%;
-    border: 1px solid gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  height: 100%;
+  border: 1px solid gray;
 }
 
 .card-title {
@@ -25,14 +24,8 @@
   }
 
 .card-content {
-    font-size: 4vmin;
-    font-weight: normal;
-  }
-
-.center {
-display: flex;
-// justify-content: center;
-align-items: center; 
+  font-size: 4vmin;
+  font-weight: normal;
 }
 
 ion-grid {

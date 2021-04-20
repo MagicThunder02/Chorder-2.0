@@ -4,16 +4,13 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-grid>
-      <ion-row class="ion-align-items-center">
-        <ion-col class="ion-text-left" size="10.5">
-          <ion-title>
-            {{'home.options' | translate}}
-          </ion-title>
-        </ion-col>
-
-      </ion-row>
-    </ion-grid>
+    <ion-item lines="none">
+      <ion-title style="padding: 0;">
+        {{'home.options' | translate}}
+      </ion-title>
+      <!-- <ion-icon name="information-circle-outline" color="medium" size="large" (click)="openModal()">
+      </ion-icon> -->
+    </ion-item>
 
   </ion-toolbar>
 </ion-header>
@@ -25,12 +22,12 @@
     </ion-list-header>
     <ion-item lines="none">
       <ion-label> {{ 'options.darkmode' | translate }} </ion-label>
-      <ion-toggle (ionChange)="optionClick('darkmode', $event)" slot="end"></ion-toggle>
+      <ion-toggle [checked]="global.darkmode" (ionChange)="optionClick('darkmode', $event)" slot="end"></ion-toggle>
     </ion-item>
   </ion-list>
 
   <ion-list>
-    <ion-radio-group value="default">
+    <ion-radio-group [value]="global.notation">
 
       <ion-list-header>
         <ion-label>{{ 'options.notation' | translate }}</ion-label>
@@ -38,13 +35,13 @@
 
       <ion-item>
         <ion-label>{{ 'options.anglosaxon' | translate }}</ion-label>
-        <ion-radio slot="start" value="default" (click)="optionClick('notation', 'american')"></ion-radio>
+        <ion-radio slot="start" value="american" (click)="optionClick('notation', 'american')"></ion-radio>
         <ion-text> C, D, E ...</ion-text>
       </ion-item>
 
       <ion-item>
         <ion-label>{{ 'options.natural' | translate }}</ion-label>
-        <ion-radio slot="start" (click)="optionClick('notation', 'normal')"></ion-radio>
+        <ion-radio slot="start" value="normal" (click)="optionClick('notation', 'normal')"></ion-radio>
         <ion-text> Do, Re, Mi ...</ion-text>
       </ion-item>
 
@@ -52,7 +49,7 @@
   </ion-list>
 
   <ion-list>
-    <ion-radio-group value="default">
+    <ion-radio-group [value]="global.language">
 
       <ion-list-header>
         <ion-label>{{ 'options.language' | translate }}</ion-label>
@@ -63,7 +60,7 @@
           <img src="/assets/flags/england.svg">
         </ion-avatar>
         <ion-label>{{ 'options.english' | translate }} </ion-label>
-        <ion-radio slot="start" value="default" (click)="optionClick('language', 'en')"></ion-radio>
+        <ion-radio slot="start" value="en" (click)="optionClick('language', 'en')"></ion-radio>
       </ion-item>
 
       <ion-item>
@@ -71,13 +68,13 @@
           <img src="/assets/flags/italy.svg">
         </ion-avatar>
         <ion-label>{{ 'options.italian' | translate }}</ion-label>
-        <ion-radio slot="start" (click)="optionClick('language', 'it')"></ion-radio>
+        <ion-radio slot="start" value="it" (click)="optionClick('language', 'it')"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>
 
   <ion-list>
-    <ion-radio-group value="piano">
+    <ion-radio-group [value]="global.instrument">
 
       <ion-list-header>
         <ion-label>{{ 'options.instrument' | translate }}</ion-label>

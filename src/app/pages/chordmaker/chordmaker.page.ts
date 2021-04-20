@@ -5,6 +5,8 @@ import { Chord, Interval } from "@tonaljs/tonal";
 import * as Tone from 'tone';
 import { MusicNotationPipe } from 'src/app/pipes/music-notation.pipe';
 import { GlobalService } from 'src/app/services/global.service';
+import { ModalController } from '@ionic/angular';
+import { InfoModalComponent } from '../infoModal/infoModal.component';
 // import * as SampleLibrary from 'tjss.js';
 
 
@@ -46,7 +48,7 @@ export class ChordmakerPage implements OnInit {
   // private synth = new Tone.PolySynth().toDestination();
   private synth;
 
-  constructor(private translate: TranslateService, public global: GlobalService) {
+  constructor(private translate: TranslateService, public global: GlobalService, private modalCtrl: ModalController) {
 
     this.synth = new Tone.Sampler({
       urls: {
@@ -251,6 +253,17 @@ export class ChordmakerPage implements OnInit {
     });
     console.log(this.tiles);
 
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: InfoModalComponent,
+      componentProps: {
+        pageName: "chordmaker",
+      },
+      cssClass: 'fullscreen'
+    });
+    await modal.present();
   }
 
 }

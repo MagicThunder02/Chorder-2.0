@@ -5,6 +5,7 @@ import { Injectable, OnInit } from '@angular/core';
 })
 export class GlobalService {
 
+  public darkmode: boolean = false;
   public notation: string = 'american';
   public language: string = 'en';
   public instrument: string = 'piano';

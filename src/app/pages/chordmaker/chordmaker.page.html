@@ -4,24 +4,15 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-grid>
-      <ion-row class="ion-align-items-center">
-        <ion-col class="ion-text-left" size="10.5">
-          <ion-title>
-            ChordMaker
-          </ion-title>
-        </ion-col>
-        <ion-col size="1.5" style="display: flex !important;">
-          <ion-icon name="information-circle-outline" color="medium" size="large">
-            <app-helper></app-helper>
-          </ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
+    <ion-item lines="none">
+      <ion-title style="padding: 0; text-align: left;">
+        {{'home.chordmaker' | translate}}
+      </ion-title>
+      <ion-icon name="information-circle-outline" color="medium" size="large" slot="end" (click)="openModal()">
+      </ion-icon>
+    </ion-item>
 
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content>
@@ -36,7 +27,6 @@
             {{tile.name | musicNotation}}
           </ion-card-content>
 
-
         </ion-card>
 
       </ion-col>
@@ -44,7 +34,7 @@
   </ion-grid>
 
 
-  <ion-card *ngFor="let chord of chords">
+  <ion-card *ngFor="let chord of chords" style="border: 1px solid grey;">
     <ion-card-header (click)="toggleCard(chord)">
       <ion-card-title class="card-title">{{chord.symbol | musicNotation}}</ion-card-title>
       <ion-card-subtitle *ngIf="chord.show" class="card-subtitle"> {{chord.name | musicNotation}}</ion-card-subtitle>
@@ -58,7 +48,7 @@
         <br>
       </ion-text>
       <ion-text *ngIf="chord.type"> {{'type' | translate}}: {{chord.type}} <br></ion-text>
-      <ion-text *ngIf="chord.aliases != ''"> {{'aliases' | translate}}: {{beautify(chord.aliases)}} <br><br>
+      <ion-text *ngIf="chord.aliases != []"> {{'aliases' | translate}}: {{beautify(chord.aliases)}} <br><br>
       </ion-text>
 
       <ng-container *ngIf="!expandExtensions">
@@ -96,6 +86,7 @@
 
       </ng-container>
       <br>
+
       <ion-button color="secondary" (click)="playChord(chord, 'chord')"> {{'play_chord' | translate}}
       </ion-button>
       <ion-button color="secondary" (click)="playChord(chord, 'arp')"> {{'play_arp' | translate}}

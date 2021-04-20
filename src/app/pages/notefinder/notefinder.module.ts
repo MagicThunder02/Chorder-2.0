@@ -9,9 +9,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../home/home.module';
 import { HttpClient } from '@angular/common/http';
 import { PipesModule } from '../../pipes/pipes-module/pipes.module';
-import { UtilitiesModule } from '../../utilities/utilities.module';
-import { HelperComponent } from '../../utilities/helper/helper.component';
-
 
 @NgModule({
   imports: [
@@ -19,7 +16,6 @@ import { HelperComponent } from '../../utilities/helper/helper.component';
     FormsModule,
     IonicModule,
     PipesModule,
-    UtilitiesModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -35,6 +31,5 @@ import { HelperComponent } from '../../utilities/helper/helper.component';
     ])
   ],
   declarations: [NotefinderPage],
-  entryComponents: [HelperComponent]
 })
 export class NotefinderModule { }

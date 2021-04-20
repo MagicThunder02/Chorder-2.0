@@ -1,0 +1,42 @@
+// ion-grid, ion-row, ion-col {
+//     height: 100%;
+// }
+ion-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    border-radius: 10px;
+    border: 2px solid  var(--ion-color-shade);
+    background-color: var(--ion-color-light);
+}
+
+.boxText{
+    padding: 2%;
+}
+
+.card-tiles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    max-height: calc(--width *60/100);
+    --width: 100%;
+    width: 100%;
+    margin: 0;
+    border: 1px solid gray;
+    color: black;
+}
+
+.card-chord {
+    border: 1px solid gray;
+    width: 100%;
+    color: black;
+}
+
+.card-title {
+    font-size: 5vmin;
+    font-weight: normal;
+}

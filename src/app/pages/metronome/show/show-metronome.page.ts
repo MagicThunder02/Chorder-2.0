@@ -1,8 +1,6 @@
-import { ApplicationRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { Metronome } from '../metronome.model';
-
-
 
 @Component({
   selector: 'app-show-metronome',
@@ -22,11 +20,6 @@ export class ShowMetronomePage implements OnInit {
   ionViewDidEnter() {
 
     this.metronome = this.navParams.get('metronome');
-
-  }
-
-  printMousePos(event) {
-    console.log("clientX: " + event.clientX + " - clientY: " + event.clientY)
 
   }
 

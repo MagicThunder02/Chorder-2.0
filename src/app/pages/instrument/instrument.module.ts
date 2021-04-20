@@ -9,11 +9,8 @@ import { InstrumentPageRoutingModule } from './instrument-routing.module';
 import { InstrumentPage } from './instrument.page';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpLoaderFactory } from 'src/app/app.module';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, "./assets/i18n/", ".js");
-}
 
 @NgModule({
   imports: [
