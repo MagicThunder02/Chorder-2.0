@@ -1,11 +1,11 @@
 // ion-grid, ion-row, ion-col {
 //     height: 100%;
 // }
-ion-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+// ion-col {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
 
 .box {
     border-radius: 10px;
@@ -27,16 +27,70 @@ ion-col {
     width: 100%;
     margin: 0;
     border: 1px solid gray;
-    color: black;
+    color: var(--ion-color-light-contrast);
 }
 
 .card-chord {
     border: 1px solid gray;
-    width: 100%;
-    color: black;
+    // width: 100%;
+    color: var(--ion-color-light-contrast);
 }
 
 .card-title {
     font-size: 5vmin;
     font-weight: normal;
+}
+
+.button-tiles {
+    text-transform: none;
+    width: 100%;
+
+    opacity: 1 !important;
+
+    --background: var(--ion-color-light-null);
+    color: var(--ion-color-light-contrast);
+
+    padding: 0;
+    --border-radius: 5px;
+    border-radius: 5px;
+
+    border: 1px solid gray;
+}
+
+.select {
+    opacity: 1 !important;
+    --background: var(--ion-color-light-null);
+    width: 100%;
+}
+
+.bpmClass {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    padding: 1%;
+    margin: 0 auto;
+    width: 20vmin;
+    height: 12vmin;
+    border-radius: 5px;
+    border: 2px solid gray;
+}
+
+.showColor {
+    margin: 0 auto;
+    width: 6vmin;
+    height: 6vmin;
+    border-radius: 50%;
+    border: 1px solid black;
+    background-color: grey;
+}
+
+ion-button{
+    opacity: 1!important;
+    color: var(--ion-color-light-contrast);
+}
+
+.roundButton {
+    --border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    height: 100%;
 }

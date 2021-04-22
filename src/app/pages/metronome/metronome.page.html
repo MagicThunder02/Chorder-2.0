@@ -27,9 +27,12 @@
       </ion-col>
       <ion-col class="ion-text-center">
 
-        <div class="container">
+        <div class="container" (click)="metronome.tapBpm()">
           <div *ngIf="metronome" class="bpmClass">
-            <ion-text> BPM <br>
+            <ion-text *ngIf="!metronome.data.timer.active"> BPM <br>
+              {{metronome.data.bpm}}
+            </ion-text>
+            <ion-text *ngIf="metronome.data.timer.active"> TAP <br>
               {{metronome.data.bpm}}
             </ion-text>
           </div>
@@ -46,15 +49,17 @@
 
     <ion-row class="ion-align-items-center">
       <ion-col>
-        <ion-range [(ngModel)]="sliderValue" min="30" max="300" debounce="20" color="secondary"
-          (ionChange)="metronome.getSlider(sliderValue)">
+        <ion-range [(ngModel)]="sliderValue" min="30" max="300" [value]="metronome.data.bpm" debounce="15"
+          color="secondary" (ionChange)="metronome.getSlider(sliderValue)">
           <ion-icon name="musical-notes" slot="start" size="small"></ion-icon>
           <ion-icon name="musical-notes" slot="end"></ion-icon>
         </ion-range>
       </ion-col>
     </ion-row>
 
-
+    <ion-row style="border-top: 1px solid rgb(184, 184, 184);">
+      <ion-col></ion-col>
+    </ion-row>
 
     <ion-row class="ion-align-items-center">
       <ion-col>
@@ -205,6 +210,17 @@
 
       </ion-row>
 
+      <ion-row *ngIf="track.toggle" style="padding-top: 3%;" class="ion-align-items-center">
+        <ion-col>
+          <ion-text>{{'metronome.firstbeat' | translate}}:</ion-text>
+        </ion-col>
+        <ion-col class="ion-text-right">
+          <ion-toggle color="secondary" [checked]="track.changeFirstBeat"
+            (ionChange)="metronome.changeTrackOptions('firstbeat', '', track)">
+          </ion-toggle>
+        </ion-col>
+      </ion-row>
+
     </ng-container>
 
     <ion-row style="border-bottom: 1px solid rgb(184, 184, 184);">
@@ -217,7 +233,7 @@
   <ion-grid>
     <ion-row>
       <ion-col class="center">
-        <ion-button color="secondary" (click)="metronome.initializeMetronome();showModal();">
+        <ion-button color="secondary" (click)="metronome.initializeMetronome(); openMetroModal();">
           <ion-icon name="play"></ion-icon>
         </ion-button>
       </ion-col>

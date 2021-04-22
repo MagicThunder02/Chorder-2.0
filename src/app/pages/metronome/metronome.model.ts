@@ -2,12 +2,22 @@ import { ApplicationRef } from '@angular/core';
 import * as Tone from "tone";
 import { Drawings } from './drawings.model';
 
+export interface MetroTapTimer {
+    buffer: number;
+    resetTime: number;
+    tapFirst: number;
+    tapDeltas: number[];
+    tapAverage: number;
+    tapTimer: any;
+    active: boolean;
+}
 
 export interface MetroTrack {
     toggle: boolean;
     beats: number;
     idx?: number;
     drawings?: Drawings;
+    changeFirstBeat: boolean;
     color: string;
     sound: string;
     synth: any;
@@ -21,6 +31,7 @@ export class MetroData {
     measures: number;
     measureCount: number;
     showBpm: number;
+    timer: MetroTapTimer;
     tracks: MetroTrack[];
     colors: string[];
     sounds: string[];
@@ -63,11 +74,21 @@ export class Metronome {
             measures: 4,
             measureCount: 0,
             showBpm: 120,
+            timer: {
+                buffer: 8,
+                resetTime: 4000,
+                tapFirst: 0,
+                tapAverage: 0,
+                tapDeltas: [],
+                tapTimer: 0,
+                active: false,
+            },
             tracks: [
                 {
                     toggle: false,
-                    beats: 8,
+                    beats: 4,
                     idx: 0,
+                    changeFirstBeat: true,
                     sound: "Tick",
                     color: "#3dc2ff",
                     synth: '',
@@ -136,8 +157,9 @@ export class Metronome {
 
             this.data.tracks.push({
                 toggle: false,
-                beats: 8,
+                beats: 4,
                 idx: 0,
+                changeFirstBeat: true,
                 sound: sound,
                 color: "#3dc2ff",
                 synth: '',
@@ -186,6 +208,16 @@ export class Metronome {
                 }
                 track.sound = this.data.sounds[idx]
                 break;
+
+            case "firstbeat":
+                if (track.changeFirstBeat) {
+                    track.changeFirstBeat = false;
+                } else {
+                    track.changeFirstBeat = true;
+                }
+                console.log(track.changeFirstBeat)
+
+                break;
         }
 
     }
@@ -201,24 +233,7 @@ export class Metronome {
             event.stopPropagation();
         }
     }
-    // public longPress(parameter: string, operation: string, track?: MetroTrack) {
-    //     console.log(this.longpress);
 
-
-    //     if (this.longpress == 'press') {
-
-    //         this.longpress = setInterval(() => {
-    //             this.modSettings(parameter, operation, track);
-    //             this.appRef.tick();
-    //             console.log(this.longpress)
-    //         }, 100);
-
-
-    //     } else {
-    //         clearInterval(this.longpress)
-    //         this.longpress = 'press';
-    //     }
-    // }
 
     public modSettings(parameter: string, operation: string, track?: MetroTrack) {
         console.log(parameter, operation, track)
@@ -339,10 +354,15 @@ export class Metronome {
         for (let beat = 0; beat < track.beats; beat++) {
 
             if (beat == 0) {
-                measure.push({ time: repeatTime * beat, note: "C3" })
+                if (track.changeFirstBeat) {
+                    measure.push({ time: repeatTime * beat, note: "C3" });
+                }
+                else {
+                    measure.push({ time: repeatTime * beat, note: "F2" });
+                }
             }
             else {
-                measure.push({ time: repeatTime * beat, note: "F2" })
+                measure.push({ time: repeatTime * beat, note: "F2" });
             }
         }
         // console.log(measure);
@@ -363,8 +383,9 @@ export class Metronome {
     }
 
     private createPart() {
-        const repeatMaster = 60 / this.data.bpm * this.data.tracks[0].beats;
 
+        const repeatMaster = 60 / this.data.bpm * this.data.tracks[0].beats;
+        Tone.Transport.bpm.value = this.data.bpm;
 
         this.data.tracks.forEach((track, i) => {
 
@@ -421,6 +442,43 @@ export class Metronome {
         }
     }
 
+    public tapBpm() {
+        this.data.timer.active = true;
+
+        clearTimeout(this.data.timer.tapTimer);
+        this.data.timer.tapTimer = setTimeout(() => {
+            this.data.timer.tapFirst = 0;
+            this.data.timer.tapDeltas = [];
+            this.data.timer.tapAverage = 0;
+            this.data.timer.active = false;
+            console.log('Reset timer!')
+        }, this.data.timer.resetTime);
+
+
+        if (this.data.timer.tapFirst != 0) {
+            if (this.data.timer.tapDeltas.length > this.data.timer.buffer) {
+                this.data.timer.tapDeltas.shift();
+            }
+            this.data.timer.tapDeltas.push(60 / ((Date.now() - this.data.timer.tapFirst) / 1000));
+            this.data.timer.tapFirst = Date.now();
+        }
+
+        if (this.data.timer.tapFirst == 0) {
+            this.data.timer.tapFirst = Date.now();
+        }
+        this.data.timer.tapAverage = 0;
+        this.data.timer.tapDeltas.forEach(delta => {
+            this.data.timer.tapAverage += delta;
+        })
+
+        this.data.timer.tapAverage = this.data.timer.tapAverage / this.data.timer.tapDeltas.length;
+
+        if (this.data.timer.tapAverage) {
+            this.data.bpm = Math.round(this.data.timer.tapAverage);
+        }
+        // console.log('deltas: ' + this.data.timer.tapDeltas, 'timer: ' + this.data.timer.tapTimer)
+    }
+
     public cancelEvents() {
         this.events.forEach(event => {
             event.cancel(0);
@@ -430,7 +488,7 @@ export class Metronome {
     }
 
     public play() {
-        Tone.Transport.bpm.value = this.data.bpm
+        Tone.Transport.bpm.value = this.data.bpm;
         Tone.Transport.position = 0;
         Tone.Transport.start();
     }

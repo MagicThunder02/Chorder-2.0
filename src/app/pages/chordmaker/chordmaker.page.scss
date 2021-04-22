@@ -4,16 +4,18 @@
   height: 14%;
 }
 
-.card-tiles {
+.button-tiles {
   display: flex;
   align-items: center;
   justify-content: center;
+  --border-radius: 5px;
+  border-radius: 5px;
   margin: auto;
   height: 100%;
   border: 1px solid gray;
 }
 
-.card-title {
+.button-title {
   font-size: 5vmin;
   font-weight: normal;
 }

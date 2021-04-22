@@ -58,7 +58,6 @@
         {{'infoModal.usage4-chordmaker' | translate }} <br>
 
         <ion-grid>
-
           <ion-row>
             <ion-col size="12">
               <ion-card class="card-chord">
@@ -135,18 +134,101 @@
         <ion-card-subtitle>{{'infoModal.usage1-notefinder' | translate }}</ion-card-subtitle>
         {{'infoModal.usage2-notefinder' | translate }} <br>
 
+        <ion-grid>
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="select">
+                <ion-select slot="end" disabled="true">
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="3" *ngFor="let element of ['Maj', 'Min', 'Dim', 'Aug']">
+              <ion-button disabled="true" expand="block" class="button-tiles">
+                {{element}}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12/5" *ngFor="let number of [5, 7, 9, 11, 13]">
+              <ion-button disabled="true" expand="block" class="button-tiles">
+                {{number}}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-searchbar disabled="true" class="button-tiles" [placeholder]="'notefinder.search' | translate">
+              </ion-searchbar>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" class="ion-text-center">
+              <ion-icon name="arrow-down-outline" size="large"></ion-icon>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="select">
+                <ion-select slot="end" disabled="true" [placeholder]="'C' | musicNotation">
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="3" *ngFor="let element of ['Maj', 'Min', 'Dim', 'Aug']">
+              <ion-button disabled="true" *ngIf="element == 'Dim'" color="secondary" expand="block"
+                class="button-tiles">
+                {{element}}
+              </ion-button>
+              <ion-button disabled="true" *ngIf="element != 'Dim'" expand="block" class="button-tiles">
+                {{element}}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12/5" *ngFor="let number of [5, 7, 9, 11, 13]">
+              <ion-button disabled="true" *ngIf="number == 7" color="secondary" expand="block" class="button-tiles">
+                {{number}}
+              </ion-button>
+              <ion-button disabled="true" *ngIf="number != 7" expand="block" class="button-tiles">
+                {{number}}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-searchbar disabled="true" class="button-tiles" [placeholder]="'Cdim' | musicNotation">
+              </ion-searchbar>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
         <br>
 
         <ion-card-subtitle> {{'infoModal.usage3-notefinder' | translate }}</ion-card-subtitle>
         {{'infoModal.usage4-notefinder' | translate }} <br>
 
-        <ion-grid>
+        <br>
 
+
+
+        <ion-grid>
           <ion-row>
             <ion-col size="12">
               <ion-card class="card-chord">
                 <ion-card-header>
-                  <ion-card-title>{{'Caug' | musicNotation}}</ion-card-title>
+                  <ion-card-title>{{'Cdim' | musicNotation}}</ion-card-title>
                 </ion-card-header>
               </ion-card>
             </ion-col>
@@ -162,15 +244,14 @@
             <ion-col size="12">
               <ion-card class="card-chord">
                 <ion-card-header>
-                  <ion-card-title>{{'Cdim' | musicNotation}}</ion-card-title>
-                  <ion-card-title>{{'Cdim' | musicNotation}}</ion-card-title>
-                  <ion-card-subtitle>{{'C diminished' | musicNotation}}</ion-card-subtitle>
+                  <ion-card-title>{{'Cdim7' | musicNotation}}</ion-card-title>
+                  <ion-card-subtitle>{{'C diminished seventh' | musicNotation}}</ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content>
                   {{'tonic' | translate}}: {{'C' | musicNotation}} <br>
-                  {{'intervals' | translate}}: 1P, 3m, 5d <br>
-                  {{'type' | translate}}: {{'diminished' | translate}} <br>
-                  {{'aliases' | translate}}: dim, °, o <br>
+                  {{'intervals' | translate}}: 1P, 3M, 5A <br>
+                  {{'type' | translate}}: {{'diminished seventh' | translate}} <br>
+
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -181,6 +262,7 @@
 
         <ion-card-subtitle> {{'infoModal.usage5-notefinder' | translate }}</ion-card-subtitle>
         {{'infoModal.usage6-notefinder'| translate }}
+
         <br>
 
         <ion-grid>
@@ -200,4 +282,272 @@
     </ion-card>
   </ng-container>
 
+  <ng-container *ngSwitchCase="'metronome'">
+
+    <ion-card color="light">
+      <ion-card-header>
+        <ion-card-title>{{'infoModal.what-question' | translate }} {{'home.metronome' | translate}}?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{'infoModal.what-metronome' | translate }}
+      </ion-card-content>
+
+      <ion-card-header>
+        <ion-card-title>{{'infoModal.usage-question' | translate }}?</ion-card-title>
+
+      </ion-card-header>
+      <ion-card-content>
+        <ion-card-subtitle>{{'infoModal.usage1-metronome' | translate }}</ion-card-subtitle>
+        {{'infoModal.usage-bpm-metronome' | translate }} <br>
+
+        <ion-grid>
+          <ion-row class="ion-align-items-center" style="padding-top: 5%;">
+            <ion-col class="ion-text-right">
+              <ion-button disabled="true" size="small" color="secondary">
+                <ion-icon name="remove"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col class="ion-text-center">
+
+              <div class="bpmClass">
+                <ion-text> TAP <br> 120 </ion-text>
+              </div>
+
+            </ion-col>
+            <ion-col class="ion-text-left">
+              <ion-button disabled="true" size="small" color="secondary">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-align-items-center">
+            <ion-col>
+              <ion-range disabled="true" value="120" min="30" max="300" color="secondary">
+                <ion-icon name="musical-notes" slot="start" size="small"></ion-icon>
+                <ion-icon name="musical-notes" slot="end"></ion-icon>
+              </ion-range>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-card-subtitle>{{'infoModal.usage2-metronome' | translate }}</ion-card-subtitle>
+        {{'infoModal.usage-increase-metronome' | translate }} <br>
+
+
+        <ion-card>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row class="ion-align-items-center">
+                <ion-col>
+                  <ion-text>{{'metronome.increase' | translate}}:</ion-text>
+                </ion-col>
+                <ion-col class="ion-text-right">
+                  <ion-toggle disabled="true" checked="true" style="opacity: 1;" color="secondary">
+                  </ion-toggle>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-content>
+            <ion-row class="ion-align-items-center increaserow">
+              <ion-col size="6.5">
+                <ion-card-subtitle>{{'metronome.finalbpm' | translate}}:</ion-card-subtitle>
+                <ion-text>{{'infoModal.usage-final-metronome' | translate}}</ion-text>
+              </ion-col>
+              <ion-col size="2" class="ion-text-right">
+                <ion-button disabled="true" size="small" color="secondary">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col size="1.5" class="ion-text-center">
+                <ion-text>160</ion-text>
+              </ion-col>
+              <ion-col size="2" class="ion-text-left">
+                <ion-button disabled="true" size="small" color="secondary">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+
+
+        <ion-card>
+          <ion-card-content>
+            <ion-row class="ion-align-items-center increaserow">
+              <ion-col size="6.5">
+                <ion-card-subtitle>{{'metronome.step' | translate}}:</ion-card-subtitle>
+                <ion-text>{{'infoModal.usage-step-metronome' | translate}}</ion-text>
+              </ion-col>
+              <ion-col size="2" class="ion-text-right">
+                <ion-button disabled="true" size="small" color="secondary">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col size="1.5" class="ion-text-center">
+                <ion-text>5</ion-text>
+              </ion-col>
+              <ion-col size="2" class="ion-text-left">
+                <ion-button disabled="true" size="small" color="secondary">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-content>
+            <ion-row class="ion-align-items-center increaserow">
+              <ion-col size="6.5">
+                <ion-card-subtitle>{{'metronome.measures' | translate}}:</ion-card-subtitle>
+                <ion-text>{{'infoModal.usage-measures-metronome' | translate}}</ion-text>
+              </ion-col>
+              <ion-col size="2" class="ion-text-right">
+                <ion-button disabled="true" size="small" color="secondary">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col size="1.5" class="ion-text-center">
+                <ion-text>2</ion-text>
+              </ion-col>
+              <ion-col size="2" class="ion-text-left">
+                <ion-button disabled="true" size="small" color="secondary">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+
+        <br>
+
+        <ion-card-subtitle>{{'infoModal.usage3-metronome' | translate}}</ion-card-subtitle>
+        <ion-text>{{'infoModal.usage-beats-metronome' | translate}}</ion-text>
+
+        <ion-card>
+          <ion-card-content>
+            <ion-grid>
+
+
+              <ion-row style="padding-top: 3%;" class="ion-align-items-center">
+
+
+                <ion-col size="1.5">
+                  <ion-icon name="caret-down-circle-outline" size="large" color="medium"
+                    (click)="metronome.toggleTrackOptions($event, track)">
+                  </ion-icon>
+                </ion-col>
+
+                <ion-col size="4">
+                  <ion-text>{{'metronome.beats' | translate}}</ion-text>
+                </ion-col>
+
+                <ion-col size="2.5" class="ion-text-right">
+                  <ion-button disabled="true" size="small" color="secondary">
+                    <ion-icon name="remove"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col size="1.5" class="ion-text-center">
+                  <ion-text>8</ion-text>
+                </ion-col>
+                <ion-col size="2.5" class="ion-text-left">
+                  <ion-button disabled="true" size="small" color="secondary">
+                    <ion-icon name="add"></ion-icon>
+                  </ion-button>
+                </ion-col>
+
+              </ion-row>
+
+              <ion-row style="padding-top: 3%;" class="ion-align-items-center">
+                <ion-col size="5.5">
+                  <ion-text>{{'metronome.color' | translate}}:</ion-text>
+                </ion-col>
+
+                <ion-col size="2.5" class="ion-text-right">
+                  <ion-button disabled="true" size="small" color="secondary">
+                    <ion-icon name="caret-back-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col size="1.5" class="ion-text-center">
+                  <div class="showColor" style="background: #3dc2ff;"></div>
+                </ion-col>
+                <ion-col size="2.5" class="ion-text-left">
+                  <ion-button disabled="true" size="small" color="secondary">
+                    <ion-icon name="caret-forward-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+
+              </ion-row>
+
+              <ion-row style="padding-top: 3%;" class="ion-align-items-center">
+                <ion-col size="5.5">
+                  <ion-text>{{'metronome.sound' | translate}}:</ion-text>
+                </ion-col>
+
+                <ion-col size="2.5" class="ion-text-right">
+                  <ion-button disabled="true" size="small" color="secondary">
+                    <ion-icon name="caret-back-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col size="1.5" class="ion-text-center">
+                  <ion-text>Tick</ion-text>
+                </ion-col>
+                <ion-col size="2.5" class="ion-text-left">
+                  <ion-button disabled="true" size="small" color="secondary">
+                    <ion-icon name="caret-forward-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+
+              </ion-row>
+              <ion-row style="padding-top: 3%;" class="ion-align-items-center">
+                <ion-col>
+                  <ion-text>{{'metronome.firstbeat' | translate}}:</ion-text>
+                </ion-col>
+                <ion-col class="ion-text-right">
+                  <ion-toggle color="secondary" checked="true">
+                  </ion-toggle>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </ion-card-content>
+        </ion-card>
+
+        <br>
+
+        <ion-card-subtitle>{{'infoModal.usage4-metronome' | translate}}</ion-card-subtitle>
+        <ion-text>{{'infoModal.usage-add-metronome' | translate}}</ion-text>
+
+        <ion-card>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6" class="ion-text-center">
+
+                  <ion-button disabled="true" color="danger" class="roundButton">
+                    <ion-icon name="trash"></ion-icon>
+                  </ion-button>
+
+                </ion-col>
+                <ion-col size="6" class="ion-text-center">
+
+                  <ion-button disabled="true" color="secondary" class="roundButton">
+                    <ion-icon name="add"></ion-icon>
+                  </ion-button>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-card-content>
+    </ion-card>
+
+  </ng-container>
 </ion-content>

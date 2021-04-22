@@ -203,6 +203,10 @@ export class NotefinderPage implements OnInit {
     this.chords = [];
     switch (this.status) {
       case "000":
+        if (this.key == '') {
+          this.chords = [];
+          this.filteredChords = [];
+        }
         break;
 
       case "010":

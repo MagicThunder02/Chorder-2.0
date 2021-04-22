@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Metronome, } from './metronome.model';
 import { ShowMetronomePage } from './show/show-metronome.page';
 import * as Tone from "tone";
+import { InfoModalComponent } from '../infoModal/infoModal.component';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class MetronomePage implements OnInit {
   public increase: boolean = false;
 
   constructor(
-    private modalController: ModalController,
+    private modalCtrl: ModalController,
     private applicationRef: ApplicationRef,
   ) {
 
@@ -32,23 +33,32 @@ export class MetronomePage implements OnInit {
 
   }
 
-  async showModal() {
+  async openMetroModal() {
     //audiocontext resume
     Tone.start();
 
-
-    const modal: HTMLIonModalElement =
-      await this.modalController.create({
-        component: ShowMetronomePage,
-        componentProps: {
-          metronome: this.metronome,
-          document: document,
-        },
-        cssClass: 'fullscreen'
-      });
+    const modal: HTMLIonModalElement = await this.modalCtrl.create({
+      component: ShowMetronomePage,
+      componentProps: {
+        metronome: this.metronome,
+        document: document,
+      },
+      cssClass: 'fullscreen'
+    });
 
     modal.onDidDismiss().then((result: any) => { });
 
+    await modal.present();
+  }
+
+  async openModal() {
+    const modal: HTMLIonModalElement = await this.modalCtrl.create({
+      component: InfoModalComponent,
+      componentProps: {
+        pageName: "metronome",
+      },
+      cssClass: 'fullscreen'
+    });
     await modal.present();
   }
 }
