@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Chord, Interval } from "@tonaljs/tonal";
 import * as Tone from 'tone';
@@ -17,7 +17,7 @@ export interface Tile {
 }
 
 export interface myChord {
-  name?: string;
+  name?: string[];
   symbol: string;
   tonic?: string;
   root?: string;
@@ -38,6 +38,7 @@ export interface myChord {
 export class ChordmakerPage implements OnInit {
 
   private musicNotationPipe = new MusicNotationPipe(this.global);
+  private translatePipe = new TranslatePipe(this.translate, null);
 
   public tiles: Tile[] = [];
   private notes: string[] = [];
@@ -132,7 +133,9 @@ export class ChordmakerPage implements OnInit {
         if (chordName.includes("/") && (chordName.split("/")[1].length == 1 || chordName.split("/")[1].length == 2)) {
           let cropName = chordName.split("/")[0];
           let cropChord = Chord.get(cropName);
-          this.chords[idx].name = cropChord.name + " slash " + chordName.split("/")[1];
+
+          this.chords[idx].name = (cropChord.name + " slash " + chordName.split("/")[1]).split(" ");
+
           this.chords[idx].root = chordName.split("/")[1];
           this.chords[idx].intervals = cropChord.intervals;
           this.chords[idx].type = cropChord.type + " slashed";
@@ -143,7 +146,7 @@ export class ChordmakerPage implements OnInit {
         }
         else {
           let newChord = Chord.get(chordName);
-          this.chords[idx].name = newChord.name;
+          this.chords[idx].name = newChord.name.split(" ");
           this.chords[idx].root = newChord.root;
           this.chords[idx].intervals = newChord.intervals;
           this.chords[idx].aliases = newChord.aliases;
@@ -209,7 +212,17 @@ export class ChordmakerPage implements OnInit {
     }
   }
 
-  beautify(array: string[], pipe: boolean = true) {
+  // public writeChordName(array: string[]) {
+  //   console.log(array)
+  //   let out;
+  //   array.forEach(element => {
+  //     out += this.translatePipe.transform(element);
+  //   });
+  //   console.log(out)
+  //   return out
+  // }
+
+  public beautify(array: string[], pipe: boolean = true) {
     let myString: string = '';
 
     switch (pipe) {

@@ -122,7 +122,11 @@ export class Drawings {
             ball.color = '#9d9fa6'; //grey
         })
         if (track.idx == 0) {
-            this.balls[track.idx].color = this.shadeColor(track.color, -80);
+            if (track.changeFirstBeat) {
+                this.balls[track.idx].color = this.shadeColor(track.color, -80);
+            } else {
+                this.balls[track.idx].color = track.color;
+            }
         }
         else {
             this.balls[track.idx].color = track.color;
