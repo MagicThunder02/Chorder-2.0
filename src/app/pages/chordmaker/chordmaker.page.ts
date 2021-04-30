@@ -18,7 +18,7 @@ export interface Tile {
 
 export interface myChord {
   name?: string[];
-  symbol: string;
+  symbol?: string;
   tonic?: string;
   root?: string;
   type?: string;
@@ -28,6 +28,7 @@ export interface myChord {
   reductions?: string[];
   notes?: string[];
   show?: boolean;
+  empty?: boolean;
 }
 
 @Component({
@@ -41,8 +42,8 @@ export class ChordmakerPage implements OnInit {
   private translatePipe = new TranslatePipe(this.translate, null);
 
   public tiles: Tile[] = [];
-  private notes: string[] = [];
-  public chords: myChord[] = [];
+  public selecedTiles: Tile[] = [];
+  public chord: myChord = { empty: true };
   public expandReduction: boolean = false;
   public expandExtensions: boolean = false;
 
@@ -60,14 +61,6 @@ export class ChordmakerPage implements OnInit {
     }).toDestination();
   }
 
-  selectTile(tile: Tile) {
-    this.chords = [];
-    this.toggleTile(tile)
-    this.checkEquals(tile)
-    this.colorTiles()
-    this.findChord()
-  }
-
   selectInstrument() {
     this.synth = '';
 
@@ -81,8 +74,24 @@ export class ChordmakerPage implements OnInit {
     }).toDestination();
   }
 
+  selectTile(tile: Tile) {
+    this.toggleTile(tile)
+    this.checkEquals(tile)
+    this.colorTiles()
+    this.findChord()
+  }
+
+
   //select or deselect a tile
   toggleTile(tile: Tile) {
+    if (this.selecedTiles.includes(tile)) {
+      this.selecedTiles.splice(this.selecedTiles.indexOf(tile), 1);
+    }
+    else {
+      this.selecedTiles.push(tile);
+    }
+
+
     if (tile.selected == false) {
       tile.selected = true;
     } else {
@@ -92,12 +101,14 @@ export class ChordmakerPage implements OnInit {
 
   //check if two note with the same value are both checked, if yes deselects the last selected one
   checkEquals(selectedTile: Tile) {
-    this.tiles.forEach((tile) => {
+
+    this.selecedTiles.forEach((tile) => {
 
       //if the interval is 0 
       let interval = Interval.distance(selectedTile.name, tile.name);
       if (interval == "0A" || interval == "2d") {
         tile.selected = false
+        this.selecedTiles.splice(this.selecedTiles.indexOf(tile), 1);
       }
     });
 
@@ -105,74 +116,71 @@ export class ChordmakerPage implements OnInit {
 
   //color the tiles if selected
   colorTiles() {
+
     this.tiles.forEach(tile => {
-      if (tile.selected) {
-        tile.color = "secondary"
+      tile.color = "light";
+    })
+
+    this.selecedTiles.forEach((selecedTile, idx) => {
+      let found = this.tiles.find(tile => {
+        return tile == selecedTile;
+      })
+      if (idx == 0) {
+        found.color = "tertiary";
       }
       else {
-        tile.color = "light"
+        found.color = "secondary";
       }
+
     })
   }
 
   findChord() {
-    this.notes = [];
+    let filter: string;
 
-    this.tiles.forEach(tile => {
-      if (tile.selected) {
-        this.notes.push(tile.name)
-      }
+    if (this.selecedTiles[0]) {
+      filter = this.selecedTiles[0].name;
+    }
+
+    let notes: string[] = this.selecedTiles.map(tile => {
+      return tile.name;
     });
 
-    if (this.notes.length >= 3) {
+    if (notes.length >= 2) {
+      let chordsList = Chord.detect(notes);
+      let filteredChord = chordsList.find(chordName => {
 
-      let chordNames = Chord.detect(this.notes);
-      chordNames.forEach((chordName, idx) => {
-        this.chords.push({ symbol: chordName });
-
-        if (chordName.includes("/") && (chordName.split("/")[1].length == 1 || chordName.split("/")[1].length == 2)) {
-          let cropName = chordName.split("/")[0];
-          let cropChord = Chord.get(cropName);
-
-          this.chords[idx].name = (cropChord.name + " slash " + chordName.split("/")[1]).split(" ");
-
-          this.chords[idx].root = chordName.split("/")[1];
-          this.chords[idx].intervals = cropChord.intervals;
-          this.chords[idx].type = cropChord.type + " slashed";
-          this.chords[idx].tonic = cropChord.tonic;
-
-          this.chords[idx].notes = cropChord.notes;
-          this.chords[idx].notes.push(chordName.split("/")[1])
-        }
-        else {
-          let newChord = Chord.get(chordName);
-          this.chords[idx].name = newChord.name.split(" ");
-          this.chords[idx].root = newChord.root;
-          this.chords[idx].intervals = newChord.intervals;
-          this.chords[idx].aliases = newChord.aliases;
-          this.chords[idx].notes = newChord.notes;
-          this.chords[idx].type = newChord.type;
-          this.chords[idx].tonic = newChord.tonic;
-        }
-
-        this.chords[idx].extensions = Chord.extended(chordName);
-        this.chords[idx].reductions = Chord.reduced(chordName);
-
-        this.chords.forEach(chord => {
-          chord.show = false;
-        });
+        return chordName.slice(0, 2).includes(filter);
       })
 
-      console.log(this.chords);
-    }
-  }
+      let tmpChord = Chord.get(filteredChord);
+      console.log(tmpChord)
+      this.chord.symbol = tmpChord.symbol;
+      this.chord.name = tmpChord.name.split(" ");
+      this.chord.tonic = tmpChord.tonic;
+      this.chord.root = tmpChord.root;
+      this.chord.intervals = tmpChord.intervals;
+      this.chord.aliases = tmpChord.aliases;
+      this.chord.type = tmpChord.type;
+      this.chord.notes = tmpChord.notes;
+      this.chord.extensions = Chord.extended(tmpChord.symbol);
+      this.chord.reductions = Chord.reduced(tmpChord.symbol);
+      this.chord.empty = tmpChord.empty;
 
+      console.log('filter', filter, 'filteredchord', 'chordlist', chordsList)
+    }
+    else {
+      this.chord.empty = true;
+    }
+
+  }
   toggleCard(chord: myChord) {
     if (chord.show == false) {
       chord.show = true;
     } else {
       chord.show = false;
     }
+    console.log(chord)
   }
 
   playChord(chord: myChord, mode: string) {
@@ -212,15 +220,6 @@ export class ChordmakerPage implements OnInit {
     }
   }
 
-  // public writeChordName(array: string[]) {
-  //   console.log(array)
-  //   let out;
-  //   array.forEach(element => {
-  //     out += this.translatePipe.transform(element);
-  //   });
-  //   console.log(out)
-  //   return out
-  // }
 
   public beautify(array: string[], pipe: boolean = true) {
     let myString: string = '';

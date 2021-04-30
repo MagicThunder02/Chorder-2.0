@@ -1,7 +1,14 @@
 .col-tiles {
   text-transform: none;
   // border: 1px solid red;
-  height: 14%;
+
+}
+
+ion-col {
+  flex: 0 0 calc(calc(4 / var(--ion-grid-columns, 12)) * 100%);
+  width: calc(calc(4 / var(--ion-grid-columns, 12)) * 100%);
+  max-width: calc(calc(4 / var(--ion-grid-columns, 12)) * 100%);
+  aspect-ratio: 2 / 1;
 }
 
 .button-tiles {
@@ -13,29 +20,64 @@
   margin: auto;
   height: 100%;
   border: 1px solid gray;
+
 }
 
 .button-title {
-  font-size: 5vmin;
+  // font-size: 150%;
   font-weight: normal;
 }
 
 .card-subtitle {
-    font-size: 4.5vmin;
+    // font-size: 4.5vmin;
     font-weight: normal;
   }
 
 .card-content {
-  font-size: 4vmin;
+  // font-size: 4vmin;
   font-weight: normal;
 }
 
-ion-grid {
+// ion-grid {
+    // border: 1px solid green;
+    // height: 70%;
+// }
+
+ion-row {
+  // border: 1px solid blue;
+  height: 100%;
+}
+
+@media (min-width: 600px), (orientation: landscape) {
+  
+  ion-col {
+    // flex: 0 0 calc(calc(1 / var(--ion-grid-columns, 12)) * 100%);
+    width: calc(calc((12/7) / var(--ion-grid-columns, 12)) * 100%);
+    max-width: calc(calc((12/7) / var(--ion-grid-columns, 12)) * 100%);
+    
+  }
+
+  ion-grid {
     // border: 1px solid green;
     height: 70%;
 }
 
-ion-row {
-    // border: 1px solid blue;
-    height: 100%;
+  // .button-title{ 
+    // font-size: 150%;
+  // }
+
+  .col-container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+}
+
+@media (min-width: 992px) {
+  ion-grid {
+    max-height: 50%;
+  }
+  .button-title {
+    font-size: 3em; 
+  }
 }
