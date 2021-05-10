@@ -17,6 +17,7 @@
 <ion-content>
 
   <ion-item>
+    <label> {{'notefinder.insert' | translate}} </label>
     <ion-select [(ngModel)]="key" slot="end" color="light" interface="popover" (ionChange)="searchChord()">
       <ion-select-option *ngFor="let note of scale" [value]="note"> {{ note | musicNotation }}</ion-select-option>
     </ion-select>

@@ -1,14 +1,14 @@
 .col-tiles {
   text-transform: none;
-  // border: 1px solid red;
-
-}
-
-ion-col {
   flex: 0 0 calc(calc(4 / var(--ion-grid-columns, 12)) * 100%);
   width: calc(calc(4 / var(--ion-grid-columns, 12)) * 100%);
   max-width: calc(calc(4 / var(--ion-grid-columns, 12)) * 100%);
   aspect-ratio: 2 / 1;
+}
+
+.row-tiles {
+  // border: 1px solid blue;
+  height: 100%;
 }
 
 .button-tiles {
@@ -20,7 +20,14 @@ ion-col {
   margin: auto;
   height: 100%;
   border: 1px solid gray;
+}
 
+.reset-button {
+
+  --border-radius: 5px;
+  border-radius: 5px;
+
+  border: 1px solid gray;
 }
 
 .button-title {
@@ -38,23 +45,19 @@ ion-col {
   font-weight: normal;
 }
 
-// ion-grid {
-    // border: 1px solid green;
-    // height: 70%;
-// }
-
-ion-row {
-  // border: 1px solid blue;
-  height: 100%;
+.reset {
+  height: initial;
+  aspect-ratio: initial;
 }
 
-@media (min-width: 600px), (orientation: landscape) {
+
+
+@media (orientation: landscape) {
   
-  ion-col {
+.col-tiles {
     // flex: 0 0 calc(calc(1 / var(--ion-grid-columns, 12)) * 100%);
     width: calc(calc((12/7) / var(--ion-grid-columns, 12)) * 100%);
     max-width: calc(calc((12/7) / var(--ion-grid-columns, 12)) * 100%);
-    
   }
 
   ion-grid {
@@ -62,11 +65,7 @@ ion-row {
     height: 70%;
 }
 
-  // .button-title{ 
-    // font-size: 150%;
-  // }
-
-  .col-container {
+  .row-tiles {
     display: flex;
     flex-direction: column-reverse;
   }

@@ -74,6 +74,12 @@ export class ChordmakerPage implements OnInit {
     }).toDestination();
   }
 
+  resetTiles() {
+    this.selecedTiles = [];
+    this.colorTiles();
+    this.chord = { empty: true }
+  }
+
   selectTile(tile: Tile) {
     this.toggleTile(tile)
     this.checkEquals(tile)
