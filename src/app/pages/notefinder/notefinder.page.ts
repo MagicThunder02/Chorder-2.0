@@ -310,28 +310,40 @@ export class NotefinderPage implements OnInit {
       case true:
         if (array) {
           array.forEach((element, idx) => {
-            if (idx != 0 && idx != array.length && element != '') {
-              myString = myString + ", " + this.musicNotationPipe.transform(element);
+            if (idx != 0 && idx != array.length) {
+              if (element != "") {
+                myString = myString + ", " + this.musicNotationPipe.transform(element);
+              }
             }
             else {
-              myString = myString + this.musicNotationPipe.transform(element);
+              if (element != "") {
+                myString = myString + this.musicNotationPipe.transform(element);
+              }
             }
 
           })
-          return myString;
+          if (myString != "") {
+            return myString;
+          }
         }
         break;
 
       case false: array.forEach((element, idx) => {
-        if (idx != 0 && idx != array.length && element != '') {
-          myString = myString + ", " + element;
+        if (idx != 0 && idx != array.length) {
+          if (element != "") {
+            myString = myString + ", " + element;
+          }
         }
         else {
-          myString = myString + element
+          if (element != "") {
+            myString = myString + element
+          }
         }
 
       })
-        return myString;
+        if (myString != "") {
+          return myString;
+        }
     }
   }
 

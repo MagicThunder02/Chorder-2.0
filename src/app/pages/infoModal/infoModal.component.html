@@ -41,12 +41,30 @@
                 <ion-card-content class="card-title"> {{'C' | musicNotation}} </ion-card-content>
               </ion-card>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="2" style="display: flex; justify-content: center; align-items: center;">
+              <ion-icon name="arrow-forward-outline" size="large"></ion-icon>
+            </ion-col>
+            <ion-col size="5">
+              <ion-card class="card-tiles" color="tertiary">
+                <ion-card-content class="card-title" style="color: var(--ion-color-light-tint);"> {{'C' |
+                  musicNotation}} </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+
+          <ion-row style="padding-top: 3%;">
+            <ion-col size="5">
+              <ion-card class="card-tiles">
+                <ion-card-content class="card-title"> {{'E' | musicNotation}} </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col size="2" style="display: flex; justify-content: center; align-items: center;">
               <ion-icon name="arrow-forward-outline" size="large"></ion-icon>
             </ion-col>
             <ion-col size="5">
               <ion-card class="card-tiles" color="secondary">
-                <ion-card-content class="card-title"> {{'C' | musicNotation}} </ion-card-content>
+                <ion-card-content class="card-title" style="color: var(--ion-color-light-tint);"> {{'E' |
+                  musicNotation}} </ion-card-content>
               </ion-card>
             </ion-col>
           </ion-row>
@@ -58,22 +76,6 @@
         {{'infoModal.usage4-chordmaker' | translate }} <br>
 
         <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-card class="card-chord">
-                <ion-card-header>
-                  <ion-card-title>{{'Caug' | musicNotation}}</ion-card-title>
-                </ion-card-header>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="12" class="ion-text-center">
-              <ion-icon name="arrow-down-outline" size="large"></ion-icon>
-            </ion-col>
-          </ion-row>
-
           <ion-row>
             <ion-col size="12">
               <ion-card class="card-chord">
@@ -139,6 +141,7 @@
           <ion-row>
             <ion-col size="12">
               <ion-item class="select">
+                <label *ngIf="!key"> {{'notefinder.insert' | translate}} </label>
                 <ion-select slot="end" disabled="true">
                 </ion-select>
               </ion-item>

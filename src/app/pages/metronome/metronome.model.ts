@@ -334,8 +334,8 @@ export class Metronome {
         }
 
         this.data.tracks.forEach(track => {
-            if (track.beats < 2) {
-                track.beats = 2;
+            if (track.beats < 1) {
+                track.beats = 1;
             }
             if (track.beats > 12) {
                 track.beats = 12;
@@ -399,7 +399,7 @@ export class Metronome {
 
             let loop = new Tone.Loop((time) => {
 
-                track.drawings.lightBall(track, this.appRef);
+                track.drawings.lightBall(track, this.appRef, repeatTime);
                 this.increaseBpm();
 
                 track.idx++;

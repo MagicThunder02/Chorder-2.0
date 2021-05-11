@@ -76,6 +76,10 @@ export class Drawings {
                     ball.diameter = 40;
                 }
 
+                if (track.beats == 1) {
+                    ball.diameter = 70
+                }
+
             } else {
                 ball.diameter = this.canvas.contentHeight / (maxBeats * 2);
             }
@@ -112,15 +116,33 @@ export class Drawings {
                 this.circle.cX = x0 + this.circDiameter * Math.cos(Math.PI) + ball.diameter / 2 + this.circle.thickness / 2;
                 this.circle.cY = y0 + this.circDiameter * Math.sin(- Math.PI / 2) + ball.diameter / 2 + this.circle.thickness / 2;
 
+                if (track.beats == 1) {
+                    ball.cX = x0;
+                    ball.cY = y0;
+                }
                 // console.log('balls drawed', x0, y0, ball.diameter)
             })
         }
     }
 
-    public lightBall(track, appRef) {
-        this.balls.forEach(ball => {
-            ball.color = '#9d9fa6'; //grey
-        })
+    public lightBall(track, appRef, time) {
+
+        //if 1 beats the ball pulse slower
+        if (track.beats == 1) {
+            time = time * 500;
+        } else {
+            time = time * 750;
+        }
+
+        // switch off the ball
+        setTimeout(() => {
+            this.balls.forEach(ball => {
+                ball.color = '#9d9fa6'; //grey
+            })
+        }, time)
+
+
+        // switch on the ball
         if (track.idx == 0) {
             if (track.changeFirstBeat) {
                 this.balls[track.idx].color = this.shadeColor(track.color, -80);

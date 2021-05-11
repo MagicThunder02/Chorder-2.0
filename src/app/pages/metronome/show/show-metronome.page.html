@@ -28,13 +28,16 @@
         [style.top]="ball.cY + 'px'" class="ball">
       </div>
 
-      <ng-container *ngIf="metronome.data.tracks.length >= 2">
-        <div *ngFor="let track of metronome.data.tracks"
-          [style.border]="track.drawings.circle.thickness + 'px' + ' solid ' + track.drawings.circle.color"
-          [style.height]="track.drawings.circle.radius + 'px'" [style.width]="track.drawings.circle.radius + 'px'"
-          [style.left]="track.drawings.circle.cX + 'px'" [style.top]="track.drawings.circle.cY + 'px'"
-          class="circumpherence">
-        </div>
+      <ng-container *ngIf="metronome.data.tracks.length > 1">
+        <ng-container *ngFor="let track of metronome.data.tracks">
+
+          <div *ngIf="track.beats > 1"
+            [style.border]="track.drawings.circle.thickness + 'px' + ' solid ' + track.drawings.circle.color"
+            [style.height]="track.drawings.circle.radius + 'px'" [style.width]="track.drawings.circle.radius + 'px'"
+            [style.left]="track.drawings.circle.cX + 'px'" [style.top]="track.drawings.circle.cY + 'px'"
+            class="circumpherence">
+          </div>
+        </ng-container>
       </ng-container>
       <!-- <ion-text> {{index}}</ion-text> -->
     </ng-container>
