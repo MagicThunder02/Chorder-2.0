@@ -15,8 +15,18 @@ export interface Tile {
 }
 
 export interface myChord {
-  chord: any;
+  name?: string[];
+  symbol?: string;
+  tonic?: string;
+  root?: string;
+  type?: string;
+  aliases?: string[];
+  intervals?: { symbols: string[], quality: string[], numbers: String[] };
+  extensions?: { open: boolean, values: string[] };
+  reductions?: { open: boolean, values: string[] };
+  notes?: string[];
   show?: boolean;
+  empty?: boolean;
 }
 
 @Component({
@@ -104,7 +114,7 @@ export class NotefinderPage implements OnInit {
 
   pushAll() {
     this.chords = [];
-    let chordName = this.key.trim() + "major"
+    let chordName = this.key.trim() + " major"
     this.pushExtendedChords(chordName);
     chordName = this.key.trim() + "min"
     this.pushExtendedChords(chordName);
@@ -114,11 +124,109 @@ export class NotefinderPage implements OnInit {
     this.pushExtendedChords(chordName);
   }
 
+  intervalToNumber(intervals: string[]) {
+    return intervals.map(interval => {
+      let number = "";
+
+      switch (interval[0]) {
+        case "1":
+          number = "unison"
+          break;
+        case "2":
+          number = "second"
+          break;
+        case "3":
+          number = "third"
+          break;
+        case "4":
+          number = "fourth"
+          break;
+        case "5":
+          number = "fifth"
+          break;
+        case "6":
+          number = "sixth"
+          break;
+        case "7":
+          number = "seventh"
+          break;
+        case "8":
+          number = "seventh"
+          break;
+        case "9":
+          number = "ninth"
+          break;
+        case "11":
+          number = "eleventh"
+          break;
+        case "13":
+          number = "thirteenth"
+          break;
+      }
+
+      return number;
+    })
+  }
+
+  intervalToQuality(intervals: string[]) {
+    return intervals.map(interval => {
+      let quality = "";
+
+      switch (interval[1]) {
+        case "P":
+          if (interval[0] != "1") {
+            quality = "perfect"
+          }
+          break;
+        case "m":
+          quality = "minor"
+          break;
+        case "M":
+          quality = "major"
+          break;
+        case "d":
+          quality = "diminished-f"
+          break;
+        case "A":
+          quality = "augmented-f"
+          break;
+      }
+
+      return quality;
+    })
+  }
+
+  assembleChord(chordName) {
+    let returnChord: myChord = {};
+    console.log("c", chordName, Chord.get("C major"))
+    let tmpChord = Chord.get(chordName);
+
+    returnChord.symbol = tmpChord.symbol;
+    returnChord.name = tmpChord.name.split(" ");
+    returnChord.tonic = tmpChord.tonic;
+    returnChord.root = tmpChord.root;
+    returnChord.intervals = {
+      symbols: tmpChord.intervals,
+      quality: this.intervalToQuality(tmpChord.intervals),
+      numbers: this.intervalToNumber(tmpChord.intervals)
+    };
+    returnChord.aliases = tmpChord.aliases;
+    returnChord.type = tmpChord.type;
+    returnChord.notes = tmpChord.notes;
+    returnChord.extensions = { open: false, values: Chord.extended(tmpChord.symbol) };
+    returnChord.reductions = { open: false, values: Chord.reduced(tmpChord.symbol) };
+    returnChord.empty = tmpChord.empty;
+    return returnChord;
+  }
+
+
   pushExtendedChords(chordName) {
     let chordNameArray = Chord.extended(chordName);
-    this.chords.push({ chord: Chord.get(chordName), show: false })
+    console.log(chordName, chordNameArray)
+
+    this.chords.push(this.assembleChord(chordName))
     chordNameArray.forEach(chord => {
-      this.chords.push({ chord: Chord.get(chord), show: false })
+      this.chords.push(this.assembleChord(chord))
     })
   }
 
@@ -188,7 +296,7 @@ export class NotefinderPage implements OnInit {
 
       let tmp: myChord[] = [];
       this.chords.forEach(chord => {
-        if (chord.chord.symbol.includes(this.grade)) {
+        if (chord.symbol.includes(this.grade)) {
           tmp.push(chord);
         }
       });
@@ -239,12 +347,12 @@ export class NotefinderPage implements OnInit {
     let tmp: any[] = [];
 
     this.chords.forEach(chord => {
-      if (chord.chord.symbol.toLowerCase().trim().includes(this.serVal)) {
+      if (chord.symbol.toLowerCase().trim().includes(this.serVal)) {
 
         tmp.push(chord);
       }
       else {
-        chord.chord.aliases.forEach(alias => {
+        chord.aliases.forEach(alias => {
           if (alias.toLowerCase().trim().includes(this.serVal)) {
 
             tmp.push(chord);
@@ -258,10 +366,10 @@ export class NotefinderPage implements OnInit {
   }
 
   toggleCard(chord: myChord) {
-    if (chord.show == false) {
-      chord.show = true;
-    } else {
+    if (chord.show) {
       chord.show = false;
+    } else {
+      chord.show = true;
     }
   }
 
@@ -270,7 +378,7 @@ export class NotefinderPage implements OnInit {
 
     let scale = ["Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
 
-    let notes = chord.chord.notes.map(function (note, idx) {
+    let notes = chord.notes.map(function (note, idx) {
 
       if (note.includes("##")) {
         let idx = scale.indexOf(note.slice(0, -1));
@@ -283,7 +391,7 @@ export class NotefinderPage implements OnInit {
         note = scale[(idx - 2) % scale.length];
       }
 
-      if (parseInt(chord.chord.intervals[idx], 10) <= 7) {
+      if (parseInt(chord.intervals[idx], 10) <= 7) {
         return note = note + "3"
       } else {
         return note = note + "4"

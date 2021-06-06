@@ -90,19 +90,19 @@
                 <ion-text> {{'extensions' | translate}}: <br> <br></ion-text>
 
                 <ng-container *ngIf="!chord.extensions.open; else extenionsOpened">
-                  <ng-container *ngFor="let mychord of chord.extensions.values.slice(0,3); last as isLast"
+                  <ion-text *ngFor="let mychord of chord.extensions.values.slice(0,3); last as isLast"
                     (click)="inputChord(mychord)">
                     <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
                     <ion-text *ngIf="!isLast"> , </ion-text>
-                  </ng-container>
+                  </ion-text>
                 </ng-container>
 
                 <ng-template #extenionsOpened>
-                  <ng-container *ngFor="let mychord of chord.extensions.values; last as isLast"
+                  <ion-text *ngFor="let mychord of chord.extensions.values; last as isLast"
                     (click)="inputChord(mychord)">
                     <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
                     <ion-text *ngIf="!isLast"> , </ion-text>
-                  </ng-container>
+                  </ion-text>
                 </ng-template>
 
                 <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"
@@ -117,20 +117,20 @@
               <ion-card-header>
                 <ion-text> {{'reductions' | translate}}: <br> <br></ion-text>
 
-                <ng-container *ngIf="!chord.reductions.open; else reductionsOpened">
+                <ion-text *ngIf="!chord.reductions.open; else reductionsOpened">
                   <ion-text class="linkChord" *ngFor="let mychord of chord.reductions.values.slice(0,3); last as isLast"
-                    (click)="inputChord(chord)">
+                    (click)="inputChord(mychord)">
                     <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
                     <ion-text *ngIf="!isLast"> , </ion-text>
                   </ion-text>
-                </ng-container>
+                </ion-text>
 
                 <ng-template #reductionsOpened>
-                  <ng-container class="linkChord" *ngFor="let mychord of chord.reductions.values; last as isLast"
-                    (click)="inputChord(chord)">
+                  <ion-text class="linkChord" *ngFor="let mychord of chord.reductions.values; last as isLast"
+                    (click)="inputChord(mychord)">
                     <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
                     <ion-text *ngIf="!isLast"> , </ion-text>
-                  </ng-container>
+                  </ion-text>
                 </ng-template>
 
                 <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"

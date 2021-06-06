@@ -344,39 +344,6 @@ export class ChordmakerPage implements OnInit {
   }
 
 
-  public beautify(array: string[], pipe: boolean = true) {
-    let myString: string = '';
-
-    switch (pipe) {
-
-      case true:
-        if (array) {
-          array.forEach((element, idx) => {
-            if (idx != 0 && idx != array.length && element != '') {
-              myString = myString + ", " + this.musicNotationPipe.transform(element);
-            }
-            else {
-              myString = myString + this.musicNotationPipe.transform(element);
-            }
-
-          })
-          return myString;
-        }
-        break;
-
-      case false: array.forEach((element, idx) => {
-        if (idx != 0 && idx != array.length && element != '') {
-          myString = myString + ", " + element;
-        }
-        else {
-          myString = myString + element
-        }
-
-      })
-        return myString;
-    }
-  }
-
   ionViewDidEnter(): void {
     this.selectInstrument()
   }
