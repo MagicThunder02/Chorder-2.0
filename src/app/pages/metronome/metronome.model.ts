@@ -178,21 +178,30 @@ export class Metronome {
 
         let idx: number = 0;
 
+        // if (operation) {
+
         switch (parameter) {
 
             case "color":
-                idx = this.data.colors.indexOf(track.color)
+                idx = this.data.colors.indexOf(track.color) || 0;
+
+                //if the argument is a color 
+                // if (operation.includes("#")) {
+                //     track.color = operation;
+                // }
+
                 if (operation == "add") {
                     idx = (idx + 1) % this.data.colors.length;
+                    track.color = this.data.colors[idx];
                 }
-                else {
+                if (operation == "remove") {
                     if (idx == 0) {
                         idx = this.data.colors.length;
                     }
                     idx = (idx - 1) % this.data.colors.length;
+                    track.color = this.data.colors[idx];
                 }
 
-                track.color = this.data.colors[idx];
                 break;
 
             case "sound":
@@ -208,18 +217,8 @@ export class Metronome {
                 }
                 track.sound = this.data.sounds[idx]
                 break;
-
-            case "firstbeat":
-                if (track.changeFirstBeat) {
-                    track.changeFirstBeat = false;
-                } else {
-                    track.changeFirstBeat = true;
-                }
-                console.log(track.changeFirstBeat)
-
-                break;
         }
-
+        // }
     }
 
     public toggleTrackOptions(event, track: MetroTrack) {
@@ -246,7 +245,15 @@ export class Metronome {
                     case "remove": track.beats--; break;
                     default: break;
                 }
+
+                if (track.beats == 1) {
+                    track.changeFirstBeat = false;
+                } else {
+                    track.changeFirstBeat = true;
+                }
+                // console.log(track.changeFirstBeat)
                 break;
+
             case "bpm":
                 switch (operation) {
                     case "add": this.data.bpm++; break;
@@ -399,7 +406,7 @@ export class Metronome {
 
             let loop = new Tone.Loop((time) => {
 
-                track.drawings.lightBall(track, this.appRef, repeatTime);
+                track.drawings.lightBall(track, this.appRef, this);
                 this.increaseBpm();
 
                 track.idx++;

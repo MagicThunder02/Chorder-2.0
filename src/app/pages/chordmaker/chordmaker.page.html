@@ -39,77 +39,130 @@
 
       </ion-col>
     </ion-row>
+
+    <ion-row>
+      <ion-col>
+
+        <ion-card *ngIf="chord && !chord.empty" class="card outer">
+          <ion-card-header>
+
+            <ion-card class="card inner" style="margin-top: 0;">
+              <ion-card-header>
+                <ion-card-title class="card-title-symbol">{{chord.symbol | musicNotation}}</ion-card-title>
+
+                <ion-card-subtitle class="card-subtitle">
+                  <ng-container *ngIf="chord.name.length > 2">
+                    <ion-text *ngFor="let word of chord.name">
+                      {{word | musicNotation | translate}}
+                    </ion-text><br>
+                  </ng-container>
+                  <ion-text>
+                    {{'aliases' | translate}}:
+                  </ion-text>
+                  <ion-text *ngFor="let alias of chord.aliases"> {{alias | musicNotation}} </ion-text>
+                </ion-card-subtitle>
+              </ion-card-header>
+            </ion-card>
+
+            <ion-card class="card inner">
+              <ion-card-header>
+
+                <ion-grid>
+                  <ion-row *ngFor="let note of chord.notes; index as i">
+                    <ion-col size="2" style="font-weight: bold;">{{note | musicNotation}}</ion-col>
+                    <ion-col size="2">{{chord.intervals.symbols[i]}}</ion-col>
+
+                    <ion-col *ngIf="global.language == 'en'" style="text-transform: capitalize;">
+                      {{chord.intervals.quality[i] | translate}}
+                      {{chord.intervals.numbers[i] | translate}} </ion-col>
+
+                    <ion-col *ngIf="global.language == 'it'" style="text-transform: capitalize;">
+                      {{chord.intervals.numbers[i] | translate}} {{chord.intervals.quality[i] | translate}}</ion-col>
+
+                  </ion-row>
+                </ion-grid>
+              </ion-card-header>
+            </ion-card>
+
+
+            <ion-card class="card inner" *ngIf="chord.extensions.values.length != 0">
+              <ion-card-header>
+                <ion-text> {{'extensions' | translate}}: <br> <br></ion-text>
+
+                <ng-container *ngIf="!chord.extensions.open; else extenionsOpened">
+                  <ng-container *ngFor="let mychord of chord.extensions.values.slice(0,3); last as isLast"
+                    (click)="inputChord(mychord)">
+                    <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
+                    <ion-text *ngIf="!isLast"> , </ion-text>
+                  </ng-container>
+                </ng-container>
+
+                <ng-template #extenionsOpened>
+                  <ng-container *ngFor="let mychord of chord.extensions.values; last as isLast"
+                    (click)="inputChord(mychord)">
+                    <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
+                    <ion-text *ngIf="!isLast"> , </ion-text>
+                  </ng-container>
+                </ng-template>
+
+                <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"
+                  *ngIf="chord.extensions.values.length > 3" (click)="toggleEllipsis('extensions')">
+                </ion-icon>
+
+              </ion-card-header>
+            </ion-card>
+
+
+            <ion-card class="card inner" *ngIf="chord.reductions.values.length != 0">
+              <ion-card-header>
+                <ion-text> {{'reductions' | translate}}: <br> <br></ion-text>
+
+                <ng-container *ngIf="!chord.reductions.open; else reductionsOpened">
+                  <ion-text class="linkChord" *ngFor="let mychord of chord.reductions.values.slice(0,3); last as isLast"
+                    (click)="inputChord(chord)">
+                    <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
+                    <ion-text *ngIf="!isLast"> , </ion-text>
+                  </ion-text>
+                </ng-container>
+
+                <ng-template #reductionsOpened>
+                  <ng-container class="linkChord" *ngFor="let mychord of chord.reductions.values; last as isLast"
+                    (click)="inputChord(chord)">
+                    <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
+                    <ion-text *ngIf="!isLast"> , </ion-text>
+                  </ng-container>
+                </ng-template>
+
+                <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"
+                  *ngIf="chord.reductions.values.length > 3" (click)="toggleEllipsis('reductions')">
+                </ion-icon>
+
+              </ion-card-header>
+            </ion-card>
+
+            <ion-card class="card inner" style="margin-bottom: 0;">
+
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="ion-text-center">
+                    <ion-button color="secondary" (click)="playChord(chord, 'chord')"> {{'play_chord' | translate}}
+                    </ion-button>
+                  </ion-col>
+                  <ion-col class="ion-text-center">
+                    <ion-button color="secondary" (click)="playChord(chord, 'arp')"> {{'play_arp' | translate}}
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-card>
+
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 
 
-  <ion-card *ngIf="chord && !chord.empty" style="border: 1px solid grey;">
-    <ion-card-header>
-      <!-- <ion-card-header (click)="toggleCard(chord)"> -->
-      <ion-card-title class="card-title">{{chord.symbol | musicNotation}}</ion-card-title>
-      <ion-card-subtitle class="card-subtitle">
-        <ion-text *ngFor="let word of chord.name">
-          {{word | musicNotation | translate}}
-        </ion-text>
-      </ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content class="card-content">
-      <ion-text *ngIf="chord.tonic">{{'tonic' | translate}}: {{chord.tonic | musicNotation}} <br></ion-text>
-      <ion-text *ngIf="chord.root">{{'root' | translate}}: {{chord.root | musicNotation}}<br></ion-text>
-      <ion-text *ngIf="chord.intervals != ''">{{'intervals' | translate}}: {{beautify(chord.intervals,
-        false)}}
-        <br>
-      </ion-text>
-      <ion-text *ngIf="chord.type"> {{'type' | translate}}: {{chord.type}} <br></ion-text>
-      <ion-text *ngIf="chord.aliases != []"> {{'aliases' | translate}}: {{beautify(chord.aliases, false)}} <br><br>
-      </ion-text>
-
-      <ng-container *ngIf="!expandExtensions">
-        <ion-text *ngIf="chord.extensions != ''" class="center"> {{'extensions' | translate}}:
-          {{beautify(chord.extensions.slice(0, 3))}}
-          <ion-icon *ngIf="chord.extensions.length > 3" color="secondary" name="ellipsis-horizontal"
-            style="padding-left: 3%;" (click)="expandExtensions=true"></ion-icon> <br>
-        </ion-text>
-      </ng-container>
-
-      <ng-container *ngIf="expandExtensions">
-        <ion-text *ngIf="chord.extensions != ''" class="center"> {{'extensions' | translate}}:
-
-        </ion-text>
-        <ion-text *ngIf="chord.extensions != ''" class="center">
-          {{beautify(chord.extensions)}}
-        </ion-text>
-        <ion-icon *ngIf="chord.extensions.length > 3" color="secondary" name="ellipsis-horizontal"
-          (click)="expandExtensions=false">
-        </ion-icon>
-        <br>
-      </ng-container>
-
-
-      <ng-container *ngIf="!expandReduction">
-        <ion-text *ngIf="chord.reductions != ''" class="center"> {{'reductions' | translate}}:
-          {{beautify(chord.reductions.slice(0, 3))}}
-          <ion-icon *ngIf="chord.reductions.length > 3" color="secondary" name="ellipsis-horizontal"
-            style="padding-left: 3%;" (click)="expandReduction=true"></ion-icon> <br>
-        </ion-text>
-      </ng-container>
-
-      <ng-container *ngIf="expandReduction">
-        <ion-text *ngIf="chord.reductions != ''" class="center"> {{'reductions' | translate}}:
-          {{beautify(chord.reductions)}}
-        </ion-text>
-        <ion-icon *ngIf="chord.reductions.length > 3" color="secondary" name="ellipsis-horizontal"
-          (click)="expandReduction=false">
-        </ion-icon>
-
-      </ng-container>
-      <br>
-
-      <ion-button color="secondary" (click)="playChord(chord, 'chord')"> {{'play_chord' | translate}}
-      </ion-button>
-      <ion-button color="secondary" (click)="playChord(chord, 'arp')"> {{'play_arp' | translate}}
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
 
 </ion-content>

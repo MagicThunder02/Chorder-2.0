@@ -12,7 +12,7 @@ import { InfoModalComponent } from '../infoModal/infoModal.component';
 
 export interface Tile {
   name: string;
-  color: string;
+  color?: string;
   selected?: boolean;
 }
 
@@ -23,9 +23,9 @@ export interface myChord {
   root?: string;
   type?: string;
   aliases?: string[];
-  intervals?: string[];
-  extensions?: string[];
-  reductions?: string[];
+  intervals?: { symbols: string[], quality: string[], numbers: String[] };
+  extensions?: { open: boolean, values: string[] };
+  reductions?: { open: boolean, values: string[] };
   notes?: string[];
   show?: boolean;
   empty?: boolean;
@@ -42,16 +42,15 @@ export class ChordmakerPage implements OnInit {
   private translatePipe = new TranslatePipe(this.translate, null);
 
   public tiles: Tile[] = [];
-  public selecedTiles: Tile[] = [];
+  public selectedTiles: Tile[] = [];
   public chord: myChord = { empty: true };
-  public expandReduction: boolean = false;
-  public expandExtensions: boolean = false;
+
 
   // private synth = new Tone.PolySynth().toDestination();
   private synth;
 
   constructor(private translate: TranslateService, public global: GlobalService, private modalCtrl: ModalController) {
-
+    console.log(global.language)
     this.synth = new Tone.Sampler({
       urls: {
         A2: "pianoA2.wav",
@@ -64,7 +63,6 @@ export class ChordmakerPage implements OnInit {
   selectInstrument() {
     this.synth = '';
 
-    console.log(this.global.instrument)
     this.synth = new Tone.Sampler({
       urls: {
         A2: this.global.instrument + "A2.wav",
@@ -75,7 +73,7 @@ export class ChordmakerPage implements OnInit {
   }
 
   resetTiles() {
-    this.selecedTiles = [];
+    this.selectedTiles = [];
     this.colorTiles();
     this.chord = { empty: true }
   }
@@ -90,11 +88,11 @@ export class ChordmakerPage implements OnInit {
 
   //select or deselect a tile
   toggleTile(tile: Tile) {
-    if (this.selecedTiles.includes(tile)) {
-      this.selecedTiles.splice(this.selecedTiles.indexOf(tile), 1);
+    if (this.selectedTiles.includes(tile)) {
+      this.selectedTiles.splice(this.selectedTiles.indexOf(tile), 1);
     }
     else {
-      this.selecedTiles.push(tile);
+      this.selectedTiles.push(tile);
     }
 
 
@@ -108,13 +106,13 @@ export class ChordmakerPage implements OnInit {
   //check if two note with the same value are both checked, if yes deselects the last selected one
   checkEquals(selectedTile: Tile) {
 
-    this.selecedTiles.forEach((tile) => {
+    this.selectedTiles.forEach((tile) => {
 
       //if the interval is 0 
       let interval = Interval.distance(selectedTile.name, tile.name);
       if (interval == "0A" || interval == "2d") {
         tile.selected = false
-        this.selecedTiles.splice(this.selecedTiles.indexOf(tile), 1);
+        this.selectedTiles.splice(this.selectedTiles.indexOf(tile), 1);
       }
     });
 
@@ -127,10 +125,11 @@ export class ChordmakerPage implements OnInit {
       tile.color = "light";
     })
 
-    this.selecedTiles.forEach((selecedTile, idx) => {
+    this.selectedTiles.forEach((selectedTile, idx) => {
       let found = this.tiles.find(tile => {
-        return tile == selecedTile;
+        return tile.name == selectedTile.name;
       })
+
       if (idx == 0) {
         found.color = "tertiary";
       }
@@ -141,45 +140,163 @@ export class ChordmakerPage implements OnInit {
     })
   }
 
+  intervalToNumber(intervals: string[]) {
+    return intervals.map(interval => {
+      let number = "";
+
+      switch (interval[0]) {
+        case "1":
+          number = "unison"
+          break;
+        case "2":
+          number = "second"
+          break;
+        case "3":
+          number = "third"
+          break;
+        case "4":
+          number = "fourth"
+          break;
+        case "5":
+          number = "fifth"
+          break;
+        case "6":
+          number = "sixth"
+          break;
+        case "7":
+          number = "seventh"
+          break;
+        case "8":
+          number = "seventh"
+          break;
+        case "9":
+          number = "ninth"
+          break;
+        case "11":
+          number = "eleventh"
+          break;
+        case "13":
+          number = "thirteenth"
+          break;
+      }
+
+      return number;
+    })
+  }
+
+  intervalToQuality(intervals: string[]) {
+    return intervals.map(interval => {
+      let quality = "";
+
+      switch (interval[1]) {
+        case "P":
+          if (interval[0] != "1") {
+            quality = "perfect"
+          }
+          break;
+        case "m":
+          quality = "minor"
+          break;
+        case "M":
+          quality = "major"
+          break;
+        case "d":
+          quality = "diminished-f"
+          break;
+        case "A":
+          quality = "augmented-f"
+          break;
+      }
+
+      return quality;
+    })
+  }
+
+  assembleChord(chordName) {
+    let tmpChord = Chord.get(chordName);
+    this.chord.symbol = tmpChord.symbol;
+    this.chord.name = tmpChord.name.split(" ");
+    this.chord.tonic = tmpChord.tonic;
+    this.chord.root = tmpChord.root;
+    this.chord.intervals = {
+      symbols: tmpChord.intervals,
+      quality: this.intervalToQuality(tmpChord.intervals),
+      numbers: this.intervalToNumber(tmpChord.intervals)
+    };
+    this.chord.aliases = tmpChord.aliases;
+    this.chord.type = tmpChord.type;
+    this.chord.notes = tmpChord.notes;
+    this.chord.extensions = { open: false, values: Chord.extended(tmpChord.symbol) };
+    this.chord.reductions = { open: false, values: Chord.reduced(tmpChord.symbol) };
+    this.chord.empty = tmpChord.empty;
+  }
+
   findChord() {
     let filter: string;
 
-    if (this.selecedTiles[0]) {
-      filter = this.selecedTiles[0].name;
+    if (this.selectedTiles[0]) {
+      filter = this.selectedTiles[0].name;
     }
 
-    let notes: string[] = this.selecedTiles.map(tile => {
+    let notes: string[] = this.selectedTiles.map(tile => {
       return tile.name;
     });
 
+
     if (notes.length >= 2) {
       let chordsList = Chord.detect(notes);
-      let filteredChord = chordsList.find(chordName => {
 
+      let filteredChord = chordsList.find(chordName => {
         return chordName.slice(0, 2).includes(filter);
       })
 
-      let tmpChord = Chord.get(filteredChord);
-      console.log(tmpChord)
-      this.chord.symbol = tmpChord.symbol;
-      this.chord.name = tmpChord.name.split(" ");
-      this.chord.tonic = tmpChord.tonic;
-      this.chord.root = tmpChord.root;
-      this.chord.intervals = tmpChord.intervals;
-      this.chord.aliases = tmpChord.aliases;
-      this.chord.type = tmpChord.type;
-      this.chord.notes = tmpChord.notes;
-      this.chord.extensions = Chord.extended(tmpChord.symbol);
-      this.chord.reductions = Chord.reduced(tmpChord.symbol);
-      this.chord.empty = tmpChord.empty;
+      this.assembleChord(filteredChord);
 
-      console.log('filter', filter, 'filteredchord', 'chordlist', chordsList)
+      console.log(this.chord)
     }
     else {
       this.chord.empty = true;
     }
 
   }
+
+  inputChord(chordName) {
+
+    this.assembleChord(chordName);
+
+    this.selectedTiles = [];
+    this.chord.notes.forEach(note => {
+      this.selectedTiles.push({ name: note, color: "light" })
+    })
+
+    this.colorTiles();
+
+    console.log(chordName, this.chord)
+  }
+
+  toggleEllipsis(parameter) {
+
+    switch (parameter) {
+      case "extensions":
+        if (this.chord.extensions.open) {
+          this.chord.extensions.open = false;
+        }
+        else {
+          this.chord.extensions.open = true;
+        }
+        break;
+
+      case "reductions":
+        if (this.chord.reductions.open) {
+          this.chord.reductions.open = false;
+        }
+        else {
+          this.chord.reductions.open = true;
+        }
+        break;
+    }
+  }
+
   toggleCard(chord: myChord) {
     if (chord.show == false) {
       chord.show = true;
@@ -269,8 +386,6 @@ export class ChordmakerPage implements OnInit {
     scale.forEach((note, idx) => {
       this.tiles.push({ name: note, color: "light", selected: false })
     });
-    console.log(this.tiles);
-
   }
 
   async openModal() {

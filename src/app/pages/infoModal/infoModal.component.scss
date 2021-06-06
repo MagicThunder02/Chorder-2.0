@@ -7,6 +7,16 @@
 //     justify-content: center;
 // }
 
+ion-button, ion-slider {
+    opacity: 1 !important;
+}
+ion-select {
+    opacity: 1 !important;
+    --background: var(--ion-color-light);
+    --placeholder-color: var(--ion-color-dark);
+    --placeholder-opacity: 1;
+}
+
 .box {
     border-radius: 10px;
     border: 2px solid  var(--ion-color-shade);
@@ -47,7 +57,7 @@
 
     opacity: 1 !important;
 
-    --background: var(--ion-color-light-null);
+    --background: var(--ion-color-light-null); //white
     color: var(--ion-color-light-contrast);
 
     padding: 0;
@@ -55,24 +65,6 @@
     border-radius: 5px;
 
     border: 1px solid gray;
-}
-
-.select {
-    opacity: 1 !important;
-    --background: var(--ion-color-light-null);
-    width: 100%;
-}
-
-.bpmClass {
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    padding: 1%;
-    margin: 0 auto;
-    width: 20vmin;
-    height: 12vmin;
-    border-radius: 5px;
-    border: 2px solid gray;
 }
 
 .showColor {
@@ -84,13 +76,21 @@
     background-color: grey;
 }
 
-ion-button{
-    opacity: 1!important;
-    color: var(--ion-color-light-contrast);
-}
+// ion-button{
+//     opacity: 1!important;
+//     color: var(--ion-color-light-contrast);
+// }
 
 .roundButton {
     --border-radius: 50%;
     aspect-ratio: 1 / 1;
     height: 100%;
+}
+
+.tap {
+    width: 20vmin;
+    height: 12vmin;
+    opacity: 1;
+    --border-color: var(--ion-color-secondary);
+    --color: var(--ion-color-dark);
 }

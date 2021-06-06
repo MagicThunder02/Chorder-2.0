@@ -13,13 +13,18 @@
 
   <ng-container *ngIf="metronome">
 
-    <div class="container">
-      <div *ngIf="metronome" class="bpmClass">
-        <ion-text> BPM <br>
-          {{metronome.data.showBpm}}
-        </ion-text>
-      </div>
-    </div>
+    <ion-grid>
+      <ion-row class="ion-align-items-center" style="padding-top: 3%;">
+        <ion-col class="ion-text-center" size="12">
+          <ion-button class="bpm" fill="outline" disabled="true">
+            BPM <br>
+            {{metronome.data.showBpm}}
+
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
 
 
     <ng-container *ngFor="let track of metronome.data.tracks">

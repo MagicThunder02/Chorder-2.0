@@ -25,14 +25,18 @@ ion-text {
     background-color: grey;
 }
 
-.bpmClass {
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    padding: 1%;
-    margin: 0 auto;
+.bpm {
+    font-size: larger;
+    width: 30vmin;
+    height: 16vmin;
+    opacity: 1;
+    --border-color: var(--ion-color-medium);
+    --color: var(--ion-color-dark);
+}
+
+.tap {
     width: 20vmin;
     height: 12vmin;
-    border-radius: 5px;
-    border: 2px solid gray;
+    --border-color: var(--ion-color-secondary);
+    --color: var(--ion-color-dark);
 }

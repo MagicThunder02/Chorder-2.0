@@ -19,7 +19,18 @@
 
   <ion-grid *ngIf="metronome">
 
-    <ion-row class="ion-align-items-center" style="padding-top: 5%;">
+
+    <ion-row class="ion-align-items-center" style="padding-top: 3%;">
+      <ion-col class="ion-text-center" size="12">
+        <ion-button (click)="metronome.tapBpm()" class="bpm" fill="outline" disabled="true">
+          BPM <br>
+          {{metronome.data.bpm}}
+
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center" style="padding-top: 3%;">
       <ion-col class="ion-text-right">
         <ion-button size="small" color="secondary" (click)="metronome.modSettings('bpm', 'remove')">
           <ion-icon name="remove"></ion-icon>
@@ -27,16 +38,16 @@
       </ion-col>
       <ion-col class="ion-text-center">
 
-        <div class="container" (click)="metronome.tapBpm()">
-          <div *ngIf="metronome" class="bpmClass">
-            <ion-text *ngIf="!metronome.data.timer.active"> BPM <br>
-              {{metronome.data.bpm}}
-            </ion-text>
-            <ion-text *ngIf="metronome.data.timer.active"> TAP <br>
-              {{metronome.data.bpm}}
-            </ion-text>
+        <!-- <div class="container" (click)="metronome.tapBpm()">
+          <div *ngIf="metronome" class="bpmClass tap">
+
+
           </div>
-        </div>
+        </div> -->
+
+        <ion-button (click)="metronome.tapBpm()" class="tap" fill="outline">
+          Tap
+        </ion-button>
 
       </ion-col>
       <ion-col class="ion-text-left">
@@ -210,7 +221,7 @@
 
       </ion-row>
 
-      <ion-row *ngIf="track.toggle" style="padding-top: 3%;" class="ion-align-items-center">
+      <!-- <ion-row *ngIf="track.toggle" style="padding-top: 3%;" class="ion-align-items-center">
         <ion-col>
           <ion-text>{{'metronome.firstbeat' | translate}}:</ion-text>
         </ion-col>
@@ -219,7 +230,7 @@
             (ionChange)="metronome.changeTrackOptions('firstbeat', '', track)">
           </ion-toggle>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
     </ng-container>
 

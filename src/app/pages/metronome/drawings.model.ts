@@ -125,7 +125,10 @@ export class Drawings {
         }
     }
 
-    public lightBall(track, appRef, time) {
+    public lightBall(track, appRef, metro) {
+        console.log(metro)
+        let time = 60 / metro.data.showBpm * metro.data.tracks[0].beats;
+        time = time / track.beats;
 
         //if 1 beats the ball pulse slower
         if (track.beats == 1) {
@@ -144,6 +147,7 @@ export class Drawings {
 
         // switch on the ball
         if (track.idx == 0) {
+            console.log(track.changeFirstBeat)
             if (track.changeFirstBeat) {
                 this.balls[track.idx].color = this.shadeColor(track.color, -80);
             } else {
