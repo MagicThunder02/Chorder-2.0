@@ -129,7 +129,7 @@
                   </ng-template>
 
                   <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"
-                    *ngIf="chord.extensions.values.length > 3" (click)="toggleEllipsis('extensions')">
+                    *ngIf="chord.extensions.values.length > 3" (click)="toggleEllipsis('extensions', chord)">
                   </ion-icon>
 
                 </ion-card-header>
@@ -157,7 +157,7 @@
                   </ng-template>
 
                   <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"
-                    *ngIf="chord.reductions.values.length > 3" (click)="toggleEllipsis('reductions')">
+                    *ngIf="chord.reductions.values.length > 3" (click)="toggleEllipsis('reductions', chord)">
                   </ion-icon>
 
                 </ion-card-header>

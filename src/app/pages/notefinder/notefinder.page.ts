@@ -231,7 +231,9 @@ export class NotefinderPage implements OnInit {
 
   //color the tiles if selected
   colorTiles() {
+
     this.qualitiesTiles.forEach(tile => {
+
       if (tile.selected) {
         tile.color = "secondary"
       }
@@ -240,6 +242,7 @@ export class NotefinderPage implements OnInit {
       }
     })
     this.gradesTiles.forEach(tile => {
+
       if (tile.selected) {
         tile.color = "secondary"
       }
@@ -347,28 +350,43 @@ export class NotefinderPage implements OnInit {
 
   inputChord(chordName) {
 
-    let chord = this.assembleChord(chordName);
+    let inputChord = this.assembleChord(chordName);
+    //finds the bigger interval
+    let interval = inputChord.intervals.symbols[inputChord.intervals.symbols.length - 1].slice(0, -1);
 
+    //finds the tile with the correspondent value
+    let qualityTile = this.qualitiesTiles.find(tile => {
+      return tile.name == inputChord.quality;
+    })
+    let gradeTile = this.gradesTiles.find(tile => {
+      return tile.name == interval;
+    })
 
-    switch (chord.quality) {
-      case "major":
-        this.gradesTiles[0].selected = true;
-        break;
-
-      case "minor":
-        this.gradesTiles[1].selected = true;
-        break;
-      case "diminished":
-        this.gradesTiles[2].selected = true;
-        break;
-      case "augmented":
-        this.gradesTiles[3].selected = true;
-        break;
-    }
+    //deselect all and then select the previusly found tiles
+    this.gradesTiles.forEach(gradeTile => {
+      gradeTile.selected = false;
+    })
+    this.qualitiesTiles.forEach(qualitiesTile => {
+      qualitiesTile.selected = false;
+    })
+    if (qualityTile) { qualityTile.selected = true; }
+    if (gradeTile) { gradeTile.selected = true; }
 
     this.colorTiles();
 
-    console.log(chordName, chord)
+    //research for all chords and puts the input one at the top opened
+    this.searchChord();
+
+    this.chords.forEach((chord, idx) => {
+      if (chord.symbol == inputChord.symbol) {
+        this.chords.splice(idx, 1);
+        this.chords.unshift(chord);
+      }
+    });
+
+    this.chords[0].show = true;
+
+    console.log(chordName, inputChord)
   }
 
   toggleCard(chord: myChord) {
@@ -376,6 +394,29 @@ export class NotefinderPage implements OnInit {
       chord.show = false;
     } else {
       chord.show = true;
+    }
+  }
+
+  toggleEllipsis(parameter, chord) {
+
+    switch (parameter) {
+      case "extensions":
+        if (chord.extensions.open) {
+          chord.extensions.open = false;
+        }
+        else {
+          chord.extensions.open = true;
+        }
+        break;
+
+      case "reductions":
+        if (chord.reductions.open) {
+          chord.reductions.open = false;
+        }
+        else {
+          chord.reductions.open = true;
+        }
+        break;
     }
   }
 
