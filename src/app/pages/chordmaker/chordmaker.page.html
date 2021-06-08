@@ -56,6 +56,11 @@
                       {{word | musicNotation | translate}}
                     </ion-text><br>
                   </ng-container>
+                  <ng-container *ngIf="chord.quality">
+                    <ion-text style="text-transform: capitalize;">
+                      {{chord.quality | translate}} {{'chord' | translate}}
+                    </ion-text><br>
+                  </ng-container>
                   <ion-text>
                     {{'aliases' | translate}}:
                   </ion-text>
@@ -118,7 +123,7 @@
                 <ion-text> {{'reductions' | translate}}: <br> <br></ion-text>
 
                 <ion-text *ngIf="!chord.reductions.open; else reductionsOpened">
-                  <ion-text class="linkChord" *ngFor="let mychord of chord.reductions.values.slice(0,3); last as isLast"
+                  <ion-text *ngFor="let mychord of chord.reductions.values.slice(0,3); last as isLast"
                     (click)="inputChord(mychord)">
                     <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
                     <ion-text *ngIf="!isLast"> , </ion-text>
@@ -126,7 +131,7 @@
                 </ion-text>
 
                 <ng-template #reductionsOpened>
-                  <ion-text class="linkChord" *ngFor="let mychord of chord.reductions.values; last as isLast"
+                  <ion-text *ngFor="let mychord of chord.reductions.values; last as isLast"
                     (click)="inputChord(mychord)">
                     <ion-text class="linkChord">{{mychord | musicNotation}}</ion-text>
                     <ion-text *ngIf="!isLast"> , </ion-text>

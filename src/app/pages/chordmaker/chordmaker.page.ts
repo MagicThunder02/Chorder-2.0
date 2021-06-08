@@ -27,6 +27,7 @@ export interface myChord {
   extensions?: { open: boolean, values: string[] };
   reductions?: { open: boolean, values: string[] };
   notes?: string[];
+  quality?: string;
   show?: boolean;
   empty?: boolean;
 }
@@ -143,40 +144,42 @@ export class ChordmakerPage implements OnInit {
   intervalToNumber(intervals: string[]) {
     return intervals.map(interval => {
       let number = "";
+      // console.log(interval.slice(0, -1), interval)
 
-      switch (interval[0]) {
+
+      switch (interval.slice(0, -1)) {
         case "1":
-          number = "unison"
+          number = "unison";
           break;
         case "2":
-          number = "second"
+          number = "second";
           break;
         case "3":
-          number = "third"
+          number = "third";
           break;
         case "4":
-          number = "fourth"
+          number = "fourth";
           break;
         case "5":
-          number = "fifth"
+          number = "fifth";
           break;
         case "6":
-          number = "sixth"
+          number = "sixth";
           break;
         case "7":
-          number = "seventh"
+          number = "seventh";
           break;
         case "8":
-          number = "seventh"
+          number = "seventh";
           break;
         case "9":
-          number = "ninth"
+          number = "ninth";
           break;
         case "11":
-          number = "eleventh"
+          number = "eleventh";
           break;
         case "13":
-          number = "thirteenth"
+          number = "thirteenth";
           break;
       }
 
@@ -188,7 +191,7 @@ export class ChordmakerPage implements OnInit {
     return intervals.map(interval => {
       let quality = "";
 
-      switch (interval[1]) {
+      switch (interval[interval.length - 1]) {
         case "P":
           if (interval[0] != "1") {
             quality = "perfect"
@@ -228,6 +231,7 @@ export class ChordmakerPage implements OnInit {
     this.chord.notes = tmpChord.notes;
     this.chord.extensions = { open: false, values: Chord.extended(tmpChord.symbol) };
     this.chord.reductions = { open: false, values: Chord.reduced(tmpChord.symbol) };
+    this.chord.quality = tmpChord.quality;
     this.chord.empty = tmpChord.empty;
   }
 

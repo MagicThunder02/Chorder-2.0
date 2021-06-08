@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Chord } from "@tonaljs/tonal";
+import { Chord, ChordType } from "@tonaljs/tonal";
 import * as Tone from 'tone';
 import { GlobalService } from 'src/app/services/global.service';
 import { MusicNotationPipe } from 'src/app/pipes/music-notation.pipe';
@@ -25,6 +25,7 @@ export interface myChord {
   extensions?: { open: boolean, values: string[] };
   reductions?: { open: boolean, values: string[] };
   notes?: string[];
+  quality?: string;
   show?: boolean;
   empty?: boolean;
 }
@@ -39,7 +40,7 @@ export class NotefinderPage implements OnInit {
   private musicNotationPipe = new MusicNotationPipe(this.global);
 
   public scale: string[] = [];
-  public typesTiles: Tile[] = [];
+  public qualitiesTiles: Tile[] = [];
   public gradesTiles: Tile[] = [];
   public key: string = '';
   private type: string = '';
@@ -80,87 +81,44 @@ export class NotefinderPage implements OnInit {
     }).toDestination();
   }
 
-  //fist byte = key
-  //second byte = type
-  //third byte = grade
-  checkStatus() {
-    this.status = "";
-
-    if (this.key == " " || this.key == "") {
-      this.status = this.status + "0";
-    }
-    else {
-      this.status = this.status + "1";
-    }
-
-    if (!this.typesTiles[0].selected && !this.typesTiles[1].selected &&
-      !this.typesTiles[2].selected && !this.typesTiles[3].selected) {
-      this.status = this.status + "0";
-    }
-    else {
-      this.status = this.status + "1";
-    }
-
-    if (!this.gradesTiles[0].selected && !this.gradesTiles[1].selected &&
-      !this.gradesTiles[2].selected && !this.gradesTiles[3].selected && !this.gradesTiles[4].selected) {
-      this.status = this.status + "0";
-    }
-    else {
-      this.status = this.status + "1";
-    }
-
-    console.log(this.status)
-  }
-
-  pushAll() {
-    this.chords = [];
-    let chordName = this.key.trim() + " major"
-    this.pushExtendedChords(chordName);
-    chordName = this.key.trim() + "min"
-    this.pushExtendedChords(chordName);
-    chordName = this.key.trim() + "dim"
-    this.pushExtendedChords(chordName);
-    chordName = this.key.trim() + "aug"
-    this.pushExtendedChords(chordName);
-  }
-
   intervalToNumber(intervals: string[]) {
     return intervals.map(interval => {
       let number = "";
+      // console.log(interval.slice(0, -1), interval)
 
-      switch (interval[0]) {
+      switch (interval.slice(0, -1)) {
         case "1":
-          number = "unison"
+          number = "unison";
           break;
         case "2":
-          number = "second"
+          number = "second";
           break;
         case "3":
-          number = "third"
+          number = "third";
           break;
         case "4":
-          number = "fourth"
+          number = "fourth";
           break;
         case "5":
-          number = "fifth"
+          number = "fifth";
           break;
         case "6":
-          number = "sixth"
+          number = "sixth";
           break;
         case "7":
-          number = "seventh"
+          number = "seventh";
           break;
         case "8":
-          number = "seventh"
+          number = "seventh";
           break;
         case "9":
-          number = "ninth"
+          number = "ninth";
           break;
         case "11":
-          number = "eleventh"
+          number = "eleventh";
           break;
         case "13":
-          number = "thirteenth"
+          number = "thirteenth";
           break;
       }
 
@@ -171,8 +129,7 @@ export class NotefinderPage implements OnInit {
   intervalToQuality(intervals: string[]) {
     return intervals.map(interval => {
       let quality = "";
-
-      switch (interval[1]) {
+      switch (interval[interval.length - 1]) {
         case "P":
           if (interval[0] != "1") {
             quality = "perfect"
@@ -198,7 +155,6 @@ export class NotefinderPage implements OnInit {
 
   assembleChord(chordName) {
     let returnChord: myChord = {};
-    console.log("c", chordName, Chord.get("C major"))
     let tmpChord = Chord.get(chordName);
 
     returnChord.symbol = tmpChord.symbol;
@@ -215,22 +171,19 @@ export class NotefinderPage implements OnInit {
     returnChord.notes = tmpChord.notes;
     returnChord.extensions = { open: false, values: Chord.extended(tmpChord.symbol) };
     returnChord.reductions = { open: false, values: Chord.reduced(tmpChord.symbol) };
+
+    if (tmpChord.quality != "Unknown") {
+      returnChord.quality = tmpChord.quality;
+    }
+    else {
+      returnChord.quality = ""
+    }
+
     returnChord.empty = tmpChord.empty;
     return returnChord;
   }
 
-
-  pushExtendedChords(chordName) {
-    let chordNameArray = Chord.extended(chordName);
-    console.log(chordName, chordNameArray)
-
-    this.chords.push(this.assembleChord(chordName))
-    chordNameArray.forEach(chord => {
-      this.chords.push(this.assembleChord(chord))
-    })
-  }
-
-  selectTypeTile(tile: Tile) {
+  selectQualitiesTiles(tile: Tile) {
     this.type = tile.name;
     this.toggleTypeTile(tile);
     this.colorTiles()
@@ -249,7 +202,7 @@ export class NotefinderPage implements OnInit {
   //select or deselect a tile
   toggleTypeTile(tile: Tile) {
     if (tile.selected == false) {
-      this.typesTiles.forEach(tile => {
+      this.qualitiesTiles.forEach(tile => {
         tile.selected = false;
       })
       tile.selected = true;
@@ -270,9 +223,15 @@ export class NotefinderPage implements OnInit {
     }
   }
 
+  searchbarChange(ev) {
+    if (ev) {
+      this.serVal = ev.target.value;
+    }
+  }
+
   //color the tiles if selected
   colorTiles() {
-    this.typesTiles.forEach(tile => {
+    this.qualitiesTiles.forEach(tile => {
       if (tile.selected) {
         tile.color = "secondary"
       }
@@ -290,79 +249,126 @@ export class NotefinderPage implements OnInit {
     })
   }
 
-  gradeFilter() {
-    //if the chord doesnt't contain the grade it is removed
-    if (this.status[2] == "1") {
 
-      let tmp: myChord[] = [];
-      this.chords.forEach(chord => {
-        if (chord.symbol.includes(this.grade)) {
-          tmp.push(chord);
-        }
-      });
+  pushAll() {
+    this.chords = [];
+    ChordType.all().forEach(chord => {
+      let tmpChord = this.assembleChord(this.key.trim() + chord.aliases[0])
+      // console.log(tmpChord)
 
-      this.chords = tmp;
+      this.chords.push(tmpChord)
+    })
+    // console.log(this.assembleChord(ChordType.all()[1].aliases[0]))
+  }
+
+  qualityFilter() {
+    //if any qualitytile is selected, filter by quality
+
+    //find the selected tile
+    let tile = this.qualitiesTiles.find(tile => {
+      return tile.selected == true;
+    })
+
+    if (tile) {
+      this.chords = this.chords.filter(chord => {
+        //if the selected quality is equal to the chord's quality returns che chord
+        return chord.quality.includes(tile.name);
+      })
     }
+
+  }
+
+  gradeFilter() {
+    //if any gradetile is selected, filter by grade
+
+    //find the selected tile
+    let tile = this.gradesTiles.find(tile => {
+      return tile.selected == true;
+    })
+
+
+    if (tile) {
+      this.chords = this.chords.filter(chord => {
+        //if the selected grade is equal to at least one of the intervals returns che chord
+        let filtered = chord.intervals.symbols.some(symbol => {
+          //-7 to get also the lower octave
+          return symbol.slice(0, -1) == tile.name || symbol.slice(0, -1) == eval(tile.name + "-7");
+        })
+
+        return filtered;
+      })
+    }
+
+  }
+
+  getChords() {
+    //if the searchbar is active
+    if (this.serVal) {
+
+      this.chords = this.chords.filter(chord => {
+        //search in the aliases
+        let isAlias = chord.aliases.some(alias => {
+          console.log(alias, chord.quality, this.serVal)
+          return alias.includes(this.serVal);
+        })
+        //search in the quality
+        let isQuality = chord.quality.toLowerCase().includes(this.serVal.toLowerCase());
+
+        return isAlias || isQuality
+      })
+    }
+
+  }
+
+  sortChords() {
+
+    //remove the first chord which is empty
+    this.chords = this.chords.filter(chord => {
+      return chord.empty == false;
+    })
+
+    //sort in lenght order
+    this.chords.sort((chord1, chord2) => chord1.symbol.length - chord2.symbol.length);
   }
 
   searchChord() {
-    this.checkStatus();
-    let chordName = this.key.trim() + this.type;
-    this.chords = [];
-    switch (this.status) {
-      case "000":
-        if (this.key == '') {
-          this.chords = [];
-          this.filteredChords = [];
-        }
-        break;
+    this.pushAll();
 
-      case "010":
-      case "110":
-      case "011":
-      case "111":
-        this.pushExtendedChords(chordName);
-        this.gradeFilter();
-        this.getChords();
-        break;
+    this.qualityFilter();
 
-      default:
-        console.log("default")
-        this.pushAll();
-        this.gradeFilter();
-        this.getChords();
-        break;
+    this.gradeFilter();
 
-    }
+    this.getChords();
 
-    console.log(chordName, this.chords)
+    this.sortChords();
+    console.log(this.chords)
   }
 
-  getChords(ev?: any) {
 
-    if (ev) {
-      this.serVal = ev.target.value;
+  inputChord(chordName) {
+
+    let chord = this.assembleChord(chordName);
+
+
+    switch (chord.quality) {
+      case "major":
+        this.gradesTiles[0].selected = true;
+        break;
+
+      case "minor":
+        this.gradesTiles[1].selected = true;
+        break;
+      case "diminished":
+        this.gradesTiles[2].selected = true;
+        break;
+      case "augmented":
+        this.gradesTiles[3].selected = true;
+        break;
     }
 
-    let tmp: any[] = [];
+    this.colorTiles();
 
-    this.chords.forEach(chord => {
-      if (chord.symbol.toLowerCase().trim().includes(this.serVal)) {
-
-        tmp.push(chord);
-      }
-      else {
-        chord.aliases.forEach(alias => {
-          if (alias.toLowerCase().trim().includes(this.serVal)) {
-
-            tmp.push(chord);
-          }
-        });
-      }
-    })
-
-    this.filteredChords = tmp;
-    console.log(this.serVal, this.filteredChords)
+    console.log(chordName, chord)
   }
 
   toggleCard(chord: myChord) {
@@ -457,11 +463,11 @@ export class NotefinderPage implements OnInit {
 
   ngOnInit() {
     this.scale = ["", "Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
-    let types = ["major", "min", "dim", "aug"];
+    let qualities = ["Major", "Minor", "Diminished", "Augmented"];
     let grades = ["5", "7", "9", "11", "13"]
 
-    types.forEach(name => {
-      this.typesTiles.push({ name: name, color: "light", selected: false })
+    qualities.forEach(name => {
+      this.qualitiesTiles.push({ name: name, color: "light", selected: false })
     });
     grades.forEach(name => {
       this.gradesTiles.push({ name: name, color: "light", selected: false })
