@@ -9,6 +9,7 @@ import { PipesModule } from '../../pipes/pipes-module/pipes.module';
 import { RouterModule } from '@angular/router';
 import { ChordmakerPage } from './chordmaker.page';
 import { InfoModalComponent } from '../infoModal/infoModal.component';
+import { MyComponentsModule } from 'src/app/components/mycomponents.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { InfoModalComponent } from '../infoModal/infoModal.component';
     CommonModule,
     FormsModule,
     IonicModule,
+    MyComponentsModule,
     RouterModule.forChild([
       {
         path: '',

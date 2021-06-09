@@ -2,14 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 
-import { NotefinderPage } from './notefinder.page';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../home/home.module';
+import { HttpLoaderFactory } from '../pages/home/home.module';
 import { HttpClient } from '@angular/common/http';
-import { PipesModule } from '../../pipes/pipes-module/pipes.module';
-import { MyComponentsModule } from 'src/app/components/mycomponents.module';
+import { PipesModule } from '../pipes/pipes-module/pipes.module';
+import { ChordComponent } from './chord/chord.component';
 
 @NgModule({
   imports: [
@@ -17,7 +15,6 @@ import { MyComponentsModule } from 'src/app/components/mycomponents.module';
     FormsModule,
     IonicModule,
     PipesModule,
-    MyComponentsModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -25,13 +22,8 @@ import { MyComponentsModule } from 'src/app/components/mycomponents.module';
         deps: [HttpClient]
       }
     }),
-    RouterModule.forChild([
-      {
-        path: '',
-        component: NotefinderPage
-      }
-    ])
   ],
-  declarations: [NotefinderPage],
+  declarations: [ChordComponent],
+  exports: [ChordComponent]
 })
-export class NotefinderModule { }
+export class MyComponentsModule { }

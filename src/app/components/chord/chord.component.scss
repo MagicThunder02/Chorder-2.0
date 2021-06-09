@@ -1,0 +1,27 @@
+  
+  .card-title-symbol {
+    font-size: x-large;
+    // color: var(--ion-color-secondary);
+  }
+  
+  .card {
+    border: 1px solid var(--ion-color-medium); 
+    font-weight: normal;
+  }
+  .outer{
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .inner {
+    margin-left: 0;
+    margin-right: 0;
+    box-shadow: none;
+    border-top: 0;
+    border-bottom: 0;
+  }
+  
+  .linkChord:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--ion-color-secondary);
+    color: var(--ion-color-secondary);
+  }

@@ -6,7 +6,7 @@ import { GlobalService } from 'src/app/services/global.service';
 @Component({
   selector: 'app-infoModal',
   templateUrl: './infoModal.component.html',
-  styleUrls: ['./infoModal.component.scss'],
+  styleUrls: ['./infoModal.component.scss', '../chordmaker/chordmaker.page.scss', '../notefinder/notefinder.page.scss'],
 })
 export class InfoModalComponent {
 

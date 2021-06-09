@@ -6,7 +6,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { MusicNotationPipe } from 'src/app/pipes/music-notation.pipe';
 import { ModalController } from '@ionic/angular';
 import { InfoModalComponent } from '../infoModal/infoModal.component';
-// import SampleLibrary from '../notefinder/inst-loader.js'
+
 
 export interface Tile {
   name?: string;
@@ -43,11 +43,7 @@ export class NotefinderPage implements OnInit {
   public qualitiesTiles: Tile[] = [];
   public gradesTiles: Tile[] = [];
   public key: string = '';
-  private type: string = '';
-  private grade: string = '';
   public chords: myChord[] = [];
-  public filteredChords: myChord[] = [];
-  public status: string = "";
   private serVal: string = "";
 
   private synth;
@@ -184,19 +180,15 @@ export class NotefinderPage implements OnInit {
   }
 
   selectQualitiesTiles(tile: Tile) {
-    this.type = tile.name;
     this.toggleTypeTile(tile);
     this.colorTiles()
     this.searchChord();
-    console.log(this.type)
   }
 
   selectGradeTile(tile: Tile) {
-    this.grade = tile.name;
     this.toggleGradeTile(tile);
     this.colorTiles()
     this.searchChord();
-    console.log(this.type)
   }
 
   //select or deselect a tile
@@ -344,7 +336,7 @@ export class NotefinderPage implements OnInit {
     this.getChords();
 
     this.sortChords();
-    console.log(this.chords)
+
   }
 
 
@@ -389,13 +381,7 @@ export class NotefinderPage implements OnInit {
     console.log(chordName, inputChord)
   }
 
-  toggleCard(chord: myChord) {
-    if (chord.show) {
-      chord.show = false;
-    } else {
-      chord.show = true;
-    }
-  }
+
 
   toggleEllipsis(parameter, chord) {
 
@@ -420,42 +406,7 @@ export class NotefinderPage implements OnInit {
     }
   }
 
-  playChord(chord: myChord, mode: string) {
-    //assigns octave 4 to all notes than plays them together
 
-    let scale = ["Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
-
-    let notes = chord.notes.map(function (note, idx) {
-
-      if (note.includes("##")) {
-        let idx = scale.indexOf(note.slice(0, -1));
-        note = scale[(idx + 2) % scale.length];
-        // console.log(idx, note, scale[idx % scale.length], scale[(idx + 2) % scale.length])
-      }
-
-      if (note.includes("bb")) {
-        let idx = scale.indexOf(note);
-        note = scale[(idx - 2) % scale.length];
-      }
-
-      if (parseInt(chord.intervals[idx], 10) <= 7) {
-        return note = note + "3"
-      } else {
-        return note = note + "4"
-      }
-    });
-    console.log(notes);
-
-    if (mode == "arp")
-      notes.forEach((note, idx) => {
-        this.synth.triggerAttackRelease(note, "4n", Tone.now() + idx / 2);
-      })
-    else {
-      if (mode == "chord") {
-        this.synth.triggerAttackRelease(notes, "2n");
-      }
-    }
-  }
 
   beautify(array: string[], pipe: boolean = true) {
     let myString: string = '';
@@ -513,6 +464,7 @@ export class NotefinderPage implements OnInit {
     grades.forEach(name => {
       this.gradesTiles.push({ name: name, color: "light", selected: false })
     });
+
   }
 
   async openModal() {

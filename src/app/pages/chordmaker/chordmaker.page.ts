@@ -47,30 +47,9 @@ export class ChordmakerPage implements OnInit {
   public chord: myChord = { empty: true };
 
 
-  // private synth = new Tone.PolySynth().toDestination();
-  private synth;
-
   constructor(private translate: TranslateService, public global: GlobalService, private modalCtrl: ModalController) {
     console.log(global.language)
-    this.synth = new Tone.Sampler({
-      urls: {
-        A2: "pianoA2.wav",
-      },
-      baseUrl: "assets/instruments/",
 
-    }).toDestination();
-  }
-
-  selectInstrument() {
-    this.synth = '';
-
-    this.synth = new Tone.Sampler({
-      urls: {
-        A2: this.global.instrument + "A2.wav",
-      },
-      baseUrl: "assets/instruments/",
-
-    }).toDestination();
   }
 
   resetTiles() {
@@ -278,79 +257,6 @@ export class ChordmakerPage implements OnInit {
     console.log(chordName, this.chord)
   }
 
-  toggleEllipsis(parameter) {
-
-    switch (parameter) {
-      case "extensions":
-        if (this.chord.extensions.open) {
-          this.chord.extensions.open = false;
-        }
-        else {
-          this.chord.extensions.open = true;
-        }
-        break;
-
-      case "reductions":
-        if (this.chord.reductions.open) {
-          this.chord.reductions.open = false;
-        }
-        else {
-          this.chord.reductions.open = true;
-        }
-        break;
-    }
-  }
-
-  toggleCard(chord: myChord) {
-    if (chord.show == false) {
-      chord.show = true;
-    } else {
-      chord.show = false;
-    }
-    console.log(chord)
-  }
-
-  playChord(chord: myChord, mode: string) {
-    //assigns octave 4 to all notes than plays them together
-
-    let scale = ["Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]
-
-    let notes = chord.notes.map(function (note, idx) {
-
-      if (note.includes("##")) {
-        let idx = scale.indexOf(note.slice(0, -1));
-        note = scale[(idx + 2) % scale.length];
-        // console.log(idx, note, scale[idx % scale.length], scale[(idx + 2) % scale.length])
-      }
-
-      if (note.includes("bb")) {
-        let idx = scale.indexOf(note);
-        note = scale[(idx - 2) % scale.length];
-      }
-
-      if (parseInt(chord.intervals[idx], 10) <= 7) {
-        return note = note + "3"
-      } else {
-        return note = note + "4"
-      }
-    });
-    // console.log(notes, chord.intervals);
-
-    if (mode == "arp")
-      notes.forEach((note, idx) => {
-        this.synth.triggerAttackRelease(note, "4n", Tone.now() + idx / 2);
-      })
-    else {
-      if (mode == "chord") {
-        this.synth.triggerAttackRelease(notes, "2n");
-      }
-    }
-  }
-
-
-  ionViewDidEnter(): void {
-    this.selectInstrument()
-  }
 
   ngOnInit() {
     let scale = ["Cb", "C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B", "B#"]

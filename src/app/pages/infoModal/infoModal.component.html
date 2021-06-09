@@ -80,17 +80,120 @@
             <ion-col size="12">
               <ion-card class="card-chord">
                 <ion-card-header>
-                  <ion-card-title>{{'Caug' | musicNotation}}</ion-card-title>
-                  <ion-card-subtitle>{{'C augmented' | musicNotation}}</ion-card-subtitle>
+                  <ion-card-title>{{'C' | musicNotation}}</ion-card-title>
                 </ion-card-header>
-                <ion-card-content>
-                  {{'tonic' | translate}}: {{'C' | musicNotation}} <br>
-                  {{'intervals' | translate}}: 1P, 3M, 5A <br>
-                  {{'type' | translate}}: {{'augmented' | translate}} <br>
-                  {{'aliases' | translate}}: aug, +, +5, ^{{'#' | musicNotation}}5 <br>
-                  {{'extensions' | translate}}: {{'CM7b6' | musicNotation}}, {{'Cmaj7#5' | musicNotation}}, {{'C7#5' |
-                  musicNotation}}
-                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" class="ion-text-center">
+              <ion-icon name="arrow-down-outline" size="large"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-card class="card outer">
+
+                <ion-card-header>
+                  <ion-card class="card inner" style="margin-top: 0;" (click)="toggleCard(chord)">
+                    <ion-card-header>
+                      <ion-card-title class="card-title-symbol">{{'C' | musicNotation}}</ion-card-title>
+
+                      <ion-card-subtitle class="card-subtitle">
+
+                        <ion-text *ngIf="global.language == 'en'" style="text-transform: capitalize;">
+                          {{'Major' | translate}} {{'chord' | translate}}<br>
+                        </ion-text>
+                        <ion-text *ngIf="global.language == 'it'" style="text-transform: capitalize;">
+                          {{'chord' | translate}} {{'Major' | translate}}<br>
+                        </ion-text>
+
+                        <ion-text>
+                          {{'aliases' | translate}}:
+                        </ion-text>
+                        <ion-text> M, ^ </ion-text>
+                      </ion-card-subtitle>
+                    </ion-card-header>
+                  </ion-card>
+
+                  <ion-card class="card inner">
+                    <ion-card-header>
+
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col size="2" style="font-weight: bold;"> {{'C' | musicNotation}} </ion-col>
+                          <ion-col size="2">1P</ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;"> {{'unison' | translate}}</ion-col>
+                        </ion-row>
+
+                        <ion-row>
+                          <ion-col size="2" style="font-weight: bold;"> {{'E' | musicNotation}} </ion-col>
+                          <ion-col size="2">3M</ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'en'">
+                            {{'major' | translate}} {{'third' | translate}}
+                          </ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'it'">
+                            {{'third' | translate}} {{'major' | translate}}
+                          </ion-col>
+                        </ion-row>
+
+                        <ion-row>
+                          <ion-col size="2" style="font-weight: bold;"> {{'G' | musicNotation}} </ion-col>
+                          <ion-col size="2">5P</ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'en'">
+                            {{'perfect' | translate}} {{'fifth' | translate}}
+                          </ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'it'">
+                            {{'fifth' | translate}} {{'perfect' | translate}}
+                          </ion-col>
+                        </ion-row>
+
+                      </ion-grid>
+                    </ion-card-header>
+                  </ion-card>
+
+
+                  <ion-card class="card inner">
+                    <ion-card-header>
+                      <ion-text> {{'extensions' | translate}}: <br> <br></ion-text>
+
+                      {{'Cmaj7' | musicNotation}}, {{'C7' | musicNotation}}, {{'C6' | musicNotation}}
+
+                      <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"></ion-icon>
+
+                    </ion-card-header>
+                  </ion-card>
+
+
+                  <ion-card class="card inner">
+                    <ion-card-header>
+                      <ion-text> {{'reductions' | translate}}: <br> <br></ion-text>
+
+                      {{'C5' | musicNotation}}
+                    </ion-card-header>
+                  </ion-card>
+
+                  <ion-card class="card inner" style="margin-bottom: 0;">
+
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col class="ion-text-center">
+                          <ion-button color="secondary" disabled="true"> {{'play_chord' |
+                            translate}}
+                          </ion-button>
+                        </ion-col>
+                        <ion-col class="ion-text-center">
+                          <ion-button color="secondary" disabled="true"> {{'play_arp' | translate}}
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+
+                  </ion-card>
+                </ion-card-header>
+
+
               </ion-card>
             </ion-col>
           </ion-row>
@@ -188,11 +291,11 @@
 
           <ion-row>
             <ion-col size="3" *ngFor="let element of ['Maj', 'Min', 'Dim', 'Aug']">
-              <ion-button disabled="true" *ngIf="element == 'Dim'" color="secondary" expand="block"
+              <ion-button disabled="true" *ngIf="element == 'Maj'" color="secondary" expand="block"
                 class="button-tiles">
                 {{element}}
               </ion-button>
-              <ion-button disabled="true" *ngIf="element != 'Dim'" expand="block" class="button-tiles">
+              <ion-button disabled="true" *ngIf="element != 'Maj'" expand="block" class="button-tiles">
                 {{element}}
               </ion-button>
             </ion-col>
@@ -200,10 +303,10 @@
 
           <ion-row>
             <ion-col size="12/5" *ngFor="let number of [5, 7, 9, 11, 13]">
-              <ion-button disabled="true" *ngIf="number == 7" color="secondary" expand="block" class="button-tiles">
+              <ion-button disabled="true" *ngIf="number == 9" color="secondary" expand="block" class="button-tiles">
                 {{number}}
               </ion-button>
-              <ion-button disabled="true" *ngIf="number != 7" expand="block" class="button-tiles">
+              <ion-button disabled="true" *ngIf="number != 9" expand="block" class="button-tiles">
                 {{number}}
               </ion-button>
             </ion-col>
@@ -211,7 +314,7 @@
 
           <ion-row>
             <ion-col size="12">
-              <ion-searchbar disabled="true" class="button-tiles" [placeholder]="'Cdim' | musicNotation">
+              <ion-searchbar disabled="true" class="button-tiles" [placeholder]="'C9' | musicNotation">
               </ion-searchbar>
             </ion-col>
           </ion-row>
@@ -224,14 +327,12 @@
 
         <br>
 
-
-
         <ion-grid>
           <ion-row>
             <ion-col size="12">
               <ion-card class="card-chord">
                 <ion-card-header>
-                  <ion-card-title>{{'Cdim' | musicNotation}}</ion-card-title>
+                  <ion-card-title>{{'C9' | musicNotation}}</ion-card-title>
                 </ion-card-header>
               </ion-card>
             </ion-col>
@@ -245,18 +346,138 @@
 
           <ion-row>
             <ion-col size="12">
-              <ion-card class="card-chord">
-                <ion-card-header>
-                  <ion-card-title>{{'Cdim7' | musicNotation}}</ion-card-title>
-                  <ion-card-subtitle>{{'C diminished seventh' | musicNotation}}</ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  {{'tonic' | translate}}: {{'C' | musicNotation}} <br>
-                  {{'intervals' | translate}}: 1P, 3M, 5A <br>
-                  {{'type' | translate}}: {{'diminished seventh' | translate}} <br>
 
-                </ion-card-content>
+              <ion-card class="card outer">
+
+                <ion-card-header>
+                  <ion-card class="card inner" style="margin-top: 0;" (click)="toggleCard(chord)">
+                    <ion-card-header>
+                      <ion-card-title class="card-title-symbol">{{'C9' | musicNotation}}</ion-card-title>
+
+                      <ion-card-subtitle class="card-subtitle">
+
+                        <ion-text>
+                          {{'C' | musicNotation}} {{'dominant' | translate}} {{'ninth' | translate}}
+                        </ion-text><br>
+
+
+                        <ion-text *ngIf="global.language == 'en'" style="text-transform: capitalize;">
+                          {{'Major' | translate}} {{'chord' | translate}}<br>
+                        </ion-text>
+                        <ion-text *ngIf="global.language == 'it'" style="text-transform: capitalize;">
+                          {{'chord' | translate}} {{'Major' | translate}}<br>
+                        </ion-text>
+
+                        <ion-text>
+                          {{'aliases' | translate}}:
+                        </ion-text>
+                        <ion-text> {{'9' | musicNotation}} </ion-text>
+                      </ion-card-subtitle>
+                    </ion-card-header>
+                  </ion-card>
+
+                  <ion-card class="card inner">
+                    <ion-card-header>
+
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col size="2" style="font-weight: bold;"> {{'C' | musicNotation}} </ion-col>
+                          <ion-col size="2">1P</ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;"> {{'unison' | translate}}</ion-col>
+                        </ion-row>
+
+                        <ion-row>
+                          <ion-col size="2" style="font-weight: bold;"> {{'E' | musicNotation}} </ion-col>
+                          <ion-col size="2">3M</ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'en'">
+                            {{'major' | translate}} {{'third' | translate}}
+                          </ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'it'">
+                            {{'third' | translate}} {{'major' | translate}}
+                          </ion-col>
+                        </ion-row>
+
+                        <ion-row>
+                          <ion-col size="2" style="font-weight: bold;"> {{'G' | musicNotation}} </ion-col>
+                          <ion-col size="2">5P</ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'en'">
+                            {{'perfect' | translate}} {{'fifth' | translate}}
+                          </ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'it'">
+                            {{'fifth' | translate}} {{'perfect' | translate}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="2" style="font-weight: bold;"> {{'Bb' | musicNotation}} </ion-col>
+                          <ion-col size="2">7m</ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'en'">
+                            {{'minor' | translate}} {{'seventh' | translate}}
+                          </ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'it'">
+                            {{'seventh' | translate}} {{'minor' | translate}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="2" style="font-weight: bold;"> {{'D' | musicNotation}} </ion-col>
+                          <ion-col size="2">9M</ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'en'">
+                            {{'major' | translate}} {{'ninth' | translate}}
+                          </ion-col>
+                          <ion-col size="6" style="text-transform: capitalize;" *ngIf="global.language == 'it'">
+                            {{'ninth' | translate}} {{'major' | translate}}
+                          </ion-col>
+                        </ion-row>
+
+                      </ion-grid>
+                    </ion-card-header>
+                  </ion-card>
+
+
+                  <ion-card class="card inner">
+                    <ion-card-header>
+                      <ion-text> {{'extensions' | translate}}: <br> <br></ion-text>
+
+                      {{'C13' | musicNotation}}, {{'C9#11' | musicNotation}}, {{'C13#11' | musicNotation}}
+
+                      <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"></ion-icon>
+
+                    </ion-card-header>
+                  </ion-card>
+
+
+                  <ion-card class="card inner">
+                    <ion-card-header>
+                      <ion-text> {{'reductions' | translate}}: <br> <br></ion-text>
+
+                      {{'C5' | musicNotation}}, {{'C7no5' | musicNotation}}, {{'CM' | musicNotation}}
+
+                      <ion-icon color="secondary" name="ellipsis-horizontal" style="padding-left: 3%;"></ion-icon>
+
+                    </ion-card-header>
+                  </ion-card>
+
+                  <ion-card class="card inner" style="margin-bottom: 0;">
+
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col class="ion-text-center">
+                          <ion-button color="secondary" disabled="true"> {{'play_chord' |
+                            translate}}
+                          </ion-button>
+                        </ion-col>
+                        <ion-col class="ion-text-center">
+                          <ion-button color="secondary" disabled="true"> {{'play_arp' | translate}}
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+
+                  </ion-card>
+                </ion-card-header>
+
+
               </ion-card>
+
             </ion-col>
           </ion-row>
         </ion-grid>
